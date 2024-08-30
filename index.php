@@ -99,7 +99,7 @@ function check_session(&$site_url, $admin = 0)
 
 	}
 	if ($admin) {
-		var_dump($_SESSION['user_details']['role']);
+		// var_dump($_SESSION['user_details']['role']);
 
 		if (($_SESSION['user_details']['role'] != 1 )) {
 			header("location: " . $site_url . "/login");
