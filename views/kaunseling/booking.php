@@ -35,7 +35,7 @@
             <div class="card-header fw-bold"> Calendar</div>
             <div class="card-body">
               <div class="example">
-              <!-- <div class="d-none" id="calendar_user_id"><?php echo $_SESSION['user_details']['id']?></div> -->
+              <div class="d-none" id="calendar_user_id"><?php echo $_SESSION['user_details']['id']?></div>
                 <!-- <ul class="nav nav-underline-border" role="tablist">
                   <li class="nav-item"><a class="nav-link active" data-coreui-toggle="tab" href="#preview-1000" role="tab">
                       <svg class="icon me-2">

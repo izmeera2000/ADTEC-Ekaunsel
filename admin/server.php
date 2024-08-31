@@ -181,7 +181,7 @@ if (isset($_POST['user_register'])) {
 }
 
 if (isset($_POST['user_login'])) {
-  $ndp = mysqli_real_escape_string($db, $_POST['ndp']);
+  $login = mysqli_real_escape_string($db, $_POST['login']);
   $password = mysqli_real_escape_string($db, $_POST['password']);
   // debug_to_console("test");
 
@@ -202,7 +202,7 @@ if (isset($_POST['user_login'])) {
     $password = md5($password);
 
 
-    $query = "SELECT * FROM user WHERE (ndp='$ndp') AND password='$password'";
+    $query = "SELECT * FROM user WHERE (ndp='$login' or email='$login') AND password='$password'";
     $results = mysqli_query($db, $query);
 
     if (mysqli_num_rows($results) == 1) {
@@ -263,7 +263,7 @@ if (isset($_POST['calendarfetch'])) {
   // echo (json_encode($start));
   // echo (json_encode($end));
 
-  $query = "SELECT a.id,masalah ,tarikh as start, event_status, b.ndp as ndp, b.id as user_id ,sebab , kaunselor_id FROM kaunselor_jadual a INNER JOIN ( SELECT id, ndp FROM user ) b  ON b.id = a.user_id WHERE (tarikh BETWEEN ('$start') AND ('$end')) ORDER BY id";
+  $query = "SELECT a.id,masalah ,tarikh as start,tarikh, event_status, b.ndp as ndp, b.id as user_id ,sebab , kaunselor_id FROM kaunselor_jadual a INNER JOIN ( SELECT id, ndp FROM user ) b  ON b.id = a.user_id WHERE (tarikh BETWEEN ('$start') AND ('$end')) ORDER BY tarikh  ASC ";
   // echo json_encode($query);
 
   $result = mysqli_query($db, $query);
@@ -276,7 +276,13 @@ if (isset($_POST['calendarfetch'])) {
 
 
     if ($row['event_status'] == "0") {
+
       $row['color'] = "red";
+
+    }
+
+    if ($row['event_status'] == "2") {
+      $row['color'] = "green";
 
     }
     if ($row['user_id'] != $id) {
@@ -284,13 +290,31 @@ if (isset($_POST['calendarfetch'])) {
       $row['title'] = "";
       $row['masalah'] = "";
       $row['ndp'] = "";
-      $row['user_id'] = "";
 
+    }
+
+    // if ($row['event_status'] == "2" && $row['user_id'] != $id) {
+    //   $row['color'] = "gray";
+    //   $row['title'] = "";
+    //   $row['masalah'] = "";
+    //   $row['ndp'] = "";
+    // }
+    // $row['tarikh'] = "";(
+
+
+    if ($row['user_id'] == $id) {
+
+      array_push($eventArray, $row);
+
+    } else {
+      if ($row['event_status'] != "0") {
+        array_push($eventArray, $row);
+
+      }
     }
 
     $row['allDay'] = "true";
 
-    array_push($eventArray, $row);
 
   }
   // mysqli_free_result($result);
@@ -613,7 +637,56 @@ function showmodal($modal_name)
 
 // }
 
+if (isset($_POST['senaraistudent'])) {
 
+  $students = array();
+
+  $query =
+    "SELECT role,ndp,nama,email,phone,kp,jantina,agama,status_kahwin,bangsa,image_url,time_add FROM user WHERE  role='2'";
+  $results = mysqli_query($db, $query);
+  if (mysqli_num_rows($results) > 0) {
+
+
+    while ($user = mysqli_fetch_assoc($results)) {
+
+      $students[] = array(
+        "a" => '<div class="avatar avatar-md"><img class="avatar-img"
+                                                                src="' . $site_url . 'assets/img/user/' . $user['ndp'] . '/' . $user['image_url'] . '"
+                                                                alt="' . $user['nama'] . '"></div>',           // Modify the key based on your column names
+        "b" => '<div class="text-nowrap">' . $user['nama'] . '</div>
+                                                        <div class="small text-body-secondary text-nowrap">
+                                                            <span >Registered:
+                                                            </span><span>' . $user['time_add'] . '</span>
+                                                        </div>',          // Modify the key based on your column names
+        "c" => $user['email'],         // Modify the key based on your column names
+        "d" => '
+        <button class="btn btn-primary" onclick="viewDetails(' . $user['ndp'] . ')">View</button>
+        <button class="btn btn-warning" onclick="editDetails(' . $user['ndp'] . ')">Edit</button>
+        <button class="btn btn-danger" onclick="deleteDetails(' . $user['ndp'] . ')">Delete</button>
+            <a class="btn btn-success me-2" href="#">
+        <svg class="icon">
+            <use
+                xlink:href="<?php echo $site_url ?>/assets/vendors/@coreui/icons/svg/free.svg#cil-magnifying-glass">
+            </use>
+        </svg></a>
+        ',        // Add more fields if needed
+      );
+
+    }
+  }
+
+
+
+  $response = [
+    "draw" => intval($_POST['draw'] ?? 1),
+    "recordsTotal" => count($students),
+    "recordsFiltered" => count($students),
+    "data" => $students
+  ];
+
+  echo json_encode($response);
+
+}
 
 
 ?>

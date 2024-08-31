@@ -364,7 +364,34 @@ $(document).ready(() => {
     processing: true,
     serverSide: true,
   });
+
+  table1 = new DataTable("#senaraistudent", {
+    ajax: {
+      "type": "POST",
+      "url": "senaraistudent",
+      "data": {
+        "senaraistudent": {
+          "user_id": "test",
+          // title: title,
+          // start: date,
+        },
+      },
+
+    },
+    columns: [
+      { data: 'a', className: 'text-center' }, 
+      { data: 'b' },  
+      { data: 'c', className: 'text-center' },
+      { data: 'd', className: 'text-center' },
+
+  ],
+  });
+console.log(table1)
+
 });
+
+
+
 
 const toastTrigger = document.getElementById("liveToastBtn");
 const toastLiveExample = document.getElementById("liveToast");
@@ -374,8 +401,6 @@ if (toastTrigger) {
   toastTrigger.addEventListener("click", () => {
     $.each($(".toast"), function (i, item) {
       coreui.Toast.getOrCreateInstance(item).show();
-
-
     });
   });
 }
@@ -383,38 +408,40 @@ if (toastTrigger) {
 //   $.each($(".toast"), function (i, item) {coreui.Toast.getOrCreateInstance(item).show();});
 // });
 
-
-
 // document.addEventListener("DOMContentLoaded", function(event){
 //   const myModal = new coreui.Modal("#calendaradd")
 //   myModal.show();
 // });
 
-function showtoast ($message){
+function showtoast($message) {
   document.getElementById("jstoastmessage").innerHTML = $message;
 
   $("#jstoast").toast("show");
-
 }
 
-function showmodal ( $main, $first ="", $second ="", $third ="" , $fourth ="" ){
-  const myModal = new coreui.Modal("#"+$main)
+function showmodal(
+  $main,
+  $first = "",
+  $second = "",
+  $third = "",
+  $fourth = ""
+) {
+  const myModal = new coreui.Modal("#" + $main);
 
-  if ($first){
-    document.getElementById($main+"_title").innerHTML = $first;
+  if ($first) {
+    document.getElementById($main + "_title").innerHTML = $first;
   }
 
-  if ($second){
-    document.getElementById($main+"_id").value = $second;
+  if ($second) {
+    document.getElementById($main + "_id").value = $second;
   }
-  if ($third){
-    document.getElementById($main+"_date").value = $third;
+  if ($third) {
+    document.getElementById($main + "_date").value = $third;
   }
-  if ($fourth){
-    document.getElementById($main+"_content").value = $fourth;
+  if ($fourth) {
+    document.getElementById($main + "_content").value = $fourth;
   }
   myModal.show();
-
 }
 
 //# sourceMappingURL=main.js.map

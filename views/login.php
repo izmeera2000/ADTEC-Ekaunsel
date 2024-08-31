@@ -31,7 +31,7 @@
                         </use>
                       </svg></span>
                     <input class="form-control <?php formvalidatelabel("login", $errors) ?>" type="text"
-                      placeholder="NDP" name="ndp" required>
+                      placeholder="NDP or Email" name="login" required>
                   </div>
                   <div class="input-group mb-4 <?php formvalidatelabel("login", $errors) ?>"><span class="input-group-text">
                       <svg class="icon">

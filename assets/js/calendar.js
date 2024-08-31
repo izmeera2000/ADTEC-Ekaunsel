@@ -36,16 +36,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // alert("Event: " + info.event.id);
     // console.log(info.event.startStr);
 
-    console.log(info.event);
+    // console.log(info);
 
-    // showmodal(
-    //   info.event.startStr,
-    //   "#user_calendarevent",
-    //   "user_calendarevent_date",
-    //   "user_calendarevent_id",
-    //   info.event.id
-    // );
-    // if (info.event.extendedProps.event_status != 0) {
 
     if (info.event.backgroundColor != "gray") {
       if (info.event.extendedProps.event_status != 0) {
@@ -69,12 +61,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function selectDate(info) {
     // var title = prompt("Event Title:");
+    // console.log(info)
 
     const user_id = document.getElementById("user_calendaradd_id").value;
     showmodal("user_calendaradd", null, user_id, info.startStr, info.title);
 
     calendar.unselect();
   }
+
+  function checkoverlapself(info) {
+    // console.log(info.backgroundColor)
+    console.log(info)
+    // console.log(info.extendedProps.user_id)
+// const id = document.getElementById("calendar_user_id").innerHTML;
+    // if (id == info.event.extendedProps.user_id) {
+    //   console.log("asdsa")
+    //   // console.log(info.event.start)
+    // }
+    // showtoast("event exist pls choose anotjer");
+
+    // return;
+  }
+
 
   const calendarEl = document.getElementById("calendar");
 
@@ -86,6 +94,8 @@ document.addEventListener("DOMContentLoaded", () => {
       right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
     },
     // allDay: true,
+    dayMaxEventRows: 2,
+        eventOrder: "-title",
     events: getAllEvents,
     lazyFetching: true,
     selectable: true,
@@ -94,11 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
       start: "00:01",
       end: "23:59",
     },
-    selectOverlap: function (event) {
-      showtoast("event exist pls choose anotjer");
-
-      return;
-    },
+    selectOverlap: checkoverlapself,
     eventOverlap: false,
     select: selectDate,
     eventClick: clickonEvent,

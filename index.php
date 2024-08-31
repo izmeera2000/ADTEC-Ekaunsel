@@ -75,11 +75,16 @@ function kaunseling_borang()
 
 function kaunseling_booking_kaunselor()
 {
-	check_session($site_url,1);
+	check_session($site_url, 1);
 	require_once('views/kaunseling/booking_kaunselor.php');
 
 }
+function kaunseling_student()
+{
+	check_session($site_url, 1);
+	require_once('views/kaunseling/student.php');
 
+}
 
 //custom pages
 function page404()
@@ -101,9 +106,11 @@ function check_session(&$site_url, $admin = 0)
 	if ($admin) {
 		// var_dump($_SESSION['user_details']['role']);
 
-		if (($_SESSION['user_details']['role'] != 1 )) {
-			header("location: " . $site_url . "/login");
-
+		if (($_SESSION['user_details']['role'] != 1)) {
+			// header("location: " . $site_url . "login");
+			// session_destroy();
+			// unset($_SESSION['user_details']);
+			header("location: " . $site_url . "logout");
 
 		}
 
@@ -120,7 +127,7 @@ if ($request == '' or $request == '/')
 	index();
 else if ($request == 'register')
 	register();
-else if ($request == 'login')
+else if (str_contains($request, 'login'))
 	login();
 else if (str_contains($request, 'logout'))
 	logout();
@@ -130,6 +137,8 @@ else if ($request == 'kaunseling/borang')
 	kaunseling_borang();
 else if ($request == 'kaunselor/booking')
 	kaunseling_booking_kaunselor();
+else if (str_contains($request, 'kaunselor/student'))
+	kaunseling_student();
 else if (str_contains($request, 'borang_psikologi_send'))
 	server();
 else if (str_contains($request, 'user/profile'))
@@ -148,6 +157,13 @@ else if (str_contains($request, 'calendaraddna'))
 	server();
 else if (str_contains($request, 'calendardeletena'))
 	server();
+
+	else if (str_contains($request, 'senaraistudent')){
+		// echo "asd";
+		server();
+
+	}
+
 else {
 	echo $request;
 

@@ -53,6 +53,10 @@
                         <label class="form-label"><?php echo $soalan['soalan'] ?></label>
                         <input class="form-range" min="0" max="3" step="1" type="range" value="0"
                           name="soalan-<?php echo $soalan['id'] ?>-<?php echo $soalan['kategori'] ?>">
+                          <div class="0 d-none">Tidak Pernah</div>
+                          <div class="1 d-none">Jarang</div>
+                          <div class="2 d-none">Kerap</div>
+                          <div class="3 d-none">Sangat Kerap</div>
                       </div>
                     </div>
                   </div>
