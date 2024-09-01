@@ -367,59 +367,99 @@ $(document).ready(() => {
 
   table1 = new DataTable("#senaraistudent", {
     ajax: {
-      "type": "POST",
-      "url": "senaraistudent",
-      "data": {
-        "senaraistudent": {
-          "user_id": "test",
+      type: "POST",
+      url: "senaraistudent",
+      data: {
+        senaraistudent: {
+          user_id: "test",
           // title: title,
           // start: date,
         },
       },
-
     },
     columns: [
-      { data: 'a', className: 'text-center' }, 
-      { data: 'b' },  
-      { data: 'c', className: 'text-center' },
-      { data: 'd', className: 'text-center' },
-
-  ],
+      { data: "a", className: "text-center" },
+      { data: "b" },
+      { data: "c", className: "text-center" },
+      { data: "d", className: "text-center" },
+    ],
   });
-console.log(table1.rows().data().toArray())
 
-$.ajax({
-  type: "POST",
-  url: "senaraistudent",
-  data: {
-    senaraistudent: {
-      user_id: "user_id",
-      // title: title,
-      // start: date,
+  // console.log(table1.rows().data().toArray())
+
+  // $.ajax({
+  //   type: "POST",
+  //   url: "editborang/reorder",
+  //   data: {
+  //     order: {
+  //       user_id: "user_id",
+  //     },
+  //   },
+  //   success: function (response) {
+  //     console.log(response);
+  //   },
+  // });
+
+  table1 = new DataTable("#editborang", {
+    rowReorder: {
+      selector: "td:nth-child(1), td:nth-child(2), td:nth-child(3)", // This allows reordering by dragging either the first or second column
+      update: false,
     },
-  },
-  success: function (response) {
-    console.log(response);
-    // showtoast("deleted");
-    // calendar.refetchEvents();
+    ajax: {
+      type: "POST",
+      url: "senaraisoalan",
+      data: {
+        senaraisoalan: {
+          user_id: "test",
+          // title: title,
+          // start: date,
+        },
+      },
+    },
+    columns: [
+      { data: "a", className: "text-center re_order" },
+      { data: "b", className: "text-center soalan" },
+      { data: "c", className: "text-center kategori" },
+      { data: "d", className: "text-center" },
+    ],
+    createdRow: function (row, data, dataIndex) {
+      $(row).attr("data-id", data.id); // Set data-id attribute on each row
+    },
+  });
 
-    // if (response) {
-    //   showtoast(response);
-    // }
-    // alert(id);
-    // calendar.render();
-    // var script = $(response).text();
-    // console.log((script));
+  table1.on("row-reorder", function (e, diff, edit) {
+    var result = [];
 
-    // eval(script);
-    // successCallback(response);
-  },
+    // Iterate over the rows that were reordered
+    diff.forEach(function (rowData) {
+        var id = $(rowData.node).data("id"); // Get the 'id' from the data attribute
+        var newPosition = rowData.newPosition + 1; // Use 1-based index for re_order
+
+        if (id !== undefined) {
+            result.push({
+                id: id,
+                re_order: newPosition,
+            });
+        }
+    });
+
+    // Send the reordered data to the server to update the database
+    $.ajax({
+      url: "editborang/reorder",
+      method: "POST",
+      data: {
+        order: result,
+      },
+
+      success: function (response) {
+        showtoast("order changed");
+        table1.ajax.reload(); // Reload DataTable data
+
+      },
+    });
+    console.log(result);
+  });
 });
-
-});
-
-
-
 
 const toastTrigger = document.getElementById("liveToastBtn");
 const toastLiveExample = document.getElementById("liveToast");

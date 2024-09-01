@@ -15550,5 +15550,8 @@ select.form-multi-select {
 [data-coreui-theme=dark] .footer {
   --cui-footer-bg: var(--cui-body-bg);
 }
-
+.re_order:hover,.kategori:hover,
+.soalan:hover {
+    cursor: pointer;
+}
 /*# sourceMappingURL=style.css.map */

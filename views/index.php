@@ -1,4 +1,7 @@
-<?php include(getcwd() . '/admin/server.php'); ?>
+<?php include(getcwd() . '/admin/server.php'); 
+
+
+?>
 <!DOCTYPE html><!--
 * CoreUI PRO Bootstrap Admin Template
 * @version v5.0.0
@@ -25,6 +28,11 @@
             </li>
           </ol>
         </nav>
+
+        <div>
+
+        </div>
+
         <div class="row">
           <div class="col-xl-4">
             <div class="row">

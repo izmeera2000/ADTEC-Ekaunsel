@@ -13,7 +13,7 @@
 <?php include(getcwd() . '/views/head.php');
 
 // checkarray("ndp",$errors );
-
+var_dump($_SESSION['user_details']);
 // echo basename($_FILES["fileToUpload"]["name"]);
 
 ?>
@@ -236,7 +236,7 @@
                   <?php formvalidateerr("password2",$errors) ?>
                   </div>
                 </div>
-                <button class="btn btn-block btn-success" type="submt" name="user_register"  >Create
+                <button class="btn btn-block btn-success" type="submit" name="user_register"  >Create
                   Account</button>
                 <a class="btn btn-block btn-success" type="button" href="<?php echo $site_url ?>login">Login</a>
               </div>

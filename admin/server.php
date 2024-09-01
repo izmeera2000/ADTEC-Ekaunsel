@@ -40,79 +40,82 @@ if (isset($_POST['user_register'])) {
   //     $uploadOk = 0;
   //   }
   // }
-  {
 
-    if (empty($_POST['ndp'])) {
-      $errors['ndp'] = "NDP requred";
-    } else {
-      $ndp = mysqli_real_escape_string($db, $_POST['ndp']);
 
-    }
-    if (empty($_POST['fullname'])) {
-      $errors['fullname'] = "fullname requred";
-    } else {
-      $fullname = mysqli_real_escape_string($db, $_POST['fullname']);
+  if (empty($_POST['ndp'])) {
+    $errors['ndp'] = "NDP requred";
+  } else {
+    $ndp = mysqli_real_escape_string($db, $_POST['ndp']);
 
-    }
-    if (empty($_POST['kp'])) {
-      $errors['kp'] = "kp requred";
-    } else {
-      $kp = mysqli_real_escape_string($db, $_POST['kp']);
+  }
+  if (empty($_POST['fullname'])) {
+    $errors['fullname'] = "fullname requred";
+  } else {
+    $fullname = mysqli_real_escape_string($db, $_POST['fullname']);
 
-    }
-    if (empty($_POST['jantina'])) {
-      $errors['jantina'] = "jantina requred";
-    } else {
-      $jantina = mysqli_real_escape_string($db, $_POST['jantina']);
+  }
+  if (empty($_POST['kp'])) {
+    $errors['kp'] = "kp requred";
+  } else {
+    $kp = mysqli_real_escape_string($db, $_POST['kp']);
 
-    }
-    if (empty($_POST['agama'])) {
-      $errors['agama'] = "agama requred";
-    } else {
-      $agama = mysqli_real_escape_string($db, $_POST['agama']);
+  }
+  if (empty($_POST['jantina'])) {
+    $errors['jantina'] = "jantina requred";
+  } else {
+    $jantina = mysqli_real_escape_string($db, $_POST['jantina']);
 
-    }
-    if (empty($_POST['statuskahwin'])) {
-      $errors['statuskahwin'] = "statuskahwin requred";
-    } else {
-      $statuskahwin = mysqli_real_escape_string($db, $_POST['statuskahwin']);
+  }
+  if (empty($_POST['agama'])) {
+    $errors['agama'] = "agama requred";
+  } else {
+    $agama = mysqli_real_escape_string($db, $_POST['agama']);
 
-    }
-    if (empty($_POST['bangsa'])) {
-      $errors['bangsa'] = "bangsa requred";
-    } else {
-      $bangsa = mysqli_real_escape_string($db, $_POST['bangsa']);
+  }
+  if (empty($_POST['statuskahwin'])) {
+    $errors['statuskahwin'] = "statuskahwin requred";
+  } else {
+    $statuskahwin = mysqli_real_escape_string($db, $_POST['statuskahwin']);
 
-    }
-    if (empty($_POST['email'])) {
-      $errors['email'] = "email requred";
-    } else {
-      $email = mysqli_real_escape_string($db, $_POST['email']);
+  }
+  if (empty($_POST['bangsa'])) {
+    $errors['bangsa'] = "bangsa requred";
+  } else {
+    $bangsa = mysqli_real_escape_string($db, $_POST['bangsa']);
 
-    }
-    if (empty($_POST['phone'])) {
-      $errors['phone'] = "phone requred";
-    } else {
-      $phone = mysqli_real_escape_string($db, $_POST['phone']);
+  }
+  if (empty($_POST['email'])) {
+    $errors['email'] = "email requred";
+  } else {
+    $email = mysqli_real_escape_string($db, $_POST['email']);
 
-    }
-    if (empty($_POST['password1'])) {
-      $errors['password1'] = "password1 requred";
-    } else {
-      $password1 = mysqli_real_escape_string($db, $_POST['password1']);
+  }
+  if (empty($_POST['phone'])) {
+    $errors['phone'] = "phone requred";
+  } else {
+    $phone = mysqli_real_escape_string($db, $_POST['phone']);
 
-    }
-    if (empty($_POST['password2'])) {
-      $errors['password2'] = "password2 requred";
-    } else {
-      $password2 = mysqli_real_escape_string($db, $_POST['password2']);
+  }
+  if (empty($_POST['password1'])) {
+    $errors['password1'] = "password1 requred";
+  } else {
+    $password1 = mysqli_real_escape_string($db, $_POST['password1']);
 
-    }
+  }
+  if (empty($_POST['password2'])) {
+    $errors['password2'] = "password2 requred";
+  } else {
+    $password2 = mysqli_real_escape_string($db, $_POST['password2']);
+
   }
 
 
 
+
   $role = 2;
+
+
+
   if (!empty($_POST['password1']) && !empty($_POST['password2'])) {
 
     if ($password1 != $password2) {
@@ -126,7 +129,7 @@ if (isset($_POST['user_register'])) {
 
 
   // var_dump($_POST);
-
+  //error handlng utk check data
   if (isset($ndp) && isset($email) && isset($phone) && isset($kp)) {
 
     $user_check_query = "SELECT * FROM user WHERE ndp='$ndp' OR email='$email'  OR phone='$phone'    OR kp='$kp'   LIMIT 1";
@@ -158,21 +161,37 @@ if (isset($_POST['user_register'])) {
       }
     }
   }
-  $filename = uploadpicndp($ndp, $errors);
+  checkuploadpid("test", $errors);
+
   // echo $filename;
 
   if (count($errors) == 0) {
 
 
+    //encrypt password
     $password = md5($password1);
 
-    $query = "INSERT INTO user (role, ndp,password, nama,email,phone,kp,jantina,agama,status_kahwin,bangsa,image_url) 
-                          VALUES('$role','$ndp','$password','$fullname','$email','$phone','$kp','$jantina','$agama','$statuskahwin','$bangsa','$filename')";
+    $query = "INSERT INTO user (role, ndp,password, nama,email,phone,kp,jantina,agama,status_kahwin,bangsa) 
+                          VALUES('$role','$ndp','$password','$fullname','$email','$phone','$kp','$jantina','$agama','$statuskahwin','$bangsa')";
     mysqli_query($db, $query);
 
-    $query = "SELECT * FROM user WHERE (ndp='$ndp') AND password='$password'";
+
+    //verify
+    $query = "SELECT * FROM user WHERE (ndp='$ndp' OR email='$email') AND password='$password'";
     $results = mysqli_query($db, $query);
     $user = mysqli_fetch_assoc($results);
+
+    $filename = uploadpic_id($user['id'], $errors);
+    // echo $filename;
+
+    $query2 = "UPDATE user SET image_url='$filename' WHERE email='$email'";
+    mysqli_query($db, $query2);
+
+
+    $user = mysqli_fetch_assoc($results);
+
+    $user['password'] = "";
+    //array
     $_SESSION['user_details'] = $user;
 
 
@@ -209,6 +228,8 @@ if (isset($_POST['user_login'])) {
       // $_SESSION['success'] = "You are now logged in";
       $user = mysqli_fetch_assoc($results);
       // debug_to_console("test2");
+      $user['password'] = "";
+
       $_SESSION['user_details'] = $user;
       // $_SESSION['username'] = $user["username"];
       // $user_id = $user['id'];
@@ -568,16 +589,43 @@ function formvalidateerr($key, $arr)
   }
 }
 
+function checkuploadpid($id, &$err)
+{
 
-function uploadpicndp($ndp, &$err)
+  $uploadOk = 1;
+
+
+  $target_dir = "./assets/img/user/test/";
+
+  $target_file = $target_dir . basename($_FILES["gambar"]["name"]);
+  // $check = getimagesize($_FILES["gambar"]["tmp_name"]);
+  $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+  $target_file = $target_dir . "gambar." . $imageFileType;
+
+  echo $imageFileType;
+
+  if ($_FILES["gambar"]["size"] > 500000) {
+    $err['gambar'] = "File too large";
+    $uploadOk = 0;
+
+  }
+  if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
+    $err['gambar'] = "Sorry, only JPG, JPEG & PNG  files are allowed.";
+    $uploadOk = 0;
+
+  }
+
+}
+
+function uploadpic_id($id, &$err)
 {
   $uploadOk = 1;
 
-  if (!is_dir("./assets/img/user/$ndp/")) {
-    mkdir("./assets/img/user/$ndp/", 0755, true);
+  if (!is_dir("./assets/img/user/$id/")) {
+    mkdir("./assets/img/user/$id/", 0755, true);
   }
 
-  $target_dir = "./assets/img/user/$ndp/";
+  $target_dir = "./assets/img/user/$id/";
 
   $target_file = $target_dir . basename($_FILES["gambar"]["name"]);
   // $check = getimagesize($_FILES["gambar"]["tmp_name"]);
@@ -630,6 +678,8 @@ function showmodal($modal_name)
 }
 
 
+
+
 // if (isset($_POST['user_calendaradd'])) {
 
 // debug_to_console("test");
@@ -642,7 +692,7 @@ if (isset($_POST['senaraistudent'])) {
   $students = array();
 
   $query =
-    "SELECT role,ndp,nama,email,phone,kp,jantina,agama,status_kahwin,bangsa,image_url,time_add FROM user WHERE  role='2'";
+    "SELECT id,role,ndp,nama,email,phone,kp,jantina,agama,status_kahwin,bangsa,image_url,time_add FROM user WHERE  role='2'";
   $results = mysqli_query($db, $query);
   if (mysqli_num_rows($results) > 0) {
 
@@ -651,7 +701,7 @@ if (isset($_POST['senaraistudent'])) {
 
       $students[] = array(
         "a" => '<div class="avatar avatar-md"><img class="avatar-img"
-                                                                src="' . $site_url . 'assets/img/user/' . $user['ndp'] . '/' . $user['image_url'] . '"
+                                                                src="' . $site_url . 'assets/img/user/' . $user['id'] . '/' . $user['image_url'] . '"
                                                                 alt="' . $user['nama'] . '"></div>',           // Modify the key based on your column names
         "b" => '<div class="text-nowrap">' . $user['nama'] . '</div>
                                                         <div class="small text-body-secondary text-nowrap">
@@ -682,8 +732,57 @@ if (isset($_POST['senaraistudent'])) {
   ];
 
   echo json_encode($response);
-die();
+  die();
 }
+
+if (isset($_POST['order'])) {
+  // echo json_encode($_POST);
+  $order = $_POST['order'];
+
+  foreach ($order as $row) {
+    $id = $row['id'];
+    $re_order = $row['re_order'];
+
+
+    $query = "UPDATE borang_psikologi SET re_order = '$re_order' WHERE id = '$id'";
+    mysqli_query($db, $query);
+
+  }
+die();
+
+}
+
+if (isset($_POST['senaraisoalan'])) {
+
+  $data = array();
+
+  $query =
+    "SELECT a.*,b.nama_kategori  FROM borang_psikologi a INNER JOIN  borang_psikologi_kategori b ON a.kategori = b.id ORDER BY re_order ASC";
+  $results = mysqli_query($db, $query);
+  if (mysqli_num_rows($results) > 0) {
+
+    while ($row = $results->fetch_assoc()) {
+      $data[] = array(
+        "id" => $row['id'], // Include id in the response
+        "a" => '<div class="text-center" >' . $row['re_order'] . '</div>',  // Formatting for re_order
+        "b" => '<div class="text-center">' . $row['soalan'] . '</div>',   // Formatting for soalan
+        "c" => '<div class="text-center">' . $row['nama_kategori'] . '</div>',  // Formatting for nama_kategori
+        "d" => '
+              <a class="btn btn-success" href="details.php?id=' . $row['id'] . '">
+                  <svg class="icon">
+                      <use xlink:href="icons.svg#icon-view"></use>
+                  </svg>
+              </a>
+          ' // Button with link for status
+      );
+    }
+  }
+
+  echo json_encode(array('data' => $data));
+  die();
+
+}
+
 
 
 ?>
