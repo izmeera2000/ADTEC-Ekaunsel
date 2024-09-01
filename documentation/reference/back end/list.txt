@@ -1,0 +1,34 @@
+
+
+php:
+base64 encode
+php function
+
+phpmailer
+https://github.com/PHPMailer/PHPMailer
+
+phpdotenv
+https://github.com/vlucas/phpdotenv
+
+
+
+
+js:
+ajax
+js function
+
+chartjs
+http://www.chartjs.org/
+
+jquery
+https://jquery.com/
+
+datatables
+https://datatables.net/manual/
+
+fullcalendar
+https://fullcalendar.io/docs
+
+
+html5-qrcode
+https://github.com/mebjas/html5-qrcode

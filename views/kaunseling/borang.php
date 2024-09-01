@@ -31,7 +31,7 @@
           </ol>
         </nav>
         <form action="<?php $site_url ?>" method="POST">
-          <input type="hidden" name="user_id" value="<?php echo 1 ?>">
+          <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_details']['id'] ?>">
           <?php
           $query =
             "SELECT * FROM borang_psikologi WHERE status='1' ORDER BY rand()";

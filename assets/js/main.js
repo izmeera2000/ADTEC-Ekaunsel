@@ -386,7 +386,35 @@ $(document).ready(() => {
 
   ],
   });
-console.log(table1)
+console.log(table1.rows().data().toArray())
+
+$.ajax({
+  type: "POST",
+  url: "senaraistudent",
+  data: {
+    senaraistudent: {
+      user_id: "user_id",
+      // title: title,
+      // start: date,
+    },
+  },
+  success: function (response) {
+    console.log(response);
+    // showtoast("deleted");
+    // calendar.refetchEvents();
+
+    // if (response) {
+    //   showtoast(response);
+    // }
+    // alert(id);
+    // calendar.render();
+    // var script = $(response).text();
+    // console.log((script));
+
+    // eval(script);
+    // successCallback(response);
+  },
+});
 
 });
 

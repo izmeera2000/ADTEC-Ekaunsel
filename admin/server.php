@@ -660,13 +660,10 @@ if (isset($_POST['senaraistudent'])) {
                                                         </div>',          // Modify the key based on your column names
         "c" => $user['email'],         // Modify the key based on your column names
         "d" => '
-        <button class="btn btn-primary" onclick="viewDetails(' . $user['ndp'] . ')">View</button>
-        <button class="btn btn-warning" onclick="editDetails(' . $user['ndp'] . ')">Edit</button>
-        <button class="btn btn-danger" onclick="deleteDetails(' . $user['ndp'] . ')">Delete</button>
-            <a class="btn btn-success me-2" href="#">
+            <a class="btn btn-success me-2" href="' . $site_url . 'kaunselor/student/' . $user['ndp'] . '">
         <svg class="icon">
             <use
-                xlink:href="<?php echo $site_url ?>/assets/vendors/@coreui/icons/svg/free.svg#cil-magnifying-glass">
+                xlink:href="' . $site_url . '/assets/vendors/@coreui/icons/svg/free.svg#cil-magnifying-glass">
             </use>
         </svg></a>
         ',        // Add more fields if needed
@@ -685,7 +682,7 @@ if (isset($_POST['senaraistudent'])) {
   ];
 
   echo json_encode($response);
-
+die();
 }
 
 

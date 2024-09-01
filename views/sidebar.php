@@ -52,6 +52,13 @@
 
 
       </ul>
+
+      <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>kaunseling/borang" target="_top">
+            <svg class="nav-icon">
+              <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout">
+              </use>
+            </svg><span>Borang</span></a></li>
+
     </li>
 
     <li class="nav-title">User</li>
@@ -98,7 +105,7 @@
 
       </ul>
 
-      <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>kaunselor/student" target="_top">
+      <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>kaunselor/student/senarai" target="_top">
             <svg class="nav-icon">
               <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout">
               </use>

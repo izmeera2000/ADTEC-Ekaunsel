@@ -95,6 +95,14 @@ function page404()
 }
 
 
+function student_profile($request)
+{
+	$product_id = str_replace('kaunselor/student/', '', $request);
+	$product_id = strtok($product_id, '/');
+	require_once('views/user/profile.php');
+}
+
+
 function check_session(&$site_url, $admin = 0)
 {
 	if (!isset($_SESSION['user_details'])) {
@@ -137,7 +145,7 @@ else if ($request == 'kaunseling/borang')
 	kaunseling_borang();
 else if ($request == 'kaunselor/booking')
 	kaunseling_booking_kaunselor();
-else if (str_contains($request, 'kaunselor/student'))
+else if (str_contains($request, 'kaunselor/student/senarai'))
 	kaunseling_student();
 else if (str_contains($request, 'borang_psikologi_send'))
 	server();
@@ -157,13 +165,14 @@ else if (str_contains($request, 'calendaraddna'))
 	server();
 else if (str_contains($request, 'calendardeletena'))
 	server();
+else if (str_contains($request, 'senaraistudent')) {
+	// echo "asd";
+	server();
 
-	else if (str_contains($request, 'senaraistudent')){
-		// echo "asd";
-		server();
 
-	}
-
+} 
+else if (str_starts_with($request, 'kaunselor/student'))
+	student_profile($request);
 else {
 	echo $request;
 
