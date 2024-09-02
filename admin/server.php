@@ -168,6 +168,8 @@ if (isset($_POST['user_register'])) {
   if (count($errors) == 0) {
 
 
+
+
     //encrypt password
     $password = md5($password1);
 
@@ -187,12 +189,13 @@ if (isset($_POST['user_register'])) {
     $query2 = "UPDATE user SET image_url='$filename' WHERE email='$email'";
     mysqli_query($db, $query2);
 
-
+    $results = mysqli_query($db, $query);
     $user = mysqli_fetch_assoc($results);
-
     $user['password'] = "";
+
     //array
     $_SESSION['user_details'] = $user;
+    // $_SESSION['user_details']['password'] = "";
 
 
     header('location:' . $site_url . '');
