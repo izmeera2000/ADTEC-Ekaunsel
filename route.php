@@ -8,8 +8,15 @@ $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
 $site_url = $_ENV['site1'];
 //          HTTP protocol + Server address(localhost or example.com) + requested uri (/route or /route/home)
+
+if( isset($_SERVER['HTTPS'] ) ) {
+
+$current_url = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+}
+else{
 $current_url = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
+}
 //Current URL = http://localhost/route/something
 //Site URL - http://localhost/route
 
