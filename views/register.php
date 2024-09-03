@@ -13,7 +13,7 @@
 <?php include(getcwd() . '/views/head.php');
 
 // checkarray("ndp",$errors );
-var_dump($_SESSION['user_details']);
+// var_dump($_SESSION['user_details']);
 // echo basename($_FILES["fileToUpload"]["name"]);
 
 ?>
