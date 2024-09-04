@@ -288,7 +288,8 @@
     <ul class="header-nav">
       <li class="nav-item dropdown"><a class="nav-link py-0" data-coreui-toggle="dropdown" href="#" role="button"
           aria-haspopup="true" aria-expanded="false">
-          <div class="avatar avatar-md"><img class="avatar-img" src="<?php echo $site_url ?>assets/img/user/<?php echo $_SESSION['user_details']['id'] ?>/<?php echo $_SESSION['user_details']['image_url'] ?>"
+          <div class="avatar avatar-md"><img class="avatar-img"
+              src="<?php echo $site_url ?>assets/img/user/<?php echo $_SESSION['user_details']['id'] ?>/<?php echo $_SESSION['user_details']['image_url'] ?>"
               alt="user@email.com"><span class="avatar-status bg-success"></span></div>
         </a>
         <div class="dropdown-menu dropdown-menu-end pt-0">
@@ -318,15 +319,15 @@
             </svg><span data-coreui-i18n="comments">Comments</span><span
               class="badge badge-sm bg-warning-gradient ms-2">42</span></a> -->
 
-          <div class="dropdown-header bg-body-tertiary text-body-secondary fw-semibold my-2"
-            >Settings</div><a class="dropdown-item" href="<?php echo $site_url ?>user/profile">
+          <div class="dropdown-header bg-body-tertiary text-body-secondary fw-semibold my-2">Settings</div><a
+            class="dropdown-item" href="<?php echo $site_url ?>user/profile">
             <svg class="icon me-2">
               <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-user"></use>
-            </svg><span >Profile</span></a><a class="dropdown-item" href="#">
+            </svg><span>Profile</span></a><a class="dropdown-item" href="#">
             <svg class="icon me-2">
               <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-settings"></use>
-            </svg><span >Settings</span></a>
-            <!-- <a class="dropdown-item" href="#">
+            </svg><span>Settings</span></a>
+          <!-- <a class="dropdown-item" href="#">
             <svg class="icon me-2">
               <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-credit-card"></use>
             </svg><span >Payments</span><span
@@ -346,7 +347,7 @@
             <svg class="icon me-2">
               <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout">
               </use>
-            </svg><span >Logout</span></a>
+            </svg><span>Logout</span></a>
         </div>
       </li>
     </ul>
