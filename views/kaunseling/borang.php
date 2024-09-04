@@ -53,10 +53,10 @@
                         <label class="form-label"><?php echo $soalan['soalan'] ?></label>
                         <input class="form-range" min="0" max="3" step="1" type="range" value="0"
                           name="soalan-<?php echo $soalan['id'] ?>-<?php echo $soalan['kategori'] ?>">
-                          <div class="0 d-none">Tidak Pernah</div>
-                          <div class="1 d-none">Jarang</div>
-                          <div class="2 d-none">Kerap</div>
-                          <div class="3 d-none">Sangat Kerap</div>
+                        <div class="0 fw-bold">Tidak Pernah</div>
+                        <div class="1 d-none fw-bold">Jarang</div>
+                        <div class="2 d-none fw-bold">Kerap</div>
+                        <div class="3 d-none fw-bold">Sangat Kerap</div>
                       </div>
                     </div>
                   </div>
@@ -82,7 +82,17 @@
   <?php include(getcwd() . '/views/script.php'); ?>
 
   <script>
+    $(document).ready(function () {
+      $('input.form-range').on('input', function () {
+        var rangeValue = $(this).val();
 
+        // Hide all divs
+        $(this).siblings('div').addClass('d-none');
+
+        // Show the correct div based on the range value
+        $(this).siblings('div.' + rangeValue).removeClass('d-none');
+      });
+    });
   </script>
 </body>
 
