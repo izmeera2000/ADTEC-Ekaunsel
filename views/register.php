@@ -203,7 +203,7 @@
                   <label for="test" class="form-label">Gambar</label>
                   <input class="form-control <?php formvalidatelabel("gambar", $errors) ?>" type="file" id="test"
                     name="gambar" required>
-                  <div class="text-body-secondary small">Only JPG, JPEG & PNG files are allowed.</div>
+                  <div class="text-body-secondary small">Only JPG, JPEG & PNG files are allowed. And Under 5MB</div>
                   <div class="valid-feedback">Looks good!</div>
                   <div class="invalid-feedback"><?php formvalidateerr("gambar", $errors) ?></div>
                 </div>

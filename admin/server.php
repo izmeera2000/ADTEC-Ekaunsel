@@ -673,6 +673,11 @@ function uploadpic_id($id, &$err)
 
 }
 
+function removepic ($path){
+  unlink($path);
+
+}
+
 function showtoast($message, &$toast)
 {
   // $toasted = "asd";
@@ -818,6 +823,12 @@ if (isset($_POST['addsoalan'])) {
     "INSERT INTO borang_psikologi (soalan,kategori,re_order) VALUES ('$soalan','$kategori','$max')";
   $results = mysqli_query($db, $query);
 
+}
+
+
+if (isset($_POST['addsoalan'])) {
+removepic( $site_url ."assets/img/user/". $_SESSION['user_details']['id']/ "/" . $_SESSION['user_details']['image_url'] );
+uploadpic_id($_SESSION['user_details']['id'], $err);
 }
 
 ?>
