@@ -18,13 +18,15 @@
 
 ?>
 
-<body>
+<body style="background-image: url(<?php echo $site_url ?>assets/img/adtectaiping2018.jpg);  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;">
   <div class="min-vh-100 d-flex flex-row align-items-center">
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-md-6">
           <div class="card mb-4 mx-4">
-            <form method="POST" action="register" enctype="multipart/form-data"  >
+            <form method="POST" action="register" enctype="multipart/form-data">
               <div class="card-body p-4">
                 <h1>Register</h1>
                 <p class="text-body-secondary">Create your account</p>
@@ -33,13 +35,13 @@
                       <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-user"></use>
 
                     </svg></span>
-                  <input class="form-control  <?php formvalidatelabel("ndp",$errors) ?>" type="number"
-                    placeholder="NDP" name="ndp" required>
+                  <input class="form-control  <?php formvalidatelabel("ndp", $errors) ?>" type="number" placeholder="NDP"
+                    name="ndp" required>
 
 
                   <div class="valid-feedback">Looks good!</div>
                   <div class="invalid-feedback">
-                  <?php formvalidateerr("ndp",$errors) ?>
+                    <?php formvalidateerr("ndp", $errors) ?>
                   </div>
 
 
@@ -51,13 +53,13 @@
                       <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-user"></use>
 
                     </svg></span>
-                  <input class="form-control <?php formvalidatelabel("fullname",$errors) ?>" type="text"
+                  <input class="form-control <?php formvalidatelabel("fullname", $errors) ?>" type="text"
                     placeholder="Nama Penuh" name="fullname" required>
 
 
                   <div class="valid-feedback">Looks good!</div>
                   <div class="invalid-feedback">
-                  <?php formvalidateerr("fullname",$errors) ?>
+                    <?php formvalidateerr("fullname", $errors) ?>
 
                   </div>
 
@@ -69,11 +71,11 @@
                         xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-envelope-open">
                       </use>
                     </svg></span>
-                  <input class="form-control  <?php formvalidatelabel("email",$errors) ?>" type="text"
+                  <input class="form-control  <?php formvalidatelabel("email", $errors) ?>" type="text"
                     placeholder="Email" name="email" required>
 
                   <div class="valid-feedback">Looks good!</div>
-                  <div class="invalid-feedback"><?php formvalidateerr("email",$errors) ?>
+                  <div class="invalid-feedback"><?php formvalidateerr("email", $errors) ?>
                   </div>
                 </div>
 
@@ -83,12 +85,12 @@
                       <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-user"></use>
 
                     </svg></span>
-                  <input class="form-control   <?php formvalidatelabel("phone",$errors) ?>" type="number"
+                  <input class="form-control   <?php formvalidatelabel("phone", $errors) ?>" type="number"
                     placeholder="Nombor Telefon" name="phone" required>
 
                   <div class="valid-feedback">Looks good!</div>
                   <div class="invalid-feedback">
-                  <?php formvalidateerr("phone",$errors) ?>
+                    <?php formvalidateerr("phone", $errors) ?>
                   </div>
                 </div>
 
@@ -98,12 +100,12 @@
                       <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-user"></use>
 
                     </svg></span>
-                  <input class="form-control <?php formvalidatelabel("kp",$errors) ?>" type="number"
+                  <input class="form-control <?php formvalidatelabel("kp", $errors) ?>" type="number"
                     placeholder="Nombor Kad Pengenalan" name="kp" required>
 
                   <div class="valid-feedback">Looks good!</div>
                   <div class="invalid-feedback">
-                  <?php formvalidateerr("phone",$errors) ?>
+                    <?php formvalidateerr("phone", $errors) ?>
                   </div>
                 </div>
 
@@ -113,9 +115,9 @@
 
                     </svg></span>
 
-                  <div class="form-floating <?php formvalidatelabel("jantina",$errors) ?>">
-                    <select class="form-select  <?php formvalidatelabel("jantina",$errors) ?>"
-                      id="FS_Jantina" aria-label="Floating label select example" name="jantina" required>
+                  <div class="form-floating <?php formvalidatelabel("jantina", $errors) ?>">
+                    <select class="form-select  <?php formvalidatelabel("jantina", $errors) ?>" id="FS_Jantina"
+                      aria-label="Floating label select example" name="jantina" required>
 
                       <option selected disabled> Pilih Jantina</option>
                       <option value="Lelaki">Lelaki</option>
@@ -127,7 +129,7 @@
                   </div>
                   <div class="valid-feedback">Looks good!</div>
                   <div class="invalid-feedback">
-                  <?php formvalidateerr("jantina",$errors) ?>
+                    <?php formvalidateerr("jantina", $errors) ?>
                   </div>
                 </div>
 
@@ -136,8 +138,8 @@
                       <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-user"></use>
 
                     </svg></span>
-                  <div class="form-floating <?php formvalidatelabel("agama",$errors) ?>">
-                    <select class="form-select <?php formvalidatelabel("agama",$errors) ?>" id="FS_Agama"
+                  <div class="form-floating <?php formvalidatelabel("agama", $errors) ?>">
+                    <select class="form-select <?php formvalidatelabel("agama", $errors) ?>" id="FS_Agama"
                       aria-label="Floating label select example" name="agama" required>
 
                       <option selected disabled> Pilih Agama</option>
@@ -152,7 +154,7 @@
                   </div>
                   <div class="valid-feedback">Looks good!</div>
                   <div class="invalid-feedback">
-                  <?php formvalidateerr("agama",$errors) ?>
+                    <?php formvalidateerr("agama", $errors) ?>
 
                   </div>
                 </div>
@@ -163,8 +165,8 @@
 
                     </svg></span>
 
-                  <div class="form-floating <?php formvalidatelabel("statuskahwin",$errors) ?>">
-                    <select class="form-select  <?php formvalidatelabel("statuskahwin",$errors) ?>"
+                  <div class="form-floating <?php formvalidatelabel("statuskahwin", $errors) ?>">
+                    <select class="form-select  <?php formvalidatelabel("statuskahwin", $errors) ?>"
                       id="FS_Status_Perkahwinan" aria-label="Floating label select example" name="statuskahwin"
                       required>
 
@@ -177,7 +179,7 @@
                   </div>
                   <div class="valid-feedback">Looks good!</div>
                   <div class="invalid-feedback">
-                  <?php formvalidateerr("statuskahwin",$errors) ?>
+                    <?php formvalidateerr("statuskahwin", $errors) ?>
 
                   </div>
                 </div>
@@ -187,22 +189,23 @@
                       <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-user"></use>
 
                     </svg></span>
-                  <input class="form-control <?php formvalidatelabel("bangsa",$errors) ?>" type="text"
+                  <input class="form-control <?php formvalidatelabel("bangsa", $errors) ?>" type="text"
                     placeholder="Bangsa" name="bangsa" required>
 
                   <div class="valid-feedback">Looks good!</div>
                   <div class="invalid-feedback">
-                  <?php formvalidateerr("bangsa",$errors) ?>
+                    <?php formvalidateerr("bangsa", $errors) ?>
 
                   </div>
                 </div>
 
                 <div class="mb-3">
                   <label for="test" class="form-label">Gambar</label>
-                  <input class="form-control <?php formvalidatelabel("gambar",$errors)  ?>" type="file" id="test" name="gambar"  required>
-                  <div class="text-body-secondary small">Only JPG, JPEG & PNG  files are allowed.</div>
+                  <input class="form-control <?php formvalidatelabel("gambar", $errors) ?>" type="file" id="test"
+                    name="gambar" required>
+                  <div class="text-body-secondary small">Only JPG, JPEG & PNG files are allowed.</div>
                   <div class="valid-feedback">Looks good!</div>
-                  <div class="invalid-feedback"><?php formvalidateerr("gambar",$errors) ?></div>
+                  <div class="invalid-feedback"><?php formvalidateerr("gambar", $errors) ?></div>
                 </div>
 
                 <div class="input-group mb-3"><span class="input-group-text">
@@ -211,12 +214,12 @@
                         xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-lock-locked">
                       </use>
                     </svg></span>
-                  <input class="form-control  <?php formvalidatelabel("password1",$errors) ?>"
-                    type="password" placeholder="Password" name="password1" required>
+                  <input class="form-control  <?php formvalidatelabel("password1", $errors) ?>" type="password"
+                    placeholder="Password" name="password1" required>
 
                   <div class="valid-feedback">Looks good!</div>
                   <div class="invalid-feedback">
-                  <?php formvalidateerr("password1",$errors) ?>
+                    <?php formvalidateerr("password1", $errors) ?>
 
                   </div>
                 </div>
@@ -227,18 +230,25 @@
                         xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-lock-locked">
                       </use>
                     </svg></span>
-                  <input class="form-control  <?php formvalidatelabel("password2",$errors) ?>"
-                    type="password" placeholder="Repeat password" name="password2" required>
+                  <input class="form-control  <?php formvalidatelabel("password2", $errors) ?>" type="password"
+                    placeholder="Repeat password" name="password2" required>
 
 
                   <div class="valid-feedback">Looks good!</div>
                   <div class="invalid-feedback">
-                  <?php formvalidateerr("password2",$errors) ?>
+                    <?php formvalidateerr("password2", $errors) ?>
                   </div>
                 </div>
-                <button class="btn btn-block btn-success" type="submit" name="user_register"  >Create
-                  Account</button>
-                <a class="btn btn-block btn-success" type="button" href="<?php echo $site_url ?>login">Login</a>
+
+                <div class="row">
+                  <div class="col-6">
+                    <button class="btn btn-primary px-4" type="submit" name="user_register">Create
+                      Account</button>
+                  </div>
+                  <div class="col-6 text-end">
+                    <a class="btn btn-link px-0" type="button" href="<?php echo $site_url ?>login">Login</a>
+                  </div>
+                </div>
               </div>
             </form>
           </div>

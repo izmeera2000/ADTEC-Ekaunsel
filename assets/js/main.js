@@ -416,6 +416,10 @@ $(document).ready(() => {
         },
       },
     },
+    // pageLength: 1000,
+    // dom:'frtip',
+    responsive: true,
+    paging: false,
     columns: [
       { data: "a", className: "text-center re_order" },
       { data: "b", className: "text-center soalan" },
@@ -432,15 +436,15 @@ $(document).ready(() => {
 
     // Iterate over the rows that were reordered
     diff.forEach(function (rowData) {
-        var id = $(rowData.node).data("id"); // Get the 'id' from the data attribute
-        var newPosition = rowData.newPosition + 1; // Use 1-based index for re_order
+      var id = $(rowData.node).data("id"); // Get the 'id' from the data attribute
+      var newPosition = rowData.newPosition + 1; // Use 1-based index for re_order
 
-        if (id !== undefined) {
-            result.push({
-                id: id,
-                re_order: newPosition,
-            });
-        }
+      if (id !== undefined) {
+        result.push({
+          id: id,
+          re_order: newPosition,
+        });
+      }
     });
 
     // Send the reordered data to the server to update the database
@@ -454,7 +458,6 @@ $(document).ready(() => {
       success: function (response) {
         showtoast("order changed");
         table1.ajax.reload(); // Reload DataTable data
-
       },
     });
     console.log(result);
@@ -512,4 +515,34 @@ function showmodal(
   myModal.show();
 }
 
+$("#add_soalan_button").click(function () {
+  console.log("test");
+
+  var soalan = $("#add_soalan_soalan").val();
+  var kategori = $("#add_soalan_content").val();
+
+  console.log(soalan);
+  console.log(kategori);
+  $.ajax({
+    url: "addsoalan",
+    method: "POST",
+    data: {
+      addsoalan: {
+        soalan: soalan,
+        kategori: kategori,
+        // title: title,
+        // start: date,
+      },
+    },
+    success: function (response) {
+      showtoast("tambah");
+      console.log(response);
+      $("#add_soalan_content").prop('selectedIndex',0);
+      $("#add_soalan_soalan").val("")  ;
+      $("#add_soalan").modal("hide");
+      table1.ajax.reload(); // Reload DataTable data
+
+    },
+  });
+});
 //# sourceMappingURL=main.js.map

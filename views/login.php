@@ -13,7 +13,9 @@
 <html lang="en">
 <?php include(getcwd() . '/views/head.php'); ?>
 
-<body>
+<body style="background-image: url(<?php echo $site_url ?>assets/img/adtectaiping2018.jpg);  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;">
   <div class="min-vh-100 d-flex flex-row align-items-center">
     <div class="container">
       <div class="row justify-content-center">
@@ -50,7 +52,7 @@
                       <button class="btn btn-primary px-4" type="submit" name="user_login"  >Login</button>
                     </div>
                     <div class="col-6 text-end">
-                      <button class="btn btn-link px-0" type="button">Forgot password?</button>
+                      <!-- <button class="btn btn-link px-0" type="button">Forgot password?</button> -->
                     </div>
                   </div>
                 </div>

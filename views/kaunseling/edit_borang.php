@@ -57,17 +57,18 @@
                                         } ?>
                                     </div>
                                 </div>
-                                <!-- <div class="col-auto ms-auto">
-                                    <button class="btn btn-secondary">
+                                <div class="col-auto ms-auto">
+                                    <button class="btn btn-secondary" onclick="showmodal('add_soalan')">
                                         <svg class="icon me-2">
                                             <use
                                                 xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-user-plus">
                                             </use>
-                                        </svg><span>Add new user</span>
+                                        </svg>
+                                        <span>Tambah Soalan</span>
                                     </button>
-                                </div> -->
+                                </div>
                             </div>
-                            <div class="table-responsive">
+                            <div class=" ">
                                 <table class="table mb-0 table-hover " id="editborang">
                                     <thead class="fw-semibold text-body-secondary">
                                         <tr class="align-middle">

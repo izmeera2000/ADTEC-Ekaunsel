@@ -83,54 +83,6 @@
                                     </thead>
                                     <tbody>
 
-                                        <?php
-
-                                        $query =
-                                            "SELECT role,ndp,nama,email,phone,kp,jantina,agama,status_kahwin,bangsa,image_url,time_add FROM user WHERE  role='2'";
-                                        $results = mysqli_query($db, $query);
-                                        if (mysqli_num_rows($results) > 0) {
-
-
-                                            while ($user = mysqli_fetch_assoc($results)) {
-                                                ?>
-                                                <tr class="align-middle">
-                                                    <td class="text-center">
-                                                        <div class="avatar avatar-md"><img class="avatar-img"
-                                                                src="<?php echo $site_url ?>assets/img/user/<?php echo $user['ndp'] ?>/<?php echo $user['image_url'] ?>"
-                                                                alt="<?php echo $user['nama'] ?>"></div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="text-nowrap"><?php echo $user['nama'] ?></div>
-                                                        <div class="small text-body-secondary text-nowrap">
-                                                            <span >Registered:
-                                                            </span><span><?php echo $user['time_add'] ?></span>
-                                                        </div>
-                                                    </td>
-                                                    <td class="text-center">
-                                                    <?php echo $user['ndp'] ?>
-                                                    </td>
-                                                    <td>
-                                                        <a class="btn btn-success me-2" href="#">
-                                                            <svg class="icon">
-                                                                <use
-                                                                    xlink:href="<?php echo $site_url ?>/assets/vendors/@coreui/icons/svg/free.svg#cil-magnifying-glass">
-                                                                </use>
-                                                            </svg></a>
-                                                        <a class="btn btn-info me-2" href="#">
-                                                            <svg class="icon">
-                                                                <use
-                                                                    xlink:href="<?php echo $site_url ?>/assets/vendors/@coreui/icons/svg/free.svg#cil-description">
-                                                                </use>
-                                                            </svg></a>
-                                                        <a class="btn btn-danger" href="#">
-                                                            <svg class="icon">
-                                                                <use xlink:href="<?php echo $site_url ?>/assets/vendors/@coreui/icons/svg/free.svg#cil-trash">
-                                                                </use>
-                                                            </svg></a>
-                                                    </td>
-                                                </tr>
-                                            <?php }
-                                        } ?>
 
                                     </tbody>
                                 </table>

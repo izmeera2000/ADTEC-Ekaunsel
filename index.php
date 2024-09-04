@@ -67,11 +67,16 @@ function kaunseling_booking()
 }
 function kaunseling_borang()
 {
+	// check_session($site_url);
+	require_once('views/kaunseling/borang.php');
+
+}
+function kaunseling_edit_borang()
+{
 	check_session($site_url);
 	require_once('views/kaunseling/edit_borang.php');
 
 }
-
 
 function kaunseling_booking_kaunselor()
 {
@@ -86,6 +91,9 @@ function kaunseling_student()
 
 }
 
+
+
+
 //custom pages
 function page404()
 {
@@ -99,7 +107,7 @@ function student_profile($request)
 {
 	$product_id = str_replace('kaunselor/student/', '', $request);
 	$product_id = strtok($product_id, '/');
-	require_once('views/user/profile.php');
+	require_once('views/kaunseling/student_profile.php');
 }
 
 
@@ -141,13 +149,12 @@ else if (str_contains($request, 'logout'))
 	logout();
 else if ($request == 'kaunseling/booking')
 	kaunseling_booking();
-
-
 else if ($request == 'kaunseling/borang')
 	kaunseling_borang();
-
-
-
+else if ($request == 'kaunseling/editborang')
+	kaunseling_edit_borang();
+else if ($request == 'kaunseling/addsoalan')
+	server();
 else if ($request == 'kaunselor/booking')
 	kaunseling_booking_kaunselor();
 else if (str_contains($request, 'kaunselor/student/senarai'))
@@ -173,20 +180,16 @@ else if (str_contains($request, 'calendardeletena'))
 else if (str_contains($request, 'senaraistudent')) {
 	// echo "asd";
 	server();
-} 
-else if (str_contains($request, 'editborang/reorder')) {
+} else if (str_contains($request, 'editborang/reorder')) {
 	// echo "asd";
 	server();
-} 
-
-else if (str_contains($request, 'senaraisoalan')) {
+} else if (str_contains($request, 'senaraisoalan')) {
 	// echo "asd";
 	server();
-} 
+} else if (str_contains($request, 'user_change_image')) {
 
-
-
-else if (str_starts_with($request, 'kaunselor/student'))
+	server();
+} else if (str_starts_with($request, 'kaunselor/student'))
 	student_profile($request);
 else {
 	echo $request;

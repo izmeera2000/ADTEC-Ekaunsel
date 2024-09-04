@@ -257,6 +257,21 @@ if (isset($_POST['edit_profile'])) {
   // debug_to_console($fullname);
 }
 
+
+if (isset($_POST['change_pic'])) {
+
+  $id = $_SESSION['user_details']['id'];
+
+  $filename = uploadpic_id($id, $errors);
+  // echo $filename;
+
+  $query = "UPDATE user SET image_url='$filename' WHERE id='$id'";
+  mysqli_query($db, $query);
+
+  header('location:' . $site_url . 'user/profile');
+
+}
+
 function debug_to_console($data)
 {
   $enable = 1;
@@ -751,7 +766,7 @@ if (isset($_POST['order'])) {
     mysqli_query($db, $query);
 
   }
-die();
+  die();
 
 }
 
@@ -786,6 +801,23 @@ if (isset($_POST['senaraisoalan'])) {
 
 }
 
+if (isset($_POST['addsoalan'])) {
+  $soalan = $_POST['addsoalan']['soalan'];
+  $kategori = $_POST['addsoalan']['kategori'];
 
+  $query =
+    "SELECT MAX(re_order) as max FROM borang_psikologi";
+
+  $results = mysqli_query($db, $query);
+  while ($borang = mysqli_fetch_assoc($results)) {
+
+    $max = $borang['max'] + 1;
+  }
+
+  $query =
+    "INSERT INTO borang_psikologi (soalan,kategori,re_order) VALUES ('$soalan','$kategori','$max')";
+  $results = mysqli_query($db, $query);
+
+}
 
 ?>

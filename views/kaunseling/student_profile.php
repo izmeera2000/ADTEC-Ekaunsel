@@ -4,6 +4,22 @@
 // $toasted = "asd";
 // array_push($toast,"$toasted");
 // var_dump($toast);
+
+
+$query = "SELECT * FROM user WHERE ndp='$product_id'";
+$results = mysqli_query($db, $query);
+
+if (mysqli_num_rows($results) == 1) {
+  // $_SESSION['success'] = "You are now logged in";
+  $user = mysqli_fetch_assoc($results);
+  // debug_to_console("test2");
+  // $user['password'] = "";
+  // $_SESSION['user_details'] = $user;
+  // $_SESSION['username'] = $user["username"];
+  // $user_id = $user['id'];
+  // var_dump($_SESSION['username2']);
+
+} 
 ?>
 <!DOCTYPE html><!--
 * CoreUI PRO Bootstrap Admin Template
@@ -50,23 +66,9 @@
               <div class="chart-wrapper mt-3 mb-3 mx-3" style="">
                 <!-- <canvas class="chart" id="card-chart-new1" height="75"></canvas> -->
                 <img
-                  src="<?php echo $site_url ?>assets/img/user/<?php echo $_SESSION['user_details']['id'] ?>/<?php echo $_SESSION['user_details']['image_url'] ?>"
+                  src="<?php echo $site_url ?>assets/img/user/<?php echo $user['id'] ?>/<?php echo $user['image_url'] ?>"
                   class="img-thumbnail" alt="...">
-                <form method="POST" action="user_change_image" enctype="multipart/form-data">
 
-
-                  <p class="mt-3 text-center">Change picture</p>
-
-                  <div class="input-group my-3">
-
-                    <input class="form-control <?php formvalidatelabel("gambar", $errors) ?>" type="file" id="test"
-                      name="gambar" required>
-                    <div class="valid-feedback">Looks good!</div>
-                    <div class="invalid-feedback"><?php formvalidateerr("gambar", $errors) ?></div>
-                    <button class="btn btn-primary" type="submit" name="change_pic">Change</button>
-
-                  </div>
-                </form>
                 <!-- <button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button> -->
 
               </div>
@@ -84,30 +86,34 @@
                     <svg class="icon">
                       <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-user"></use>
                     </svg></span>
-                  <input class="form-control" type="text" placeholder="Username">
+                  <input class="form-control " readonly type="text" placeholder="Username" value="<?php echo $user['nama'] ?>">
+
                 </div>
                 <div class="input-group mb-3"><span class="input-group-text">
                     <svg class="icon">
                       <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-user"></use>
                     </svg></span>
-                  <input class="form-control" type="text" placeholder="Username">
+                  <input class="form-control " readonly type="text" placeholder="Username" value="<?php echo $user['email'] ?>">
+
                 </div>
                 <div class="input-group mb-3"><span class="input-group-text">
                     <svg class="icon">
                       <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-user"></use>
                     </svg></span>
-                  <input class="form-control" type="text" placeholder="Username">
+                  <input class="form-control " readonly type="text" placeholder="Username" value="<?php echo $user['ndp'] ?>">
+
                 </div>
                 <div class="input-group mb-3"><span class="input-group-text">
                     <svg class="icon">
                       <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-user"></use>
                     </svg></span>
-                  <input class="form-control" type="text" placeholder="Username">
+                  <input class="form-control " readonly type="text" placeholder="Username" value="<?php echo $user['kp'] ?>">
+
                 </div>
 
                 <div class="row">
                   <div class="text-end">
-                    <button class="btn btn-primary px-4" type="button">Save Changes</button>
+                    <!-- <button class="btn btn-primary px-4" type="button">Save Changes</button> -->
                   </div>
 
                 </div>
