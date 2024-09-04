@@ -81,7 +81,7 @@
 
   <?php include(getcwd() . '/views/script.php'); ?>
 
-  <script>
+  <script> 
     $(document).ready(function () {
       $('input.form-range').on('input', function () {
         var rangeValue = $(this).val();
