@@ -4,16 +4,18 @@ use Ddeboer\Imap\Server;
 
 $username = 'temujanji@kaunselingadtectaiping.com.my';
 $password = 'temujanji@33';
-$server = new Server('mail.kaunselingadtectaiping.com.my
-');
+$server = new Server('mail.kaunselingadtectaiping.com.my');
 $connection = $server->authenticate($username, $password);
 
 
-$mailboxes = $connection->getMailboxes();
-foreach ($mailboxes as $mailbox) {
-    // Skip container-only mailboxes (we can't open this mailboxes)
-    if ($mailbox->getAttributes() & \LATT_NOSELECT) {
-        continue;
-    }
-    printf("Mailbox '%s' has %s messages\n", $mailbox->getName(), $mailbox->count());
+$inbox = $connection->getMailbox('INBOX');
+
+// Retrieve all messages in the inbox
+$messages = $inbox->getMessages();
+
+foreach ($messages as $message) {
+    echo 'Subject: ' . $message->getSubject() . "\n" . "<br>";
+    // echo 'From: ' . $message->getFrom()->getAddress() . "\n";
+    // echo 'Date: ' . $message->getDate()->format('Y-m-d H:i:s') . "\n";
+    // echo 'Body: ' . $message->getBodyText() . "\n\n"; // Get the body of the email
 }
