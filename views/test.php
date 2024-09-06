@@ -11,7 +11,13 @@ $connection = $server->authenticate($username, $password);
 $inbox = $connection->getMailbox('INBOX');
 
 // Retrieve all messages in the inbox
-$messages = $inbox->getMessages();
+$messages = $inbox->getMessages(
+
+
+    null,            // No search criteria
+    \SORTDATE,       // Sort by date
+    true             // Descending order
+);
 
 foreach ($messages as $message) {
     echo 'Subject: ' . $message->getSubject() . "\n" . "<br>";
