@@ -3,46 +3,33 @@ require __DIR__ . '/../route.php';
 
 
 
-// require __DIR__ . '/vendor/autoload.php';
 
-// $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
-// $dotenv->load();
-// initializing variables
+$pagetitle = "";
+
+
+
 
 $site_url = $_ENV['site1'];
-// debug_to_console2($site_url);
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-// $username = "";
-// $email = "";
-// global $$errors;
+
+
+
 $errors = array();
 $toast = array();
-// $GLOBALS['$errors']= array();
-// connect to the database
+
+
 $db = mysqli_connect($_ENV['host'], $_ENV['user'], $_ENV['pass'], $_ENV['database1']);
 
 
 
-// REGISTER USER
+
 if (isset($_POST['user_register'])) {
-  // receive all input values from the form
-  // $username = mysqli_real_escape_string($db, $_POST['username']);
 
 
-  // Check if image file is a actual image or fake image
-  // if (isset($_POST["submit"])) {
-  //   $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-  //   if ($check !== false) {
-  //     echo "File is an image - " . $check["mime"] . ".";
-  //     $uploadOk = 1;
-  //   } else {
-  //     echo "File is not an image.";
-  //     $uploadOk = 0;
-  //   }
-  // }
 
 
   if (empty($_POST['ndp'])) {
@@ -131,21 +118,21 @@ if (isset($_POST['user_register'])) {
 
 
 
-  // var_dump($_POST);
-  //error handlng utk check data
+
+
   if (isset($ndp) && isset($email) && isset($phone) && isset($kp)) {
 
     $user_check_query = "SELECT * FROM user WHERE ndp='$ndp' OR email='$email'  OR phone='$phone'    OR kp='$kp'   LIMIT 1";
     $result = mysqli_query($db, $user_check_query);
     $user = mysqli_fetch_assoc($result);
 
-    if ($user) { // if user exists
+    if ($user) {
       if ($user['ndp'] === $ndp) {
-        // $arrndp = array(
-        //   "ndp" => "NDP already registered"
-        // );
+
+
+
         $errors['ndp'] = "NDP already registered";
-        // array_push($errors['ndp'], "NDP already registered");
+
       }
 
       if ($user['email'] === $email) {
@@ -166,14 +153,14 @@ if (isset($_POST['user_register'])) {
   }
   checkuploadpid("test", $errors);
 
-  // echo $filename;
+
 
   if (count($errors) == 0) {
 
 
 
 
-    //encrypt password
+
     $password = md5($password1);
 
     $query = "INSERT INTO user (role, ndp,password, nama,email,phone,kp,jantina,agama,status_kahwin,bangsa) 
@@ -181,13 +168,13 @@ if (isset($_POST['user_register'])) {
     mysqli_query($db, $query);
 
 
-    //verify
+
     $query = "SELECT * FROM user WHERE (ndp='$ndp' OR email='$email') AND password='$password'";
     $results = mysqli_query($db, $query);
     $user = mysqli_fetch_assoc($results);
 
     $filename = uploadpic_id($user['id'], $errors);
-    // echo $filename;
+
 
     $query2 = "UPDATE user SET image_url='$filename' WHERE email='$email'";
     mysqli_query($db, $query2);
@@ -196,9 +183,9 @@ if (isset($_POST['user_register'])) {
     $user = mysqli_fetch_assoc($results);
     $user['password'] = "";
 
-    //array
+
     $_SESSION['user_details'] = $user;
-    // $_SESSION['user_details']['password'] = "";
+
 
 
     header('location:' . $site_url . '');
@@ -208,14 +195,14 @@ if (isset($_POST['user_register'])) {
 if (isset($_POST['user_login'])) {
   $login = mysqli_real_escape_string($db, $_POST['login']);
   $password = mysqli_real_escape_string($db, $_POST['password']);
-  // debug_to_console("test");
 
-  // if (empty($username)) {
-  //       array_push($errors, "Username is required");
-  // }
-  // if (empty($password)) {
-  //       array_push($errors, "Password is required");
-  // }
+
+
+
+
+
+
+
 
   if (count($errors) == 0) {
 
@@ -231,15 +218,15 @@ if (isset($_POST['user_login'])) {
     $results = mysqli_query($db, $query);
 
     if (mysqli_num_rows($results) == 1) {
-      // $_SESSION['success'] = "You are now logged in";
+
       $user = mysqli_fetch_assoc($results);
-      // debug_to_console("test2");
+
       $user['password'] = "";
 
       $_SESSION['user_details'] = $user;
-      // $_SESSION['username'] = $user["username"];
-      // $user_id = $user['id'];
-      // var_dump($_SESSION['username2']);
+
+
+
 
       header('location:' . $site_url . '');
     } else {
@@ -257,7 +244,7 @@ if (isset($_POST['edit_profile'])) {
 
   $query = "UPDATE user SET fullname = '$fullname', email='$email',phone_number='$phone' WHERE username='$username' ";
   $results = mysqli_query($db, $query);
-  // debug_to_console($fullname);
+
 }
 
 
@@ -266,7 +253,7 @@ if (isset($_POST['change_pic'])) {
   $id = $_SESSION['user_details']['id'];
 
   $filename = uploadpic_id($id, $errors);
-  // echo $filename;
+
 
   $query = "UPDATE user SET image_url='$filename' WHERE id='$id'";
   mysqli_query($db, $query);
@@ -292,25 +279,25 @@ function debug_to_console($data)
 if (isset($_POST['calendarfetch'])) {
 
 
-  // echo (json_encode($_POST));
+
 
   $id = $_SESSION['user_details']['id'];
 
   $start = ($_POST['calendarfetch']['start']);
   $end = ($_POST['calendarfetch']['end']);
-  // print_r($cart_id);
-  // echo date('Y-m-d', strtotime($start));
+
+
   $start = date("Y-m-d", strtotime($start));
   $end = date("Y-m-d", strtotime($end));
-  // echo (json_encode($start));
-  // echo (json_encode($end));
+
+
 
   $query = "SELECT a.id,masalah ,tarikh as start,tarikh, event_status, b.ndp as ndp, b.id as user_id ,sebab , kaunselor_id FROM kaunselor_jadual a INNER JOIN ( SELECT id, ndp FROM user ) b  ON b.id = a.user_id WHERE (tarikh BETWEEN ('$start') AND ('$end')) ORDER BY tarikh  ASC ";
-  // echo json_encode($query);
+
 
   $result = mysqli_query($db, $query);
   $eventArray = array();
-  // $eventArray['color'] = "red";
+
 
   while ($row = mysqli_fetch_assoc($result)) {
 
@@ -335,13 +322,13 @@ if (isset($_POST['calendarfetch'])) {
 
     }
 
-    // if ($row['event_status'] == "2" && $row['user_id'] != $id) {
-    //   $row['color'] = "gray";
-    //   $row['title'] = "";
-    //   $row['masalah'] = "";
-    //   $row['ndp'] = "";
-    // }
-    // $row['tarikh'] = "";(
+
+
+
+
+
+
+
 
 
     if ($row['user_id'] == $id) {
@@ -359,7 +346,7 @@ if (isset($_POST['calendarfetch'])) {
 
 
   }
-  // mysqli_free_result($result);
+
 
   echo json_encode($eventArray);
   die();
@@ -368,25 +355,25 @@ if (isset($_POST['calendarfetch'])) {
 if (isset($_POST['calendarfetch2'])) {
 
 
-  // echo (json_encode($_POST));
 
-  // $id = $_SESSION['user_details']['id'];
+
+
 
   $start = ($_POST['calendarfetch2']['start']);
   $end = ($_POST['calendarfetch2']['end']);
-  // print_r($cart_id);
-  // echo date('Y-m-d', strtotime($start));
+
+
   $start = date("Y-m-d", strtotime($start));
   $end = date("Y-m-d", strtotime($end));
-  // echo (json_encode($start));
-  // echo (json_encode($end));
+
+
 
   $query = "SELECT a.id,masalah ,tarikh as start, event_status, b.ndp as ndp, b.id as user_id ,sebab , kaunselor_id FROM kaunselor_jadual a INNER JOIN ( SELECT id, ndp FROM user ) b  ON b.id = a.user_id WHERE (tarikh BETWEEN ('$start') AND ('$end')) ORDER BY id";
-  // echo json_encode($query);
+
 
   $result = mysqli_query($db, $query);
   $eventArray = array();
-  // $eventArray['color'] = "red";
+
 
   while ($row = mysqli_fetch_assoc($result)) {
 
@@ -404,7 +391,7 @@ if (isset($_POST['calendarfetch2'])) {
     array_push($eventArray, $row);
 
   }
-  // mysqli_free_result($result);
+
 
   echo json_encode($eventArray);
   die();
@@ -416,7 +403,7 @@ if (isset($_POST['calendaraddna'])) {
 
 
 
-  // print_r($cart_id);
+
 
   $title = $_POST['calendaraddna']['title'];
   $start = $_POST['calendaraddna']['start'];
@@ -425,33 +412,33 @@ if (isset($_POST['calendaraddna'])) {
 
 
 
-  // $user_check_query = "SELECT * FROM kaunselor_jadual WHERE user_id='$user_id' AND tarikh='$start'   LIMIT 1";
-  // $result = mysqli_query($db, $user_check_query);
-  // $existed = mysqli_fetch_assoc($result);
-  // debug_to_console("asdads");
 
-  // echo $start;
-  // if (!$existed) { // if user exists
+
+
+
+
+
+
 
   $query = "INSERT INTO  kaunselor_jadual (user_id,masalah,tarikh) VALUES ('$user_id','$title','$start')";
-  // debug_to_console("test");
-  // echo $query;
+
+
   $result = mysqli_query($db, $query);
 
 
-  // $eventArray = array();
-  // while ($row = mysqli_fetch_assoc($result)) {
-  //     array_push($eventArray, $row);
-  // }
-  // // mysqli_free_result($result);
 
-  // echo json_encode($eventArray);
-  // } else {
-  //   // showtoast("Existed", $toast);
-  //   // array_push($toast, "Existed");
-  //   echo "existed";
 
-  // }
+
+
+
+
+
+
+
+
+
+
+
   die();
 
 }
@@ -462,7 +449,7 @@ if (isset($_POST['calendardeletena'])) {
 
 
 
-  // print_r($cart_id);
+
 
   $title = $_POST['calendardeletena']['title'];
   $start = $_POST['calendardeletena']['start'];
@@ -471,43 +458,41 @@ if (isset($_POST['calendardeletena'])) {
 
 
 
-  // $user_check_query = "SELECT * FROM kaunselor_jadual WHERE user_id='$user_id' AND tarikh='$start'   LIMIT 1";
-  // $result = mysqli_query($db, $user_check_query);
-  // $existed = mysqli_fetch_assoc($result);
-  // debug_to_console("asdads");
 
-  // echo $start;
-  // if (!$existed) { // if user exists
+
+
+
+
+
+
 
   $query = "DELETE FROM  kaunselor_jadual WHERE id ='$user_id' ";
-  // debug_to_console("test");
-  // echo $query;
+
+
   $result = mysqli_query($db, $query);
 
 
-  // $eventArray = array();
-  // while ($row = mysqli_fetch_assoc($result)) {
-  //     array_push($eventArray, $row);
-  // }
-  // // mysqli_free_result($result);
 
-  // echo json_encode($eventArray);
-  // } else {
-  //   // showtoast("Existed", $toast);
-  //   // array_push($toast, "Existed");
-  //   echo "existed";
 
-  // }
+
+
+
+
+
+
+
+
+
+
+
   die();
 
 }
 
 
 if (isset($_POST['borang_psikologi_send_a'])) {
-  // var_dump($_POST);
-//   foreach ($jwb as $key => $value) {
-//     echo "Field ".htmlspecialchars($key)." is ".htmlspecialchars($value)."<br>";
-// }  
+
+
   $user_id = $_POST['user_id'];
   $answer = array();
 
@@ -518,29 +503,28 @@ if (isset($_POST['borang_psikologi_send_a'])) {
   while ($row = mysqli_fetch_assoc($result)) {
     array_push($katArray, $row);
   }
-  // debug_to_console(  json_encode($katArray[1]));
+
 
 
   foreach ($_POST as $key => $value) {
     if (strpos($key, 'soalan-') === 0) {
-      // value starts with book_
-      // $soalan_id = str_replace("soalan-", "", $key);
-      // debug_to_console($key);
+
+
+
 
       $last = explode("-", $key, 3);
       $soalan_id = $last[1];
       $kategori = $last[2];
-      // debug_to_console($soalan_id);
-      // debug_to_console($kategori);
+
+
       foreach ($katArray as $id => $column) {
         if ($kategori == $katArray[$id]['kategori_id']) {
-          // debug_to_console(  json_encode($katArray[$id]['id']));
 
 
-          // $newt = array(
-          //   $katArray[$id]['id'] => $value
-          // );
-          // array_push($totalkat, $newt);
+
+
+
+
           if (!array_key_exists("value", $katArray[$id])) {
 
             $katArray[$id]['value'] = 0;
@@ -564,17 +548,17 @@ if (isset($_POST['borang_psikologi_send_a'])) {
 
   $query = "INSERT INTO  user_psikologi (user_id,jawapan_psikologi,keputusan) VALUES ('$user_id','$answer','$katArray')";
   $result = mysqli_query($db, $query);
-  // debug_to_console($query);
 
-  // debug_to_console(json_decode($_POST['borang_psikologi_send_a']));
+
+
   header('location:' . $site_url . '');
 
 }
 
 function formvalidatelabel($key, $arr)
 {
-  // global $errors;
-  // var_dump($arr);
+
+
   if ($arr) {
     $error = "";
     if (array_key_exists($key, $arr)) {
@@ -592,8 +576,8 @@ function formvalidatelabel($key, $arr)
 
     }
   }
-  // debug_to_console($arr[$key]);
-  // $arr[$key] = "NDP requred";
+
+
 
 }
 function formvalidateerr($key, $arr)
@@ -619,7 +603,7 @@ function checkuploadpid($id, &$err)
   $target_dir = "./assets/img/user/test/";
 
   $target_file = $target_dir . basename($_FILES["gambar"]["name"]);
-  // $check = getimagesize($_FILES["gambar"]["tmp_name"]);
+
   $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
   $target_file = $target_dir . "gambar." . $imageFileType;
 
@@ -649,7 +633,7 @@ function uploadpic_id($id, &$err)
   $target_dir = "./assets/img/user/$id/";
 
   $target_file = $target_dir . basename($_FILES["gambar"]["name"]);
-  // $check = getimagesize($_FILES["gambar"]["tmp_name"]);
+
   $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
   $target_file = $target_dir . "gambar." . $imageFileType;
 
@@ -676,14 +660,15 @@ function uploadpic_id($id, &$err)
 
 }
 
-function removepic ($path){
+function removepic($path)
+{
   unlink($path);
 
 }
 
 function showtoast($message, &$toast)
 {
-  // $toasted = "asd";
+
   array_push($toast, $message);
 
 
@@ -706,12 +691,12 @@ function showmodal($modal_name)
 
 
 
-// if (isset($_POST['user_calendaradd'])) {
 
-// debug_to_console("test");
-// showmodal("user_calendaradd");
 
-// }
+
+
+
+
 
 if (isset($_POST['senaraistudent'])) {
 
@@ -728,13 +713,13 @@ if (isset($_POST['senaraistudent'])) {
       $students[] = array(
         "a" => '<div class="avatar avatar-md"><img class="avatar-img"
                                                                 src="' . $site_url . 'assets/img/user/' . $user['id'] . '/' . $user['image_url'] . '"
-                                                                alt="' . $user['nama'] . '"></div>',           // Modify the key based on your column names
+                                                                alt="' . $user['nama'] . '"></div>',
         "b" => '<div class="text-nowrap">' . $user['nama'] . '</div>
                                                         <div class="small text-body-secondary text-nowrap">
                                                             <span >Registered:
                                                             </span><span>' . $user['time_add'] . '</span>
-                                                        </div>',          // Modify the key based on your column names
-        "c" => $user['email'],         // Modify the key based on your column names
+                                                        </div>',
+        "c" => $user['email'],
         "d" => '
             <a class="btn btn-success me-2" href="' . $site_url . 'kaunselor/student/' . $user['ndp'] . '">
         <svg class="icon">
@@ -742,7 +727,7 @@ if (isset($_POST['senaraistudent'])) {
                 xlink:href="' . $site_url . '/assets/vendors/@coreui/icons/svg/free.svg#cil-magnifying-glass">
             </use>
         </svg></a>
-        ',        // Add more fields if needed
+        ',
       );
 
     }
@@ -762,7 +747,7 @@ if (isset($_POST['senaraistudent'])) {
 }
 
 if (isset($_POST['order'])) {
-  // echo json_encode($_POST);
+
   $order = $_POST['order'];
 
   foreach ($order as $row) {
@@ -789,17 +774,17 @@ if (isset($_POST['senaraisoalan'])) {
 
     while ($row = $results->fetch_assoc()) {
       $data[] = array(
-        "id" => $row['id'], // Include id in the response
-        "a" => '<div class="text-center" >' . $row['re_order'] . '</div>',  // Formatting for re_order
-        "b" => '<div class="text-center">' . $row['soalan'] . '</div>',   // Formatting for soalan
-        "c" => '<div class="text-center">' . $row['nama_kategori'] . '</div>',  // Formatting for nama_kategori
+        "id" => $row['id'],
+        "a" => '<div class="text-center" >' . $row['re_order'] . '</div>',
+        "b" => '<div class="text-center">' . $row['soalan'] . '</div>',
+        "c" => '<div class="text-center">' . $row['nama_kategori'] . '</div>',
         "d" => '
               <a class="btn btn-success" href="details.php?id=' . $row['id'] . '">
                   <svg class="icon">
                       <use xlink:href="icons.svg#icon-view"></use>
                   </svg>
               </a>
-          ' // Button with link for status
+          '
       );
     }
   }
@@ -830,60 +815,137 @@ if (isset($_POST['addsoalan'])) {
 
 
 if (isset($_POST['addsoalan'])) {
-removepic( $site_url ."assets/img/user/". $_SESSION['user_details']['id']/ "/" . $_SESSION['user_details']['image_url'] );
-uploadpic_id($_SESSION['user_details']['id'], $err);
+  removepic($site_url . "assets/img/user/" . $_SESSION['user_details']['id'] / "/" . $_SESSION['user_details']['image_url']);
+  uploadpic_id($_SESSION['user_details']['id'], $err);
 }
 
-function sendmail($receiver ,$title ,$message ="")
+function sendmail($receiver, $title, $message = "")
 {
 
 
-  //Load Composer's autoloader
 
-  //Create an instance; passing `true` enables exceptions
+
+
   $mail = new PHPMailer(true);
 
   try {
-    //Server settings
-    $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
-    $mail->isSMTP();                                            //Send using SMTP
-    $mail->Host = 'kaunselingadtectaiping.com.my';                     //Set the SMTP server to send through
-    $mail->SMTPAuth = true;                                   //Enable SMTP authentication
-    $mail->Username = 'temujanji@kaunselingadtectaiping.com.my';                     //SMTP username
-    $mail->Password = 'temujanji@33';                               //SMTP password
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-    $mail->Port = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
-    //Recipients
+    $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+    $mail->isSMTP();
+    $mail->Host = 'kaunselingadtectaiping.com.my';
+    $mail->SMTPAuth = true;
+    $mail->Username = 'temujanji@kaunselingadtectaiping.com.my';
+    $mail->Password = 'temujanji@33';
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+    $mail->Port = 465;
+
+
     $mail->setFrom('temujanji@fingerprint.kaunselingadtectaiping.com.my', 'Temu Janji');
-    $mail->addAddress($receiver);     //Add a recipient
-    // $mail->addAddress('ellen@example.com');               //Name is optional
-    // $mail->addReplyTo('info@example.com', 'Information');
-    // $mail->addCC('cc@example.com');
-    // $mail->addBCC('bcc@example.com');
+    $mail->addAddress($receiver);
 
-    //Attachments
-    // $mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
-    // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
 
-    //Content
-    $mail->isHTML(true);                                  //Set email format to HTML
+
+
+
+
+
+
+
+
+    $mail->isHTML(true);
 
     $mail->Subject = $title;
-    if (!$message){
-      
-  
-    $mail->Body = 'This is the HTML message body <b>in bold!</b>';
-    $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-  }else{
-    $mail->Body = $message;
-    $mail->AltBody = $message;
-  }
+    if (!$message) {
+
+
+      $mail->Body = 'This is the HTML message body <b>in bold!</b>';
+      $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+    } else {
+      $mail->Body = $message;
+      $mail->AltBody = $message;
+    }
     $mail->send();
     echo 'Message has been sent';
   } catch (Exception $e) {
     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
   }
+}
+
+
+if (isset($_POST['test3'])) {
+
+    // header('Content-Type: application/json');
+    $ndp = $_POST['test3']['ndp'];
+    // echo $ndp;
+
+    $query =
+      "SELECT a.*,b.ndp  FROM `user_psikologi`  a 
+      INNER JOIN user b  ON  a.user_id = b.id
+      
+      WHERE ndp = '$ndp' ORDER BY a.id DESC LIMIT 1";
+
+    $query2 =
+      "SELECT a.*,b.ndp  FROM `user_psikologi`  a INNER JOIN user b  ON  a.user_id = b.id WHERE ndp = '$ndp' ORDER BY a.id ASC LIMIT 1";
+
+    $query3 =
+      "SELECT id,nama_kategori FROM `borang_psikologi_kategori`";
+
+
+    $rows = [];
+    $rows2 = [];
+
+    $results = mysqli_query($db, $query);
+    while ($psikologi = mysqli_fetch_assoc($results)) {
+
+      $rows[] = json_decode($psikologi['keputusan'], true);
+    }
+    $results = mysqli_query($db, $query2);
+    while ($psikologi = mysqli_fetch_assoc($results)) {
+
+      $rows[] = json_decode($psikologi['keputusan'], true);
+    }
+
+
+    $results = mysqli_query($db, $query3);
+    while ($kategori = mysqli_fetch_assoc($results)) {
+        $kategoriMap[$kategori['id']] = ucfirst($kategori['nama_kategori']);
+    }
+    
+    // Map category names to the rows data
+    foreach ($rows as &$row) {
+        foreach ($row as &$item) {
+            if (isset($kategoriMap[$item['kategori_id']])) {
+                $item['kategori_name'] = $kategoriMap[$item['kategori_id']];
+            } else {
+                $item['kategori_name'] = 'Unknown';
+            }
+        }
+    }
+
+    if (count($rows) > 0) {
+      // Get the first and last rows
+      $firstRow = $rows[0];
+      $lastRow = $rows[count($rows) - 1];
+
+      // Return the data as JSON
+      header('Content-Type: application/json');
+      echo json_encode([
+        'firstRow' => $firstRow,
+        'lastRow' => $lastRow
+      ]);
+      die();
+
+    }
+
+
+  //   $data = [
+//     ['kategori_id' => '1', 'value' => 1],
+//     ['kategori_id' => '2', 'value' => 2],
+//     ['kategori_id' => '3', 'value' => 2]
+// ];
+// header('Content-Type: application/json');
+// Return the data as JSON
+  // echo json_encode($data);
 }
 
 ?>

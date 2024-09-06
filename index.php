@@ -105,9 +105,17 @@ function page404()
 
 function student_profile($request)
 {
-	$product_id = str_replace('kaunselor/student/', '', $request);
-	$product_id = strtok($product_id, '/');
+	$product_id = basename($request);
+
 	require_once('views/kaunseling/student_profile.php');
+}
+
+
+function student_profile_psikologi($request)
+{
+	$product_id = basename($request);
+
+	require_once('admin/server.php');
 }
 
 
@@ -145,66 +153,119 @@ function test()
 // debug_to_console2($current_url);
 
 //If url is http://localhost/route/home or user is at the maion page(http://localhost/route/)
-if ($request == '' or $request == '/')
-	// echo $request;
-	index();
-else if ($request == 'register')
-	register();
-else if (str_contains($request, 'login'))
-	login();
-else if (str_contains($request, 'logout'))
-	logout();
-else if ($request == 'kaunseling/booking')
-	kaunseling_booking();
-else if ($request == 'kaunseling/borang')
-	kaunseling_borang();
-else if ($request == 'kaunseling/editborang')
-	kaunseling_edit_borang();
-else if ($request == 'kaunseling/addsoalan')
-	server();
-else if ($request == 'kaunselor/booking')
-	kaunseling_booking_kaunselor();
-else if (str_contains($request, 'kaunselor/student/senarai'))
-	kaunseling_student();
-else if (str_contains($request, 'borang_psikologi_send'))
-	server();
-else if (str_contains($request, 'user/profile'))
-	user_profile();
-else if (str_contains($request, 'user/kaunseling'))
-	user_kaunseling();
-else if (str_contains($request, 'kaunseling_sejarah'))
-	server();
-else if (str_contains($request, 'calendarfetch'))
-	server();
-else if (str_contains($request, 'calendarfetch2'))
-	server();
-else if (str_contains($request, 'user_calendaradd'))
-	server();
-else if (str_contains($request, 'calendaraddna'))
-	server();
-else if (str_contains($request, 'calendardeletena'))
-	server();
-else if (str_contains($request, 'senaraistudent')) {
-	// echo "asd";
-	server();
-} else if (str_contains($request, 'editborang/reorder')) {
-	// echo "asd";
-	server();
-} else if (str_contains($request, 'senaraisoalan')) {
-	// echo "asd";
-	server();
-} else if (str_contains($request, 'user_change_image')) {
+switch (true) {
+	case $request == '' || $request == '/':
+		index();
+		break;
 
-	server();
-} else if (str_starts_with($request, 'kaunselor/student'))
-	student_profile($request);
-	else if (str_contains($request, 'testemail'))
-	test();
-else {
-	echo $request;
+	case $request == 'register':
+		register();
+		break;
 
-	http_response_code(404);
-	page404();
+	case str_contains($request, 'login'):
+		login();
+		break;
+
+	case str_contains($request, 'logout'):
+		logout();
+		break;
+
+	case $request == 'kaunseling/booking':
+		kaunseling_booking();
+		break;
+
+	case $request == 'kaunseling/borang':
+		kaunseling_borang();
+		break;
+
+	case $request == 'kaunseling/editborang':
+		kaunseling_edit_borang();
+		break;
+
+	case $request == 'kaunseling/addsoalan':
+		server();
+		break;
+
+	case $request == 'kaunselor/booking':
+		kaunseling_booking_kaunselor();
+		break;
+
+	case str_contains($request, 'kaunselor/student/senarai'):
+		kaunseling_student();
+		break;
+
+
+
+	case str_contains($request, 'borang_psikologi_send'):
+		server();
+		break;
+
+	case str_contains($request, 'user/profile'):
+		user_profile();
+		break;
+
+	case str_contains($request, 'user/kaunseling'):
+		user_kaunseling();
+		break;
+
+	case str_contains($request, 'kaunseling_sejarah'):
+		server();
+		break;
+
+	case str_contains($request, 'calendarfetch'):
+		server();
+		break;
+
+	case str_contains($request, 'calendarfetch2'):
+		server();
+		break;
+
+	case str_contains($request, 'user_calendaradd'):
+		server();
+		break;
+
+	case str_contains($request, 'calendaraddna'):
+		server();
+		break;
+
+	case str_contains($request, 'calendardeletena'):
+		server();
+		break;
+
+	case str_contains($request, 'senaraistudent'):
+		server();
+		break;
+
+	case str_contains($request, 'editborang/reorder'):
+		server();
+		break;
+
+	case str_contains($request, 'senaraisoalan'):
+		server();
+		break;
+
+	case str_contains($request, 'user_change_image'):
+		server();
+		break;
+
+	case str_starts_with($request, 'kaunselor/student'):
+		student_profile($request);
+		break;
+
+	case str_starts_with($request, 'kaunselor/student/psikologi'):
+		server();
+		break;
+
+	case str_contains($request, 'testemail'):
+		test();
+		break;
+
+	default:
+		echo $request;
+		http_response_code(404);
+		page404();
+		break;
 }
+
 
 

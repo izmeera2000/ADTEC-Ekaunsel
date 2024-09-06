@@ -2,26 +2,30 @@
 
 use Ddeboer\Imap\Server;
 
-$username = 'temujanji@kaunselingadtectaiping.com.my';
-$password = 'temujanji@33';
-$server = new Server('mail.kaunselingadtectaiping.com.my');
-$connection = $server->authenticate($username, $password);
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
-$inbox = $connection->getMailbox('INBOX');
-
-// Retrieve all messages in the inbox
-$messages = $inbox->getMessages(
-
-
-    null,            // No search criteria
-    \SORTDATE,       // Sort by date
-    true             // Descending order
-);
-
-foreach ($messages as $message) {
-    echo 'Subject: ' . $message->getSubject() . "\n" . "<br>";
-    // echo 'From: ' . $message->getFrom()->getAddress() . "\n";
-    // echo 'Date: ' . $message->getDate()->format('Y-m-d H:i:s') . "\n";
-    // echo 'Body: ' . $message->getBodyText() . "\n\n"; // Get the body of the email
+try {
+    // Connecting to IMAP server with SSL
+$server = new Server('mail.kaunselingadtectaiping.com.my', 993, '/ssl/novalidate-cert');
+    
+    // Authenticate
+    $username = 'temujanji@kaunselingadtectaiping.com.my';
+    $password = 'temujanji@33';
+    $connection = $server->authenticate($username, $password);
+    
+    // Get INBOX mailbox
+    $inbox = $connection->getMailbox('INBOX');
+    
+    // Retrieve messages sorted by date (descending)
+    $messages = $inbox->getMessages(null, \SORTDATE, true);
+    
+    // Output message subjects
+    foreach ($messages as $message) {
+        echo 'Subject: ' . $message->getSubject() . "<br>";
+    }
+} catch (\Throwable $e) {
+    echo 'Error: ' . $e->getMessage();
 }

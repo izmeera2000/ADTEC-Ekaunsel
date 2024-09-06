@@ -537,12 +537,97 @@ $("#add_soalan_button").click(function () {
     success: function (response) {
       showtoast("tambah");
       console.log(response);
-      $("#add_soalan_content").prop('selectedIndex',0);
-      $("#add_soalan_soalan").val("")  ;
+      $("#add_soalan_content").prop("selectedIndex", 0);
+      $("#add_soalan_soalan").val("");
       $("#add_soalan").modal("hide");
       table1.ajax.reload(); // Reload DataTable data
-
     },
   });
+});
+
+// Create the Radar Chart
+const ctx = document.getElementById("radarChart").getContext("2d");
+const radarChart = new Chart(ctx, {
+  type: "radar",
+  data: {
+    labels: [], // Labels will be set dynamically
+    datasets: [
+      {
+        label: "Latest", // Label for the first dataset
+        data: [], // Data will be set dynamically
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        borderColor: "rgba(255, 99, 132, 1)",
+        borderWidth: 2,
+      },
+      {
+        label: "First", // Label for the second dataset
+        data: [], // Data will be set dynamically
+        backgroundColor: "rgba(54, 162, 235, 0.5)",
+        borderColor: "rgba(54, 162, 235, 1)",
+        borderWidth: 2,
+      },
+    ],
+  },
+  options: {    
+    responsive: true,
+
+    scales: {
+      r: {
+        beginAtZero: true,
+      },
+    },
+  },
+});
+
+// Fetch data via AJAX
+
+var ndp = document.getElementById("3").value;
+
+console.log(ndp);
+$.ajax({
+  url: "kaunselor/student/psikologi", // URL to your PHP script that returns data
+  method: "POST",
+  data: {
+    test3: {
+      ndp: ndp,
+      // title: title,
+      // start: date,
+    },
+  },
+
+  success: function (response) {
+    // Check if response contains the expected datasets
+    if (response.firstRow && response.lastRow) {
+      console.log( (response));
+      // Process firstRow
+      let labels = [];
+      let dataValues1 = [];
+      response.firstRow.forEach(function (item) {
+        labels.push(item.kategori_name);
+        dataValues1.push(item.value);
+      });
+
+      // Process lastRow
+      let dataValues2 = [];
+      response.lastRow.forEach(function (item) {
+        dataValues2.push(item.value);
+      });
+
+      // Set labels for the chart
+      radarChart.data.labels = labels;
+
+      // Set data for the datasets
+      radarChart.data.datasets[0].data = dataValues1; // Dataset 1
+      radarChart.data.datasets[1].data = dataValues2; // Dataset 2
+
+      // Update the chart with new data
+      radarChart.update();
+    } else {
+      console.error("Response does not contain expected datasets:", response);
+    }
+  },
+  error: function (error) {
+    console.error("Error fetching data", error);
+  },
 });
 //# sourceMappingURL=main.js.map

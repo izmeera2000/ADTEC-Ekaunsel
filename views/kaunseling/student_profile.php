@@ -19,7 +19,7 @@ if (mysqli_num_rows($results) == 1) {
   // $user_id = $user['id'];
   // var_dump($_SESSION['username2']);
 
-} 
+}
 ?>
 <!DOCTYPE html><!--
 * CoreUI PRO Bootstrap Admin Template
@@ -51,11 +51,11 @@ if (mysqli_num_rows($results) == 1) {
             </li>
           </ol>
         </nav>
-        <div class="row">
+        <div class="row mb-4">
           <div class="col-xl-4">
-            <div class="card  mb-4  h-100">
-              <div class="card-body p-4 d-flex align-items-center">
-              <img
+            <div class="card   mb-4  h-100  ">
+              <div class="card-body p-4 d-flex align-items-center ">
+                <img
                   src="<?php echo $site_url ?>assets/img/user/<?php echo $user['id'] ?>/<?php echo $user['image_url'] ?>"
                   class="img-fluid " alt="...">
                 <!-- <div class="row"> -->
@@ -74,7 +74,7 @@ if (mysqli_num_rows($results) == 1) {
           <div class="col-xl-8">
 
             <div class="card mb-4 h-100">
-              <div class="card-body p-4">
+              <div class="card-body p-4 ">
                 <div class="card-title fs-4 fw-semibold" data-coreui-i18n="traffic">User Details</div>
                 <p class="text-body-secondary">Details of user</p>
                 <div class="mb-3 row">
@@ -101,8 +101,7 @@ if (mysqli_num_rows($results) == 1) {
                 <div class="mb-3 row">
                   <label for="4" class="col-sm-2 col-form-label">kp</label>
                   <div class="col-sm-10">
-                    <input type="text" readonly class="form-control-plaintext" id="4"
-                      value="<?php echo $user['kp'] ?>">
+                    <input type="text" readonly class="form-control-plaintext" id="4" value="<?php echo $user['kp'] ?>">
                   </div>
                 </div>
                 <div class="row">
@@ -114,13 +113,37 @@ if (mysqli_num_rows($results) == 1) {
               </div>
             </div>
           </div>
+
         </div>
+        <div class="row">
+          <div class="col-xl-6">
 
+
+            <div class="card overflow-hidden mb-4">
+                    <div class="card-body p-4">
+                      <div class="row">
+                        <div class="col">
+                          <div class="card-title fs-4 fw-semibold" >Keputusan Ujian DASS</div>
+                        </div>
+                        <!-- <div class="col text-end text-primary fs-4 fw-semibold">$613.200</div> -->
+                      </div>
+                      <div class="card-subtitle text-body-secondary">DEPRESSION ANXIETY STRESS SCALE</div>
+                    </div>
+                    <div class="chart-wrapper mt-3 p-4" >
+                    <canvas id="radarChart"></canvas>
+                    </div>
+                  </div>
+
+          </div>
+
+
+        </div>
       </div>
-
     </div>
 
-    <?php include(getcwd() . '/views/footer.php'); ?>
+  </div>
+
+  <?php include(getcwd() . '/views/footer.php'); ?>
 
   </div>
 

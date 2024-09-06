@@ -103,13 +103,13 @@
                 </div>
                 <?php if (($_SESSION['user_details']['role'] != 1)) { ?>
 
-                <div class="mb-3 row">
-                  <label for="3" class="col-sm-2 col-form-label">ndp</label>
-                  <div class="col-sm-10">
-                    <input type="text" readonly class="form-control-plaintext" id="3"
-                      value="<?php echo $_SESSION['user_details']['ndp'] ?>">
+                  <div class="mb-3 row">
+                    <label for="3" class="col-sm-2 col-form-label">ndp</label>
+                    <div class="col-sm-10">
+                      <input type="text" readonly class="form-control-plaintext" id="3"
+                        value="<?php echo $_SESSION['user_details']['ndp'] ?>">
+                    </div>
                   </div>
-                </div>
                 <?php } ?>
                 <div class="mb-3 row">
                   <label for="4" class="col-sm-2 col-form-label">kp</label>
