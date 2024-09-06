@@ -2,9 +2,10 @@
 
 use Ddeboer\Imap\Server;
 
-$username = 'izmeera2000@gmail.com';
-$password = 'macmillangamerx';
-$server = new Server('imap.gmail.com');
+$username = 'temujanji@kaunselingadtectaiping.com.my';
+$password = 'temujanji@33';
+$server = new Server('mail.kaunselingadtectaiping.com.my
+');
 $connection = $server->authenticate($username, $password);
 
 
