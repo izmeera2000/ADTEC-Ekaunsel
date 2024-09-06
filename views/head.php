@@ -29,7 +29,7 @@
     <!-- Main styles for this application-->
     <link href="<?php echo $site_url ?>assets/css/style.css" rel="stylesheet">
     <!-- We use those styles to show code examples, you should remove them in your application.-->
-    <link href="<?php echo $site_url ?>assets/css/examples.css" rel="stylesheet">
+    <!-- <link href="<?php echo $site_url ?>assets/css/examples.css" rel="stylesheet"> -->
     <script src="<?php echo $site_url ?>assets/js/config.js"></script>
     <script src="<?php echo $site_url ?>assets/js/color-modes.js"></script>
     <link href="<?php echo $site_url ?>assets/vendors/@coreui/chartjs/css/coreui-chartjs.css" rel="stylesheet">

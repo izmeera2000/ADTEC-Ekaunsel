@@ -71,6 +71,34 @@
     </div>
   </div>
 
+  <div class="modal fade" id="calendarModal" tabindex="-1"  
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Book Kaunseling</h5>
+          <button type="button" class="btn-close" data-coreui-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        <button id="prevBtn" class="btn btn-secondary">Previous</button>
+        <button id="nextBtn" class="btn btn-secondary">Next</button>
+        <button id="todayBtn" class="btn btn-secondary">Today</button>
+        <button id="monthViewBtn" class="btn btn-secondary">Month View</button>
+        <button id="weekViewBtn" class="btn btn-secondary">Week View</button>
+        <button id="dayViewBtn" class="btn btn-secondary">Day View</button>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-danger" 
+            data-coreui-dismiss="modal">Delete</button>
+          <!-- <button type="button" class="btn btn-primary" onclick="" >Save changes</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 <?php } ?>
 
 
@@ -134,3 +162,4 @@
   </div>
 
 <?php } ?>
+

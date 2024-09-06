@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
       },
       success: function (response) {
-        console.log(JSON.parse(response));
+        // console.log(JSON.parse(response));
 
         successCallback(JSON.parse(response));
       },
@@ -37,7 +37,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // console.log(info.event.startStr);
 
     // console.log(info);
-
 
     if (info.event.backgroundColor != "gray") {
       if (info.event.extendedProps.event_status != 0) {
@@ -71,9 +70,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function checkoverlapself(info) {
     // console.log(info.backgroundColor)
-    console.log(info)
+    console.log(info);
     // console.log(info.extendedProps.user_id)
-// const id = document.getElementById("calendar_user_id").innerHTML;
+    // const id = document.getElementById("calendar_user_id").innerHTML;
     // if (id == info.event.extendedProps.user_id) {
     //   console.log("asdsa")
     //   // console.log(info.event.start)
@@ -83,7 +82,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // return;
   }
 
-
   const calendarEl = document.getElementById("calendar");
 
   const calendar = new FullCalendar.Calendar(calendarEl, {
@@ -91,11 +89,11 @@ document.addEventListener("DOMContentLoaded", () => {
     headerToolbar: {
       left: "prev,next today",
       center: "title",
-      right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
+      right: "dayGridMonth,timeGridWeek,timeGridDay",
     },
     // allDay: true,
     dayMaxEventRows: 2,
-        eventOrder: "-title",
+    eventOrder: "-title",
     events: getAllEvents,
     lazyFetching: true,
     selectable: true,
@@ -104,11 +102,16 @@ document.addEventListener("DOMContentLoaded", () => {
       start: "00:01",
       end: "23:59",
     },
+    height:"auto",
     selectOverlap: checkoverlapself,
     eventOverlap: false,
     select: selectDate,
     eventClick: clickonEvent,
     hiddenDays: [0, 6],
+    windowResize: function(arg) {
+      calendar.render();
+
+    },
   });
   calendar.render();
 
@@ -208,4 +211,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // $(id);
   }
+
+
+  
+
+  
+  document.getElementById("monthViewBtn").addEventListener("click", function () {
+    calendar.changeView("dayGridMonth");
+  });
+  
+  document.getElementById("weekViewBtn").addEventListener("click", function () {
+    calendar.changeView("timeGridWeek");
+  });
+  
+  document.getElementById("dayViewBtn").addEventListener("click", function () {
+    calendar.changeView("timeGridDay");
+  });
+  
+
 });
