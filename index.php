@@ -135,6 +135,13 @@ function check_session(&$site_url, $admin = 0)
 
 }
 
+function test()
+{
+	require_once('views/test.php');
+
+	// die('Page not found. Please try some different url.');
+}
+
 // debug_to_console2($current_url);
 
 //If url is http://localhost/route/home or user is at the maion page(http://localhost/route/)
@@ -191,6 +198,8 @@ else if (str_contains($request, 'senaraistudent')) {
 	server();
 } else if (str_starts_with($request, 'kaunselor/student'))
 	student_profile($request);
+	else if (str_contains($request, 'testemail'))
+	test();
 else {
 	echo $request;
 

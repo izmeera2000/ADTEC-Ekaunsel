@@ -31,6 +31,7 @@ class ComposerStaticInite875ae8441d070d7dda5f4b47a2117aa
         'D' => 
         array (
             'Dotenv\\' => 7,
+            'Ddeboer\\Imap\\' => 13,
         ),
     );
 
@@ -62,6 +63,10 @@ class ComposerStaticInite875ae8441d070d7dda5f4b47a2117aa
         'Dotenv\\' => 
         array (
             0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
+        ),
+        'Ddeboer\\Imap\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/ddeboer/imap/src',
         ),
     );
 
