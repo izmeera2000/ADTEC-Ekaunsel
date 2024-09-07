@@ -120,20 +120,92 @@ if (mysqli_num_rows($results) == 1) {
 
 
             <div class="card overflow-hidden mb-4">
-                    <div class="card-body p-4">
-                      <div class="row">
-                        <div class="col">
-                          <div class="card-title fs-4 fw-semibold" >Keputusan Ujian DASS</div>
-                        </div>
-                        <!-- <div class="col text-end text-primary fs-4 fw-semibold">$613.200</div> -->
-                      </div>
-                      <div class="card-subtitle text-body-secondary">DEPRESSION ANXIETY STRESS SCALE</div>
-                    </div>
-                    <div class="chart-wrapper mt-3 p-4" >
-                    <canvas id="radarChart"></canvas>
-                    </div>
+              <div class="card-body p-4">
+                <div class="row">
+                  <div class="col">
+                    <div class="card-title fs-4 fw-semibold">Keputusan Ujian DASS</div>
                   </div>
+                  <!-- <div class="col text-end text-primary fs-4 fw-semibold">$613.200</div> -->
+                </div>
+                <div class="card-subtitle text-body-secondary">DEPRESSION ANXIETY STRESS SCALE</div>
+              </div>
+              <div class="chart-wrapper mt-3 p-4">
+                <canvas id="radarChart"></canvas>
+              </div>
+            </div>
 
+          </div>
+
+          <div class="col-xl-6">
+            <div class="card mb-4">
+              <div class="card-body p-4">
+                <div class="row">
+                  <div class="col">
+                    <div class="card-title fs-4 fw-semibold">Sejarah Kaunseling</div>
+                    <div class="card-subtitle text-body-secondary mb-4">
+
+                      <?php
+
+                      $query =
+                        "SELECT a.*, b.ndp, COUNT(a.id) FROM `kaunselor_jadual` a INNER JOIN user b ON a.user_id = b.id WHERE event_status ='2'  AND b.ndp ='$product_id' ORDER BY a.id DESC ";
+                      $results = mysqli_query($db, $query);
+                      if (mysqli_num_rows($results) > 0) {
+
+
+                        while ($users = mysqli_fetch_assoc($results)) {
+
+                          if ($users['COUNT(a.id)'] == 1) {
+                            echo $users['COUNT(a.id)'] . " appointment";
+
+                          } else {
+                            echo $users['COUNT(a.id)'] . " appointments";
+
+                          }
+                        }
+                      } ?>
+                    </div>
+                  </div>x`
+                  <!-- <div class="col-auto ms-auto">
+                                    <button class="btn btn-secondary">
+                                        <svg class="icon me-2">
+                                            <use
+                                                xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-user-plus">
+                                            </use>
+                                        </svg><span>Add new user</span>
+                                    </button>
+                                </div> -->
+                </div>
+                <div class="table-responsive">
+                  <table class="table mb-0 ">
+                    <thead class="fw-semibold text-body-secondary">
+                      <tr class="align-middle">
+
+                        <th>Tarikh</th>
+                        <th class="text-center">Masalah</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php
+                      $results = mysqli_query($db, $query);
+
+                      while ($users = mysqli_fetch_assoc($results)) {
+                        ?>
+
+                        <tr class="align-middle">
+
+                          <td><?php echo $users['tarikh'] ?></td>
+                          <td class="text-center"><?php echo $users['masalah'] ?></td>
+                        </tr>
+
+                        <?php
+                      }
+                      ?>
+
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
           </div>
 
 
