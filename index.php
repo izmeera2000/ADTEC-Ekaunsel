@@ -154,6 +154,8 @@ function test()
 
 //If url is http://localhost/route/home or user is at the maion page(http://localhost/route/)
 switch (true) {
+
+	// st outside
 	case $request == '' || $request == '/':
 		index();
 		break;
@@ -169,44 +171,29 @@ switch (true) {
 	case str_contains($request, 'logout'):
 		logout();
 		break;
+	// end outside
+
+	// st student
 
 	case $request == 'kaunseling/booking':
 		kaunseling_booking();
 		break;
 
+	case str_contains($request, 'user/kaunseling'):
+		user_kaunseling();
+		break;
+
+
+
 	case $request == 'kaunseling/borang':
 		kaunseling_borang();
 		break;
-
-	case $request == 'kaunseling/editborang':
-		kaunseling_edit_borang();
-		break;
-
-	case $request == 'kaunseling/addsoalan':
-		server();
-		break;
-
-	case $request == 'kaunselor/booking':
-		kaunseling_booking_kaunselor();
-		break;
-
-	case str_contains($request, 'kaunselor/student/senarai'):
-		kaunseling_student();
-		break;
-
 
 
 	case str_contains($request, 'borang_psikologi_send'):
 		server();
 		break;
 
-	case str_contains($request, 'user/profile'):
-		user_profile();
-		break;
-
-	case str_contains($request, 'user/kaunseling'):
-		user_kaunseling();
-		break;
 
 	case str_contains($request, 'kaunseling_sejarah'):
 		server();
@@ -216,9 +203,7 @@ switch (true) {
 		server();
 		break;
 
-	case str_contains($request, 'calendarfetch2'):
-		server();
-		break;
+
 
 	case str_contains($request, 'user_calendaradd'):
 		server();
@@ -232,7 +217,52 @@ switch (true) {
 		server();
 		break;
 
-	case str_contains($request, 'senaraistudent'):
+
+	// end student
+
+
+
+
+
+
+
+
+
+
+	// st common
+
+	case str_contains($request, 'user/profile'):
+		user_profile();
+		break;
+
+	case str_contains($request, 'user_change_image'):
+		server();
+		break;
+
+	// end common
+
+	//st kaunselor
+
+
+	case $request == 'kaunseling/editborang':
+		kaunseling_edit_borang();
+		break;
+
+	case $request == 'kaunseling/manage':
+		kaunseling_booking_kaunselor();
+		break;
+
+	case str_starts_with($request, 'student/senarai'):
+		kaunseling_student();
+		break;
+
+	case str_starts_with($request, 'student'):
+		student_profile($request);
+		break;
+
+
+
+	case str_starts_with($request, 'kaunseling/student/psikologi'):
 		server();
 		break;
 
@@ -240,22 +270,42 @@ switch (true) {
 		server();
 		break;
 
+	case str_contains($request, 'calendarfetch2'):
+		server();
+		break;
+
+	case str_contains($request, 'senaraistudent'):
+		server();
+		break;
+
+
+
+
 	case str_contains($request, 'senaraisoalan'):
 		server();
 		break;
 
-	case str_contains($request, 'user_change_image'):
+
+	case $request == 'kaunseling/addsoalan':
 		server();
 		break;
 
-	case str_starts_with($request, 'kaunselor/student'):
-		student_profile($request);
-		break;
 
-	case str_starts_with($request, 'kaunselor/student/psikologi'):
-		server();
-		break;
+	//end kaunselor
 
+
+
+
+
+
+
+
+
+
+
+
+
+	//test
 	case str_contains($request, 'testemail'):
 		test();
 		break;

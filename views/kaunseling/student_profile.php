@@ -176,7 +176,7 @@ if (mysqli_num_rows($results) == 1) {
                                 </div> -->
                 </div>
                 <div class="table-responsive">
-                  <table class="table mb-0 ">
+                  <table class="table mb-0 " id="sejarahkaunseling">
                     <thead class="fw-semibold text-body-secondary">
                       <tr class="align-middle">
 

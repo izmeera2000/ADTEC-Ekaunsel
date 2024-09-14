@@ -8,6 +8,7 @@
  */
 
 // Disable the on-canvas tooltip
+let myModal; // Declare the modal instance outside of the function
 
 Chart.defaults.pointHitDetectionRadius = 1;
 Chart.defaults.plugins.tooltip.enabled = false;
@@ -490,29 +491,17 @@ function showtoast($message) {
   $("#jstoast").toast("show");
 }
 
-function showmodal(
-  $main,
-  $first = "",
-  $second = "",
-  $third = "",
-  $fourth = ""
-) {
-  const myModal = new coreui.Modal("#" + $main);
+function showmodal($main) {
+   myModal = new coreui.Modal("#" + $main);
 
-  if ($first) {
-    document.getElementById($main + "_title").innerHTML = $first;
-  }
-
-  if ($second) {
-    document.getElementById($main + "_id").value = $second;
-  }
-  if ($third) {
-    document.getElementById($main + "_date").value = $third;
-  }
-  if ($fourth) {
-    document.getElementById($main + "_content").value = $fourth;
-  }
   myModal.show();
+}
+
+
+function hidemodal() {
+  if (myModal) {
+    myModal.hide(); // Hide the modal
+  }
 }
 
 $("#add_soalan_button").click(function () {
@@ -568,7 +557,7 @@ const radarChart = new Chart(ctx, {
       },
     ],
   },
-  options: {    
+  options: {
     responsive: true,
 
     scales: {
@@ -598,7 +587,7 @@ $.ajax({
   success: function (response) {
     // Check if response contains the expected datasets
     if (response.firstRow && response.lastRow) {
-      console.log( (response));
+      console.log(response);
       // Process firstRow
       let labels = [];
       let dataValues1 = [];

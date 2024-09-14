@@ -41,7 +41,7 @@
                   <!-- <div class="card-title fs-4 fw-semibold">Traffic</div> -->
                   <!-- <div class="card-subtitle text-body-secondary border-bottom mb-3 pb-4" href="#"
                     data-coreui-i18n="lastWeek">Last Week</div> -->
-                  <img class="img-fluid img-fluid mx-auto  d-block" src="<?php echo $site_url ?>assets/img/d1.png">
+                  <img class="img-fluid    mx-auto  d-block" src="<?php echo $site_url ?>assets/img/d1.png">
                   <!-- /.row-->
                 </div>
               </div>
@@ -53,7 +53,7 @@
                   <!-- <div class="card-title fs-4 fw-semibold">Traffic</div> -->
                   <!-- <div class="card-subtitle text-body-secondary border-bottom mb-3 pb-4" href="#"
                     data-coreui-i18n="lastWeek">Last Week</div> -->
-                  <img class="img-fluid img-fluid mx-auto  d-block" src="<?php echo $site_url ?>assets/img/d2.png">
+                  <img class="img-fluid   mx-auto  d-block" src="<?php echo $site_url ?>assets/img/d2.png">
                   <!-- /.row-->
                 </div>
               </div>
@@ -67,7 +67,7 @@
                   <!-- <div class="card-title fs-4 fw-semibold">Traffic</div> -->
                   <!-- <div class="card-subtitle text-body-secondary border-bottom mb-3 pb-4" href="#"
                     data-coreui-i18n="lastWeek">Last Week</div> -->
-                  <img class="img-fluid img-fluid mx-auto  d-block" src="<?php echo $site_url ?>assets/img/d4.png">
+                  <img class="img-fluid   mx-auto  d-block" src="<?php echo $site_url ?>assets/img/d4.png">
                   <!-- /.row-->
                 </div>
               </div>

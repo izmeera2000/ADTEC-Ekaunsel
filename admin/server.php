@@ -292,7 +292,7 @@ if (isset($_POST['calendarfetch'])) {
 
 
 
-  $query = "SELECT a.id,masalah ,tarikh as start,tarikh, event_status, b.ndp as ndp, b.id as user_id ,sebab , kaunselor_id FROM kaunselor_jadual a INNER JOIN ( SELECT id, ndp FROM user ) b  ON b.id = a.user_id WHERE (tarikh BETWEEN ('$start') AND ('$end')) ORDER BY tarikh  ASC ";
+  $query = "SELECT a.id,masalah ,tarikh as start,jenis,tarikh, event_status, b.ndp as ndp, b.id as user_id ,sebab , kaunselor_id FROM kaunselor_jadual a INNER JOIN ( SELECT id, ndp FROM user ) b  ON b.id = a.user_id WHERE (tarikh BETWEEN ('$start') AND ('$end')) ORDER BY tarikh  ASC ";
 
 
   $result = mysqli_query($db, $query);
@@ -312,6 +312,19 @@ if (isset($_POST['calendarfetch'])) {
 
     if ($row['event_status'] == "2") {
       $row['color'] = "green";
+
+    }
+
+    if ($row['event_status'] == "3") {
+      $row['color'] = "gray";
+
+    }
+    if ($row['jenis'] == "1") {
+      $row['jenis'] = "Online";
+
+    }
+    else{
+      $row['jenis'] = "Offline";
 
     }
     if ($row['user_id'] != $id) {
@@ -368,7 +381,7 @@ if (isset($_POST['calendarfetch2'])) {
 
 
 
-  $query = "SELECT a.id,masalah ,tarikh as start, event_status, b.ndp as ndp, b.id as user_id ,sebab , kaunselor_id FROM kaunselor_jadual a INNER JOIN ( SELECT id, ndp FROM user ) b  ON b.id = a.user_id WHERE (tarikh BETWEEN ('$start') AND ('$end')) ORDER BY id";
+  $query = "SELECT a.id,masalah ,tarikh as start, event_status, b.ndp as ndp, b.id as user_id ,sebab , kaunselor_id, image_url , b.nama FROM kaunselor_jadual a INNER JOIN ( SELECT id, ndp, image_url,nama FROM user ) b  ON b.id = a.user_id WHERE (tarikh BETWEEN ('$start') AND ('$end') AND   event_status='1')  ORDER BY id";
 
 
   $result = mysqli_query($db, $query);
@@ -408,6 +421,7 @@ if (isset($_POST['calendaraddna'])) {
   $title = $_POST['calendaraddna']['title'];
   $start = $_POST['calendaraddna']['start'];
   $user_id = $_POST['calendaraddna']['user_id'];
+  $jenis = $_POST['calendaraddna']['type'];
 
 
 
@@ -420,7 +434,7 @@ if (isset($_POST['calendaraddna'])) {
 
 
 
-  $query = "INSERT INTO  kaunselor_jadual (user_id,masalah,tarikh) VALUES ('$user_id','$title','$start')";
+  $query = "INSERT INTO  kaunselor_jadual (user_id,masalah,tarikh,jenis) VALUES ('$user_id','$title','$start','$jenis')";
 
 
   $result = mysqli_query($db, $query);
@@ -721,7 +735,7 @@ if (isset($_POST['senaraistudent'])) {
                                                         </div>',
         "c" => $user['email'],
         "d" => '
-            <a class="btn btn-success me-2" href="' . $site_url . 'kaunselor/student/' . $user['ndp'] . '">
+            <a class="btn btn-success me-2" href="' . $site_url . 'student/' . $user['ndp'] . '">
         <svg class="icon">
             <use
                 xlink:href="' . $site_url . '/assets/vendors/@coreui/icons/svg/free.svg#cil-magnifying-glass">
@@ -947,5 +961,8 @@ if (isset($_POST['test3'])) {
 // Return the data as JSON
   // echo json_encode($data);
 }
+
+
+
 
 ?>

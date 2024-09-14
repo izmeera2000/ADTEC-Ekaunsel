@@ -97,12 +97,12 @@
             <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-star"></use>
           </svg><span data-coreui-i18n="pages">Temu Janji</span></a>
         <ul class="nav-group-items compact">
-          <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>kaunselor/booking" target="_top">
+          <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>kaunseling/manage" target="_top">
               <svg class="nav-icon">
                 <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout">
                 </use>
               </svg><span>Urus</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>kaunselor/booking" target="_top">
+          <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>kaunseling/list" target="_top">
               <svg class="nav-icon">
                 <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout">
                 </use>
@@ -120,16 +120,16 @@
           </svg><span>Borang</span></a></li>
 
 
-      <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>user/profile" target="_top">
+      <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>kaunseling/analytics" target="_top">
           <svg class="nav-icon">
             <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout">
             </use>
-          </svg><span>Traffic</span></a></li>
+          </svg><span>Analytic</span></a></li>
 
       <li class="nav-title">Student</li>
 
 
-      <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>kaunselor/student/senarai" target="_top">
+      <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>student/senarai" target="_top">
           <svg class="nav-icon">
             <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout">
             </use>
@@ -157,12 +157,12 @@
             <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-star"></use>
           </svg><span data-coreui-i18n="pages">Email</span></a>
         <ul class="nav-group-items compact">
-          <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>kaunselor/booking" target="_top">
+          <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>kaunseling/booking" target="_top">
               <svg class="nav-icon">
                 <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout">
                 </use>
               </svg><span>Inbox</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>kaunselor/booking" target="_top">
+          <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>kaunseling/booking" target="_top">
               <svg class="nav-icon">
                 <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout">
                 </use>
