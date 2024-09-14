@@ -150,6 +150,12 @@ function test()
 	// die('Page not found. Please try some different url.');
 }
 
+function testclient()
+{
+	require_once('views/client.php');
+
+	// die('Page not found. Please try some different url.');
+}
 // debug_to_console2($current_url);
 
 //If url is http://localhost/route/home or user is at the maion page(http://localhost/route/)
@@ -309,6 +315,13 @@ switch (true) {
 	case str_contains($request, 'testemail'):
 		test();
 		break;
+
+	case str_contains($request, 'client'):
+		testclient();
+		break;
+
+	//t estend
+
 
 	default:
 		echo $request;
