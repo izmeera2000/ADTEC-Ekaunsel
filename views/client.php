@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <head>
-  <title>Pusher Test</title>
+  <title>Pusher Test 2</title>
   <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
   <script>
 
@@ -8,8 +8,7 @@
     Pusher.logToConsole = true;
 
     var pusher = new Pusher('4eb1aed9a19557432a94', {
-        cluster: 'your-cluster',
-        encrypted: true
+      cluster: 'ap1'
     });
 
     var channel = pusher.subscribe('my-channel');
