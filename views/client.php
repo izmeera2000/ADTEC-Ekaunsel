@@ -1,55 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>WebSocket Reconnect Example</title>
+  <title>Pusher Test</title>
+  <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+  <script>
+
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('4eb1aed9a19557432a94', {
+      cluster: 'ap1'
+    });
+
+    var channel = pusher.subscribe('my-channel');
+    channel.bind('my-event', function(data) {
+      alert(JSON.stringify(data));
+    });
+  </script>
 </head>
 <body>
-    <h2>WebSocket Client with Reconnect</h2>
-    <textarea id="chatLog" cols="100" rows="20" readonly></textarea><br>
-    <input type="text" id="msgBox" placeholder="Enter message">
-    <button onclick="sendMessage()">Send</button>
-
-    <script>
-        let ws;
-        const serverUrl = "ws://kaunselingadtectaiping.com.my/chat"; // Replace with your WebSocket server URL
-        const reconnectInterval = 5000; // Time to wait before attempting reconnection (in milliseconds)
-
-        function connectWebSocket() {
-            ws = new WebSocket(serverUrl);
-
-            ws.onopen = function() {
-                console.log("Connected to WebSocket server.");
-                document.getElementById('chatLog').value += "Connected to WebSocket server.\n";
-            };
-
-            ws.onmessage = function(event) {
-                document.getElementById('chatLog').value += event.data + "\n";
-            };
-
-            ws.onerror = function(event) {
-                console.error("WebSocket error: ", event);
-            };
-
-            ws.onclose = function(event) {
-                console.log("WebSocket connection closed. Reconnecting...");
-                document.getElementById('chatLog').value += "WebSocket connection closed. Reconnecting...\n";
-                setTimeout(connectWebSocket, reconnectInterval);
-            };
-        }
-
-        function sendMessage() {
-            const msg = document.getElementById('msgBox').value;
-            if (ws && ws.readyState === WebSocket.OPEN) {
-                ws.send(msg);
-                document.getElementById('msgBox').value = ""; // Clear input after sending
-            } else {
-                console.log("WebSocket is not connected. Unable to send message.");
-            }
-        }
-
-        // Initial connection
-        connectWebSocket();
-    </script>
+  <h1>Pusher Test</h1>
+  <p>
+    Try publishing an event to channel <code>my-channel</code>
+    with event name <code>my-event</code>.
+  </p>
 </body>
-</html>

@@ -14,8 +14,22 @@ $site_url = $_ENV['site1'];
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
+use Pusher\Pusher;
 
 
+$options = array(
+  'cluster' => 'ap1',
+  'useTLS' => true
+);
+$pusher = new Pusher\Pusher(
+  '4eb1aed9a19557432a94',
+  'd72c290be2a8fcd69e5a',
+  '1864996',
+  $options
+);
+
+$data['message'] = 'hello world';
+$pusher->trigger('my-channel', 'my-event', $data);
 
 
 $errors = array();
