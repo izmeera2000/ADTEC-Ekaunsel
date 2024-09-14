@@ -2,44 +2,54 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>WebSocket Client</title>
+    <title>WebSocket Reconnect Example</title>
 </head>
 <body>
-    <h2>WebSocket Chat</h2>
+    <h2>WebSocket Client with Reconnect</h2>
     <textarea id="chatLog" cols="100" rows="20" readonly></textarea><br>
     <input type="text" id="msgBox" placeholder="Enter message">
     <button onclick="sendMessage()">Send</button>
 
     <script>
-        // Create WebSocket connection
-        let ws = new WebSocket("ws://localhost:8080/chat");
+        let ws;
+        const serverUrl = "ws://localhost:8080/chat"; // Replace with your WebSocket server URL
+        const reconnectInterval = 5000; // Time to wait before attempting reconnection (in milliseconds)
 
-        // When connection is open
-        ws.onopen = function() {
-            console.log("Connected to WebSocket server.");
-        };
+        function connectWebSocket() {
+            ws = new WebSocket(serverUrl);
 
-        // When a message is received
-        ws.onmessage = function(event) {
-            document.getElementById('chatLog').value += event.data + "\n";
-        };
+            ws.onopen = function() {
+                console.log("Connected to WebSocket server.");
+                document.getElementById('chatLog').value += "Connected to WebSocket server.\n";
+            };
 
-        // When there's an error
-        ws.onerror = function(event) {
-            console.log("WebSocket error: " + event);
-        };
+            ws.onmessage = function(event) {
+                document.getElementById('chatLog').value += event.data + "\n";
+            };
 
-        // When the connection is closed
-        ws.onclose = function(event) {
-            console.log("WebSocket connection closed.");
-        };
+            ws.onerror = function(event) {
+                console.error("WebSocket error: ", event);
+            };
 
-        // Send a message to the server
-        function sendMessage() {
-            let msg = document.getElementById('msgBox').value;
-            ws.send(msg);
-            document.getElementById('msgBox').value = ""; // Clear input after sending
+            ws.onclose = function(event) {
+                console.log("WebSocket connection closed. Reconnecting...");
+                document.getElementById('chatLog').value += "WebSocket connection closed. Reconnecting...\n";
+                setTimeout(connectWebSocket, reconnectInterval);
+            };
         }
+
+        function sendMessage() {
+            const msg = document.getElementById('msgBox').value;
+            if (ws && ws.readyState === WebSocket.OPEN) {
+                ws.send(msg);
+                document.getElementById('msgBox').value = ""; // Clear input after sending
+            } else {
+                console.log("WebSocket is not connected. Unable to send message.");
+            }
+        }
+
+        // Initial connection
+        connectWebSocket();
     </script>
 </body>
 </html>
