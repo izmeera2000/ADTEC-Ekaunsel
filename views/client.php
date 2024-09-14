@@ -12,7 +12,11 @@
 
     <script>
         let ws;
+<<<<<<< HEAD
         const serverUrl = "wss://kaunselingadtectaiping.com.my/chat"; // Replace with your WebSocket server URL
+=======
+        const serverUrl = "ws://kaunselingadtectaiping.com.my/chat:8080"; // Replace with your WebSocket server URL
+>>>>>>> 38e2c0bde871c755827890dbedfdecd5197dd38f
         const reconnectInterval = 5000; // Time to wait before attempting reconnection (in milliseconds)
 
         function connectWebSocket() {
