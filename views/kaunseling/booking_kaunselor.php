@@ -68,5 +68,10 @@
 <?php
 
 ?>
+    <style>
+        .fc-list-event-time {
+            display: none; /* Hide event time */
+        }
+    </style>
   </body>
 </html>

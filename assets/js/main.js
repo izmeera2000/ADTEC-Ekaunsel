@@ -492,11 +492,10 @@ function showtoast($message) {
 }
 
 function showmodal($main) {
-   myModal = new coreui.Modal("#" + $main);
+  myModal = new coreui.Modal("#" + $main);
 
   myModal.show();
 }
-
 
 function hidemodal() {
   if (myModal) {
@@ -535,88 +534,266 @@ $("#add_soalan_button").click(function () {
 });
 
 // Create the Radar Chart
-const ctx = document.getElementById("radarChart").getContext("2d");
-const radarChart = new Chart(ctx, {
-  type: "radar",
-  data: {
-    labels: [], // Labels will be set dynamically
-    datasets: [
-      {
-        label: "Latest", // Label for the first dataset
-        data: [], // Data will be set dynamically
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
-        borderColor: "rgba(255, 99, 132, 1)",
-        borderWidth: 2,
-      },
-      {
-        label: "First", // Label for the second dataset
-        data: [], // Data will be set dynamically
-        backgroundColor: "rgba(54, 162, 235, 0.5)",
-        borderColor: "rgba(54, 162, 235, 1)",
-        borderWidth: 2,
-      },
-    ],
-  },
-  options: {
-    responsive: true,
+if (document.getElementById("radarChart")) {
+  const ctx = document.getElementById("radarChart").getContext("2d");
+  const radarChart = new Chart(ctx, {
+    type: "radar",
+    data: {
+      labels: [], // Labels will be set dynamically
+      datasets: [
+        {
+          label: "Latest", // Label for the first dataset
+          data: [], // Data will be set dynamically
+          backgroundColor: "rgba(255, 99, 132, 0.5)",
+          borderColor: "rgba(255, 99, 132, 1)",
+          borderWidth: 2,
+        },
+        {
+          label: "First", // Label for the second dataset
+          data: [], // Data will be set dynamically
+          backgroundColor: "rgba(54, 162, 235, 0.5)",
+          borderColor: "rgba(54, 162, 235, 1)",
+          borderWidth: 2,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
 
-    scales: {
-      r: {
-        beginAtZero: true,
+      scales: {
+        r: {
+          beginAtZero: true,
+        },
+      },
+    },
+  });
+
+  // Fetch data via AJAX
+
+  var ndp = document.getElementById("3").value;
+
+  // console.log(ndp);
+  $.ajax({
+    url: "kaunselor/student/psikologi", // URL to your PHP script that returns data
+    method: "POST",
+    data: {
+      test3: {
+        ndp: ndp,
+        // title: title,
+        // start: date,
+      },
+    },
+
+    success: function (response) {
+      // Check if response contains the expected datasets
+      if (response.firstRow && response.lastRow) {
+        console.log(response);
+        // Process firstRow
+        let labels = [];
+        let dataValues1 = [];
+        response.firstRow.forEach(function (item) {
+          labels.push(item.kategori_name);
+          dataValues1.push(item.value);
+        });
+
+        // Process lastRow
+        let dataValues2 = [];
+        response.lastRow.forEach(function (item) {
+          dataValues2.push(item.value);
+        });
+
+        // Set labels for the chart
+        radarChart.data.labels = labels;
+
+        // Set data for the datasets
+        radarChart.data.datasets[0].data = dataValues1; // Dataset 1
+        radarChart.data.datasets[1].data = dataValues2; // Dataset 2
+
+        // Update the chart with new data
+        radarChart.update();
+      } else {
+        console.error("Response does not contain expected datasets:");
+      }
+    },
+    error: function (error) {
+      console.error("Error fetching data", error);
+    },
+  });
+}
+
+table2 = new DataTable("#senaraitemujanji", {
+  // rowReorder: {
+  //   selector: "td:nth-child(1), td:nth-child(2), td:nth-child(3)", // This allows reordering by dragging either the first or second column
+  //   update: false,
+  // },
+  ajax: {
+    type: "POST",
+    url: "senaraitemujanji",
+    data: {
+      senaraitemujanji: {
+        user_id: "test",
+        // title: title,
+        // start: date,
       },
     },
   },
+  // pageLength: 1000,
+  // dom:'frtip',
+
+  responsive: true,
+  paging: false,
+  columns: [
+    { data: "a", className: "text-center  " },
+    { data: "b", className: "   " },
+    { data: "c", className: "text-center  " },
+    { data: "d", className: "text-center  " },
+    { data: "e", className: "text-center" },
+  ],
 });
 
-// Fetch data via AJAX
-
-var ndp = document.getElementById("3").value;
-
-console.log(ndp);
-$.ajax({
-  url: "kaunselor/student/psikologi", // URL to your PHP script that returns data
-  method: "POST",
-  data: {
-    test3: {
-      ndp: ndp,
-      // title: title,
-      // start: date,
+table3 = new DataTable("#senaraitemujanji2", {
+  // rowReorder: {
+  //   selector: "td:nth-child(1), td:nth-child(2), td:nth-child(3)", // This allows reordering by dragging either the first or second column
+  //   update: false,
+  // },
+  ajax: {
+    type: "POST",
+    url: "senaraitemujanji2",
+    data: {
+      senaraitemujanji2: {
+        user_id: "test",
+        // title: title,
+        // start: date,
+      },
     },
   },
+  // pageLength: 1000,
+  // dom:'frtip',
 
-  success: function (response) {
-    // Check if response contains the expected datasets
-    if (response.firstRow && response.lastRow) {
-      console.log(response);
-      // Process firstRow
-      let labels = [];
-      let dataValues1 = [];
-      response.firstRow.forEach(function (item) {
-        labels.push(item.kategori_name);
-        dataValues1.push(item.value);
-      });
+  responsive: true,
+  paging: false,
+  columns: [
+    { data: "a", className: "text-center  " },
+    { data: "b", className: "   " },
+    { data: "c", className: "text-center  " },
+    { data: "d", className: "text-center  " },
+    { data: "e", className: "text-center" },
+  ],
+});
 
-      // Process lastRow
-      let dataValues2 = [];
-      response.lastRow.forEach(function (item) {
-        dataValues2.push(item.value);
-      });
-
-      // Set labels for the chart
-      radarChart.data.labels = labels;
-
-      // Set data for the datasets
-      radarChart.data.datasets[0].data = dataValues1; // Dataset 1
-      radarChart.data.datasets[1].data = dataValues2; // Dataset 2
-
-      // Update the chart with new data
-      radarChart.update();
-    } else {
-      console.error("Response does not contain expected datasets:", response);
-    }
+table3 = new DataTable("#senaraitemujanji3", {
+  // rowReorder: {
+  //   selector: "td:nth-child(1), td:nth-child(2), td:nth-child(3)", // This allows reordering by dragging either the first or second column
+  //   update: false,
+  // },
+  ajax: {
+    type: "POST",
+    url: "senaraitemujanji3",
+    data: {
+      senaraitemujanji3: {
+        user_id: "test",
+        // title: title,
+        // start: date,
+      },
+    },
   },
-  error: function (error) {
-    console.error("Error fetching data", error);
-  },
+  // pageLength: 1000,
+  // dom:'frtip',
+
+  responsive: true,
+  paging: false,
+  columns: [
+    { data: "a", className: "text-center  " },
+    { data: "b", className: "   " },
+    { data: "c", className: "text-center  " },
+    { data: "d", className: "text-center  " },
+    { data: "e", className: "text-center" },
+  ],
 });
 //# sourceMappingURL=main.js.map
+
+if (document.getElementById("event_status_3")) {
+  const now = new Date();
+
+  const startTime = new Date(
+    document.getElementById("starttime").dataset.value
+  );
+  const endTime = new Date(document.getElementById("endtime").dataset.value);
+
+  const totalTime = endTime - startTime;
+  const elapsedTime = now - startTime;
+
+  // Calculate progress percentage
+  const progressPercentage = Math.floor((elapsedTime / totalTime) * 100, 100);
+  console.log(progressPercentage);
+
+  if (progressPercentage <= 100) {
+    document
+      .getElementById("timeprogress")
+      .setAttribute("aria-valuenow", progressPercentage);
+    document.getElementById("timeprogress").style.width =
+      progressPercentage + "%";
+  } else {
+    document.getElementById("timeprogress").classList.remove("bg-success");
+    document.getElementById("timeprogress").classList.add("bg-warning");
+    document.getElementById("timeprogress").style.width = "100%";
+  }
+}
+
+$("#mulaoffline").click(function () {});
+
+$("#mula2").click(function () {});
+
+$("#mulaonline").click(function () {
+  showmodal("temujanji_mula");
+});
+
+$("#temujanji_mula_submit").click(function () {
+  var meeting_id = $("#temujanji_mula_id").val();
+
+  var manual = $("#temujanji_manual_input").val();
+  var start = $("#mulamasa").val();
+  var end = $("#tamatmasa").val();
+  var user_id = $("#user_id").val();
+  var user_mail = $("#user_mail").val();
+
+  $.ajax({
+    url: "temujanji_update", // URL to your PHP script that returns data
+    method: "POST",
+    data: {
+      temujanji_update: {
+        meeting_id: meeting_id,
+        manual: manual,
+        start: start,
+        end: end,
+        user_id: user_id,
+        user_mail: user_mail,
+      },
+    },
+
+    success: function (response) {
+      // Check if response contains the expected datasets
+      console.log(response);
+      // console.log("as");
+      // $("#temujanji_mula").modal("hide");
+      location.reload();
+    },
+    error: function (error) {
+      console.error("Error fetching data", error);
+    },
+  });
+  // console.log(manual);
+});
+
+$('input[name="options-outlined2"]').click(function () {
+  // alert('You selected: ' + $(this).val());
+  if ($(this).val() == 0) {
+    if (!$("#temujanji_manual").hasClass("d-none")) {
+      $("#temujanji_manual").addClass("d-none");
+    }
+  } else {
+    if ($("#temujanji_manual").hasClass("d-none")) {
+      $("#temujanji_manual").removeClass("d-none");
+    }
+  }
+});

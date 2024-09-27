@@ -22,18 +22,18 @@
 <script src="<?php echo $site_url ?>assets/vendors/@coreui/chartjs/js/coreui-chartjs.js"></script>
 <script src="<?php echo $site_url ?>assets/vendors/@coreui/utils/js/index.js"></script>
 <script src="<?php echo $site_url ?>assets/js/main.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/pusher@7.0.0/dist/web/pusher.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/pusher@7.0.0/dist/web/pusher.min.js"></script> -->
 <script>
-  // Initialize Pusher
-  var pusher = new Pusher('4eb1aed9a19557432a94', {
-    cluster: 'ap1'
-  });
+  // // Initialize Pusher
+  // var pusher = new Pusher('4eb1aed9a19557432a94', {
+  //   cluster: 'ap1'
+  // });
 
-  // Subscribe to a channel
-  var channel = pusher.subscribe('my-channel');
+  // // Subscribe to a channel
+  // var channel = pusher.subscribe('my-channel');
 
-  // Bind to an event
-  channel.bind('my-event', function (data) {
-    alert('Received data: ' + JSON.stringify(data));
-  });
+  // // Bind to an event
+  // channel.bind('my-event', function (data) {
+  //   alert('Received data: ' + JSON.stringify(data));
+  // });
 </script>

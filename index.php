@@ -41,7 +41,13 @@ function logout()
 	unset($_SESSION['user_details']);
 	header("location: " . $site_url . "");
 }
+function g_oauth()
+{
+	// check_session($site_url);
 
+	require_once('views/goauth.php');
+
+}
 
 function user_profile()
 {
@@ -90,8 +96,29 @@ function kaunseling_student()
 	require_once('views/kaunseling/student.php');
 
 }
+function kaunseling_senarai()
+{
+	check_session($site_url, 1);
+	require_once('views/kaunseling/senarai.php');
 
+}
+function kaunseling_temujanji($request)
+{
 
+	check_session($site_url, 1);
+	$product_id = basename($request);
+
+	require_once('views/kaunseling/temujanji.php');
+
+}
+
+//email
+function email_meeting_link($request,$site_url)
+{
+
+	require_once('views/email/meeting_link.php');
+
+}
 
 
 //custom pages
@@ -105,6 +132,7 @@ function page404()
 
 function student_profile($request)
 {
+	check_session($site_url, 1);
 	$product_id = basename($request);
 
 	require_once('views/kaunseling/student_profile.php');
@@ -113,6 +141,7 @@ function student_profile($request)
 
 function student_profile_psikologi($request)
 {
+	check_session($site_url, 1);
 	$product_id = basename($request);
 
 	require_once('admin/server.php');
@@ -176,6 +205,10 @@ switch (true) {
 
 	case str_contains($request, 'logout'):
 		logout();
+		break;
+
+	case str_contains($request, 'goauth'):
+		g_oauth();
 		break;
 	// end outside
 
@@ -258,6 +291,9 @@ switch (true) {
 		kaunseling_booking_kaunselor();
 		break;
 
+
+
+
 	case str_starts_with($request, 'student/senarai'):
 		kaunseling_student();
 		break;
@@ -297,10 +333,42 @@ switch (true) {
 		break;
 
 
+	case str_contains($request, 'kaunselor_reject'):
+		server();
+		break;
+
+	case str_contains($request, 'kaunselor_approve'):
+		server();
+		break;
+
+
+
+	case str_starts_with($request, 'kaunseling/senarai'):
+		kaunseling_senarai();
+		break;
+
+	case str_contains($request, 'senaraitemujanji'):
+		server();
+		break;
+	case str_contains($request, 'senaraitemujanji2'):
+		server();
+		break;
+
+	case str_contains($request, 'senaraitemujanji3'):
+		server();
+		break;
+
+
+	case str_starts_with($request, 'kaunseling/temujanji'):
+		kaunseling_temujanji($request);
+		break;
 	//end kaunselor
 
 
-
+	case str_contains($request, 'temujanji_update'):
+		server();
+		break;
+	
 
 
 
@@ -319,6 +387,11 @@ switch (true) {
 	case str_contains($request, 'client'):
 		testclient();
 		break;
+
+
+		case str_contains($request, 'email/meeting_link'):
+			email_meeting_link($request,$site_url);
+			break;
 
 	//t estend
 

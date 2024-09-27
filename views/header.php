@@ -286,12 +286,12 @@
       </li> -->
     <!-- </ul> -->
     <ul class="header-nav">
-      <li class="nav-item dropdown"><a class="nav-link py-0" data-coreui-toggle="dropdown" href="#" role="button"
+      <li class="nav-item dropdown"><button  class="nav-link py-0 " type="button"  data-coreui-toggle="dropdown"   role="button"
           aria-haspopup="true" aria-expanded="false">
           <div class="avatar avatar-md"><img class="avatar-img"
               src="<?php echo $site_url ?>assets/img/user/<?php echo $_SESSION['user_details']['id'] ?>/<?php echo $_SESSION['user_details']['image_url'] ?>"
               alt="user@email.com"><span class="avatar-status bg-success"></span></div>
-        </a>
+        </button>
         <div class="dropdown-menu dropdown-menu-end pt-0">
           <div class="dropdown-header bg-body-tertiary text-body-secondary fw-semibold rounded-top mb-2"
             data-coreui-i18n="account">Account</div>

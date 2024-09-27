@@ -128,6 +128,92 @@
               </div>
             </div>
           </div>
+
+          <?php if (($_SESSION['user_details']['role'] == 1)) { ?>
+            <div class="col-xl-6">
+
+              <div class="card my-4  ">
+                <div class="card-body p-4">
+                  <div class="card-title fs-4 fw-semibold" data-coreui-i18n="traffic">Google Auth</div>
+                  <p class="text-body-secondary">Link with Google</p>
+
+
+                  <?php
+
+
+
+                  // $accessToken = getAccessTokenFromDatabase($_SESSION['user_details']['id'], $db);
+
+
+                  if (isset($_SESSION['user_details']['access_token'])) {
+
+
+                    // $client = new Google_Client();
+
+
+
+
+                    // $client = new Google_Client();
+                    // $client->setAuthConfig('../client_secret.json');
+                    // $client->addScope(Google_Service_Calendar::CALENDAR);
+                    // $client->setAccessToken($_SESSION['user_details']['access_token']);
+                
+                    // $calendarService = new Google_Service_Calendar($client);
+                
+                    // // Create a Google Meet event
+                    // $event = new Google_Service_Calendar_Event(array(
+                    //   'summary' => 'Google Meet Meeting',
+                    //   'start' => array(
+                    //     'dateTime' => '2024-09-19T10:00:00-07:00', // Specify your date and time here
+                    //     'timeZone' => 'America/Los_Angeles',
+                    //   ),
+                    //   'end' => array(
+                    //     'dateTime' => '2024-09-19T11:00:00-07:00',
+                    //     'timeZone' => 'America/Los_Angeles',
+                    //   ),
+                    //   'conferenceData' => array(
+                    //     'createRequest' => array(
+                    //       'requestId' => 'random-string',
+                    //       'conferenceSolutionKey' => array(
+                    //         'type' => 'hangoutsMeet'
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ));
+                
+                    // $event = $calendarService->events->insert('primary', $event, array('conferenceDataVersion' => 1));
+                
+                    // // Get the Google Meet link
+                    // $googleMeetLink = $event->getHangoutLink();
+                    // echo 'Meet Link: ' . $googleMeetLink;
+                    ?>
+                    <button type="button" class="btn btn-primary">Connected</button>
+
+                    <?php
+
+
+                  } else {
+
+
+                    ?>
+
+                    <a href="<?php echo $site_url ?>goauth" class="btn btn-secondary">Not Connected</a>
+
+                    <?php
+                  }
+                  ?>
+
+                  <div class="row">
+                    <div class="text-end">
+                      <!-- <button class="btn btn-primary px-4" type="button">Save Changes</button> -->
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          <?php } ?>
         </div>
 
       </div>
@@ -141,8 +227,8 @@
   <?php include(getcwd() . '/views/script.php');
 
   ?>
-  <script src="<?php echo $site_url ?>assets/vendors/fullcalendar/js/index.global.min.js"></script>
-  <script src="<?php echo $site_url ?>assets/js/calendar.js"></script>
+  <!-- <script src="<?php echo $site_url ?>assets/vendors/fullcalendar/js/index.global.min.js"></script> -->
+  <!-- <script src="<?php echo $site_url ?>assets/js/calendar.js"></script> -->
   <script>
 
   </script>

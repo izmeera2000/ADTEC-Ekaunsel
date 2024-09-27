@@ -87,6 +87,7 @@
                 <div class="col-lg-12">
                   <div class="card overflow-hidden mb-4">
                     <div class="card-body p-4">
+
                       <div class="row">
                         <div class="col">
                           <div class="card-title fs-4 fw-semibold" data-coreui-i18n="sale">Sale</div>

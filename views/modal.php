@@ -126,12 +126,13 @@
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="kaunselor_updateevent_title">Book Kaunseling</h5>
-          <button type="button" class="btn-close" data-coreui-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form>
+        <form>
+          <div class="modal-header">
+            <h5 class="modal-title" id="kaunselor_updateevent_title">Book Kaunseling</h5>
+            <button type="button" class="btn-close" data-coreui-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+
             <input type="hidden" class="form-control" id="kaunselor_updateevent_id" value="">
 
             <div class="mb-3 row">
@@ -166,7 +167,33 @@
               </div>
             </div>
 
-            <div class="row mb-3 ">
+            <div class="mb-3 row">
+              <label for="kaunselor_updateevent_date" class="col-sm-2 col-form-label">Jenis Modal</label>
+              <div class="col-sm-10">
+                <input type="text" readonly class="form-control-plaintext" id="kaunselor_updateevent_type"
+                  value="email@example.com">
+              </div>
+            </div>
+
+            <div class="mb-3  ">
+              <input type="radio" class="btn-check" name="options-outlined" id="success-outlined" autocomplete="off"
+                value="1">
+              <label class="btn btn-outline-success" for="success-outlined">Approve</label>
+
+              <input type="radio" class="btn-check" name="options-outlined" id="danger-outlined" autocomplete="off"
+                value="0">
+              <label class="btn btn-outline-danger" for="danger-outlined">Reject</label>
+            </div>
+
+
+            <div class="mb-3  d-none" id="kaunselor_updateevent_reject">
+              <label for="kaunselor_updateevent_sebabreject" class="col-form-label">Sebab Reject</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="kaunselor_updateevent_sebabreject">
+              </div>
+            </div>
+
+            <div class="row mb-3 d-none " id="kaunselor_updateevent_approve">
               <div class="col-md-6">
                 <label for="kaunselor_updateevent_content1" class="  col-form-label">Masa Mula</label>
                 <input type="time" class="form-control" id="timeInput1" name="time1" min="08:00" max="17:00" step="1800">
@@ -178,14 +205,17 @@
               </div>
 
             </div>
-          </form>
 
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-danger" onclick="" id="kaunselor_updateevent_button1">Reject</button>
-          <button type="button" class="btn btn-primary" onclick="" id="kaunselor_updateevent_button2">Approve</button>
-        </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-danger  d-none" onclick=""
+              id="kaunselor_updateevent_button1">Save</button>
+            <button type="button" class="btn btn-success  d-none " onclick=""
+              id="kaunselor_updateevent_button2">Save</button>
+          </div>
+        </form>
+
       </div>
     </div>
   </div>
@@ -250,4 +280,61 @@
     </div>
   </div>
 
+<?php } ?>
+
+
+
+
+<?php if (str_starts_with($request, 'kaunseling/temujanji')) { ?>
+  <div class="modal fade" id="temujanji_mula" tabindex="-1" aria-labelledby="temujanji_mula_title"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <form>
+          <div class="modal-header">
+            <h5 class="modal-title" id="temujanji_mula_title">Mula Temu Janji</h5>
+            <button type="button" class="btn-close" data-coreui-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+
+            <input type="hidden" class="form-control" id="temujanji_mula_id" value="<?php echo $product_id ?>">
+
+
+            <div class="mb-3  ">
+              <input type="radio" class="btn-check" name="options-outlined2" id="success-outlined" autocomplete="off"
+                value="1" checked>
+              <label class="btn btn-primary" for="success-outlined">Manual</label>
+
+
+              <?php
+
+              ?>
+              <input type="radio" class="btn-check" name="options-outlined2" id="danger-outlined" autocomplete="off"
+                value="0" <?php echo (isset($_SESSION['user_details']['access_token'])) ? "" : "disabled" ?>>
+              <label class="btn btn-primary" for="danger-outlined">Auto</label>
+            </div>
+
+
+            <div class="mb-3" id="temujanji_manual">
+              <label for="temujanji_manual_input" class="col-form-label">Meeting Link</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="temujanji_manual_input" >
+              </div>
+            </div>
+
+
+          </div>
+          <div class="modal-footer">
+            <!-- <button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-danger  d-none" onclick=""
+              id="kaunselor_updateevent_button1">Save</button> -->
+            <!-- <button type="button" class="btn btn-success  d-none " onclick=""
+              id="kaunselor_updateevent_button2">Save</button> -->
+            <button type="button" class="btn btn-secondary" id="temujanji_mula_submit">Submit</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
 <?php } ?>

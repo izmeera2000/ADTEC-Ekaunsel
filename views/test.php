@@ -29,8 +29,24 @@
 // } catch (\Throwable $e) {
 //     echo 'Error: ' . $e->getMessage();
 // }
-$data['message'] = 'Hello from localhost!';
-$response = $pusher->trigger('my-channel', 'test-event', $data);
+// $data['message'] = 'Hello from localhost!';
+// $response = $pusher->trigger('my-channel', 'test-event', $data);
 
-echo "Response: ";
-print_r($response);
+// echo "Response: ";
+// print_r($response);
+
+$client = new Google_Client();
+$client->setAuthConfig('../client_secret.json');
+$client->addScope(Google_Service_Calendar::CALENDAR);
+$client->setRedirectUri('http://localhost/ADTEC-EKaunsel/testemail2');
+$client->setAccessType('offline');
+$client->setPrompt('select_account consent');
+
+if (!isset($_GET['code'])) {
+    $authUrl = $client->createAuthUrl();
+    header('Location: ' . filter_var($authUrl, FILTER_SANITIZE_URL));
+} else {
+    $client->authenticate($_GET['code']);
+    $_SESSION['access_token'] = $client->getAccessToken();
+    header('Location: ' . filter_var('http://localhost/ADTEC-EKaunsel/login', FILTER_SANITIZE_URL));
+}

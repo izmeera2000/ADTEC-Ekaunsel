@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("user_calendarevent_date").value =
           info.event.startStr;
 
-          document.getElementById("user_calendarevent_type").value =
+        document.getElementById("user_calendarevent_type").value =
           info.event.extendedProps.jenis;
 
         showmodal("user_calendarevent");
@@ -44,11 +44,17 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function selectDate(info) {
-    document.getElementById("user_calendaradd_date").value = info.startStr;
+    if (info.startStr >= new Date().toISOString().split("T")[0]) {
+      // alert('Selected date: ' + info.startStr);
+      document.getElementById("user_calendaradd_date").value = info.startStr;
 
-    showmodal("user_calendaradd");
-
+      showmodal("user_calendaradd");
+    } else {
+      showtoast("date not valid");
+      // calendar.unselect();
+    }
     calendar.unselect();
+
   }
 
   function checkoverlapself(info) {
@@ -57,36 +63,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const calendarEl = document.getElementById("calendar");
 
-  const calendar = new FullCalendar.Calendar(calendarEl, {
-    initialView: "dayGridMonth",
-    headerToolbar: {
-      left: "prev,next today",
-      center: "title",
-      right: "dayGridMonth,timeGridWeek,timeGridDay",
-    },
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: "dayGridMonth",
+      headerToolbar: {
+        left: "prev,next today",
+        center: "title",
+        right: "dayGridMonth,timeGridWeek,timeGridDay",
+      },
 
-    dayMaxEventRows: 2,
-    eventOrder: "-title",
-    events: getAllEvents,
-    lazyFetching: true,
-    selectable: true,
-    selectHelper: true,
-    selectConstraint: {
-      start: "00:01",
-      end: "23:59",
-    },
-    height: "auto",
-    selectOverlap: checkoverlapself,
-    eventOverlap: false,
-    select: selectDate,
-    eventClick: clickonEvent,
-    hiddenDays: [0, 6],
-    windowResize: function (arg) {
-      calendar.render();
-    },
-  });
-  calendar.render();
-
+      dayMaxEventRows: 2,
+      eventOrder: "-title",
+      events: getAllEvents,
+      lazyFetching: true,
+      selectable: true,
+      selectHelper: true,
+      selectConstraint: {
+        start: "00:01",
+        end: "23:59",
+      },
+      height: "auto",
+      selectOverlap: checkoverlapself,
+      eventOverlap: false,
+      select: selectDate,
+      eventClick: clickonEvent,
+      hiddenDays: [0, 6],
+      windowResize: function (arg) {
+        calendar.render();
+      },
+    });
+    calendar.render();
+  
   $("#user_calendaradd_button").click(function () {
     calendar_add("user_calendaradd");
   });

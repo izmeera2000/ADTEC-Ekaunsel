@@ -28,7 +28,7 @@ $pusher = new Pusher(
   $options
 );
 
- 
+
 
 $errors = array();
 $toast = array();
@@ -36,6 +36,7 @@ $toast = array();
 
 $db = mysqli_connect($_ENV['host'], $_ENV['user'], $_ENV['pass'], $_ENV['database1']);
 
+date_default_timezone_set(timezoneId: 'Asia/Kuala_Lumpur');
 
 
 
@@ -237,7 +238,13 @@ if (isset($_POST['user_login'])) {
 
       $_SESSION['user_details'] = $user;
 
+      if ($_SESSION['user_details']['role'] == 1) {
+        if (getAccessTokenFromDatabase($user['id'], $db) != "") {
+          $_SESSION['user_details']['access_token'] = getAccessTokenFromDatabase($user['id'], $db);
+          // $accessToken = getAccessTokenFromDatabase($_SESSION['user_details']['id'], $db);
+        }
 
+      }
 
 
       header('location:' . $site_url . '');
@@ -321,6 +328,11 @@ if (isset($_POST['calendarfetch'])) {
       $row['color'] = "red";
 
     }
+    if ($row['event_status'] == "1") {
+      $row['color'] = "yellow";
+      $row['textColor'] = "black";
+
+    }
 
     if ($row['event_status'] == "2") {
       $row['color'] = "green";
@@ -328,14 +340,17 @@ if (isset($_POST['calendarfetch'])) {
     }
 
     if ($row['event_status'] == "3") {
+      $row['color'] = "blue";
+
+    }
+    if ($row['event_status'] == "4") {
       $row['color'] = "gray";
 
     }
     if ($row['jenis'] == "1") {
       $row['jenis'] = "Online";
 
-    }
-    else{
+    } else {
       $row['jenis'] = "Offline";
 
     }
@@ -393,7 +408,7 @@ if (isset($_POST['calendarfetch2'])) {
 
 
 
-  $query = "SELECT a.id,masalah ,tarikh as start, event_status, b.ndp as ndp, b.id as user_id ,sebab , kaunselor_id, image_url , b.nama FROM kaunselor_jadual a INNER JOIN ( SELECT id, ndp, image_url,nama FROM user ) b  ON b.id = a.user_id WHERE (tarikh BETWEEN ('$start') AND ('$end') AND   event_status='1')  ORDER BY id";
+  $query = "SELECT a.id,masalah ,tarikh as start, event_status, b.ndp as ndp, b.id as user_id ,sebab , kaunselor_id, image_url , b.nama, jenis FROM kaunselor_jadual a INNER JOIN ( SELECT id, ndp, image_url,nama FROM user ) b  ON b.id = a.user_id WHERE (tarikh BETWEEN ('$start') AND ('$end') )  ORDER BY FIELD(event_status, 1,2,0)";
 
 
   $result = mysqli_query($db, $query);
@@ -405,12 +420,31 @@ if (isset($_POST['calendarfetch2'])) {
     $row['title'] = $row['masalah'] . " (" . $row['ndp'] . ")";
 
 
+
     if ($row['event_status'] == "0") {
+
       $row['color'] = "red";
 
     }
+    if ($row['event_status'] == "1") {
+      $row['color'] = "yellow";
+      $row['textColor'] = "black";
 
+    }
 
+    if ($row['event_status'] == "2") {
+      $row['color'] = "green";
+
+    }
+
+    if ($row['event_status'] == "3") {
+      $row['color'] = "blue";
+
+    }
+    if ($row['event_status'] == "4") {
+      $row['color'] = "gray";
+
+    }
     $row['allDay'] = "true";
 
     array_push($eventArray, $row);
@@ -845,7 +879,18 @@ if (isset($_POST['addsoalan'])) {
   uploadpic_id($_SESSION['user_details']['id'], $err);
 }
 
-function sendmail($receiver, $title, $message = "")
+
+function getEmailContent($filePath,$url)
+{
+  ob_start(); // Start output buffering
+  $site_url = $url;
+  include(getcwd() . '/views/email/' . $filePath); // Include the PHP file
+  $content = ob_get_clean(); // Get the content of the output buffer and clean it
+  return $content;
+
+
+}
+function sendmail($receiver, $title, $message = "", $url)
 {
 
 
@@ -856,21 +901,21 @@ function sendmail($receiver, $title, $message = "")
 
   try {
 
-    $mail->SMTPDebug = SMTP::DEBUG_SERVER;
     $mail->isSMTP();
+    $mail->SMTPDebug = SMTP::DEBUG_SERVER;
     $mail->Host = 'kaunselingadtectaiping.com.my';
     $mail->SMTPAuth = true;
-    $mail->Username = 'temujanji@kaunselingadtectaiping.com.my';
-    $mail->Password = 'temujanji@33';
+    $mail->Username = $_ENV['email2_username'];
+    $mail->Password = $_ENV['email2_password'];
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-    $mail->Port = 465;
+    $mail->Port = 465; // Adjust as needed (e.g., 465 for SSL)
 
 
-    $mail->setFrom('temujanji@fingerprint.kaunselingadtectaiping.com.my', 'Temu Janji');
+    $mail->setFrom('appointment@kaunselingadtectaiping.com.my', 'Temu Janji');
     $mail->addAddress($receiver);
 
-
-
+    $site_url = $url;
+    $emailBodyContent = getEmailContent('meeting_link.php', $url);
 
 
 
@@ -887,7 +932,7 @@ function sendmail($receiver, $title, $message = "")
       $mail->Body = 'This is the HTML message body <b>in bold!</b>';
       $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
     } else {
-      $mail->Body = $message;
+      $mail->Body = $emailBodyContent;         // Set the body with the content from the .php file
       $mail->AltBody = $message;
     }
     $mail->send();
@@ -900,68 +945,68 @@ function sendmail($receiver, $title, $message = "")
 
 if (isset($_POST['test3'])) {
 
-    // header('Content-Type: application/json');
-    $ndp = $_POST['test3']['ndp'];
-    // echo $ndp;
+  // header('Content-Type: application/json');
+  $ndp = $_POST['test3']['ndp'];
+  // echo $ndp;
 
-    $query =
-      "SELECT a.*,b.ndp  FROM `user_psikologi`  a 
+  $query =
+    "SELECT a.*,b.ndp  FROM `user_psikologi`  a 
       INNER JOIN user b  ON  a.user_id = b.id
       
       WHERE ndp = '$ndp' ORDER BY a.id DESC LIMIT 1";
 
-    $query2 =
-      "SELECT a.*,b.ndp  FROM `user_psikologi`  a INNER JOIN user b  ON  a.user_id = b.id WHERE ndp = '$ndp' ORDER BY a.id ASC LIMIT 1";
+  $query2 =
+    "SELECT a.*,b.ndp  FROM `user_psikologi`  a INNER JOIN user b  ON  a.user_id = b.id WHERE ndp = '$ndp' ORDER BY a.id ASC LIMIT 1";
 
-    $query3 =
-      "SELECT id,nama_kategori FROM `borang_psikologi_kategori`";
+  $query3 =
+    "SELECT id,nama_kategori FROM `borang_psikologi_kategori`";
 
 
-    $rows = [];
-    $rows2 = [];
+  $rows = [];
+  $rows2 = [];
 
-    $results = mysqli_query($db, $query);
-    while ($psikologi = mysqli_fetch_assoc($results)) {
+  $results = mysqli_query($db, $query);
+  while ($psikologi = mysqli_fetch_assoc($results)) {
 
-      $rows[] = json_decode($psikologi['keputusan'], true);
+    $rows[] = json_decode($psikologi['keputusan'], true);
+  }
+  $results = mysqli_query($db, $query2);
+  while ($psikologi = mysqli_fetch_assoc($results)) {
+
+    $rows[] = json_decode($psikologi['keputusan'], true);
+  }
+
+
+  $results = mysqli_query($db, $query3);
+  while ($kategori = mysqli_fetch_assoc($results)) {
+    $kategoriMap[$kategori['id']] = ucfirst($kategori['nama_kategori']);
+  }
+
+  // Map category names to the rows data
+  foreach ($rows as &$row) {
+    foreach ($row as &$item) {
+      if (isset($kategoriMap[$item['kategori_id']])) {
+        $item['kategori_name'] = $kategoriMap[$item['kategori_id']];
+      } else {
+        $item['kategori_name'] = 'Unknown';
+      }
     }
-    $results = mysqli_query($db, $query2);
-    while ($psikologi = mysqli_fetch_assoc($results)) {
+  }
 
-      $rows[] = json_decode($psikologi['keputusan'], true);
-    }
+  if (count($rows) > 0) {
+    // Get the first and last rows
+    $firstRow = $rows[0];
+    $lastRow = $rows[count($rows) - 1];
 
+    // Return the data as JSON
+    header('Content-Type: application/json');
+    echo json_encode([
+      'firstRow' => $firstRow,
+      'lastRow' => $lastRow
+    ]);
+    die();
 
-    $results = mysqli_query($db, $query3);
-    while ($kategori = mysqli_fetch_assoc($results)) {
-        $kategoriMap[$kategori['id']] = ucfirst($kategori['nama_kategori']);
-    }
-    
-    // Map category names to the rows data
-    foreach ($rows as &$row) {
-        foreach ($row as &$item) {
-            if (isset($kategoriMap[$item['kategori_id']])) {
-                $item['kategori_name'] = $kategoriMap[$item['kategori_id']];
-            } else {
-                $item['kategori_name'] = 'Unknown';
-            }
-        }
-    }
-
-    if (count($rows) > 0) {
-      // Get the first and last rows
-      $firstRow = $rows[0];
-      $lastRow = $rows[count($rows) - 1];
-
-      // Return the data as JSON
-      header('Content-Type: application/json');
-      echo json_encode([
-        'firstRow' => $firstRow,
-        'lastRow' => $lastRow
-      ]);
-      die();
-
-    }
+  }
 
 
   //   $data = [
@@ -973,8 +1018,337 @@ if (isset($_POST['test3'])) {
 // Return the data as JSON
   // echo json_encode($data);
 }
+if (isset($_POST['kaunselor_reject'])) {
+
+
+  $event_id = $_POST['kaunselor_reject']['id'];
+  $sebab = $_POST['kaunselor_reject']['sebab'];
+
+  // echo $event_id;
+  $query =
+    "UPDATE kaunselor_jadual SET event_status = 0 , sebab = '$sebab' WHERE id = '$event_id'";
+  $results = mysqli_query($db, $query);
+}
+
+if (isset($_POST['kaunselor_approve'])) {
+
+
+  $event_id = $_POST['kaunselor_approve']['id'];
+  $mula1 = $_POST['kaunselor_approve']['mula'];
+  $tamat1 = $_POST['kaunselor_approve']['tamat'];
+
+  if ($mula1 && $tamat1) {
+    // echo $event_id;
+    $query =
+      "SELECT * FROM kaunselor_jadual WHERE id='$event_id'";
+    $results = mysqli_query($db, $query);
+
+    // echo "test";
+    $event = mysqli_fetch_assoc($results);
+    $mula = date_format(new DateTime(datetime: $event['tarikh'] . $mula1), "Y/m/d H:i:s");
+    $tamat = date_format(new DateTime(datetime: $event['tarikh'] . $tamat1), "Y/m/d H:i:s");
+
+    echo $event['tarikh'] . $mula1;
+
+    // list($hours2, $minutes2) = explode(separator: ':', $tamat1);
+
+
+    // $rows[] = json_decode($psikologi['keputusan'], true);
+
+    $query1 =
+      "UPDATE kaunselor_jadual SET event_status = 2, masa_mula ='$mula', masa_tamat = '$tamat'  WHERE id = '$event_id'";
+    $results = mysqli_query($db, $query1);
+  }
+
+
+}
+
+
+function saveTokensToDatabase($accessToken, $refreshToken, $expiresIn, $user_id, $db)
+{
+  $expiresAt = date('Y-m-d H:i:s', time() + $expiresIn); // Calculate expiration time
+
+  // Assume you have a logged-in user with $userId
+  // $userId = 'some_unique_user_id';
+
+  // Save to database (example using PDO)
+
+  $query =
+    "INSERT INTO oauth (user_id,access_token,refresh_token,expires_at) VALUES ('$user_id','$accessToken','$refreshToken','$expiresAt') ON 
+  DUPLICATE KEY UPDATE access_token='$accessToken',refresh_token='$refreshToken',expires_at='$expiresAt'";
+  $results = mysqli_query($db, $query);
+}
+
+function getAccessTokenFromDatabase($user_id, $db)
+{
+  // Retrieve tokens from database
+
+
+  $query =
+    "SELECT access_token, refresh_token, expires_at FROM oauth WHERE user_id = '$user_id'";
+  $results = mysqli_query($db, $query);
+
+  if (mysqli_num_rows($results) == 1) {
+
+    $tokenData = $results->fetch_assoc();
+
+    // Check if the access token is expired
+    if (time() > strtotime($tokenData['expires_at'])) {
+      // Token expired, use the refresh token to get a new access token
+      return refreshAccessToken($tokenData['refresh_token'], $user_id, $db);
+    }
+    return $tokenData['access_token']; // Return valid access token
+
+  }
+
+  return;
+}
 
 
 
+function refreshAccessToken($refreshToken, $user_id, $db)
+{
+  $client = new Google_Client();
+  $client->setAuthConfig('../client_secret.json');
+  $client->refreshToken($refreshToken);
+
+  $newAccessToken = $client->getAccessToken();
+  $expiresAt = date('Y-m-d H:i:s', time() + $newAccessToken['expires_in']);
+
+  $accesstoken = $newAccessToken['access_token'];
+
+  $query =
+    "UPDATE oauth SET access_token = '$accesstoken', expires_at = '$expiresAt' WHERE user_id = '$user_id'";
+  $results = mysqli_query($db, $query);
+
+  $query =
+    "SELECT access_token, refresh_token, expires_at FROM oauth WHERE user_id = '$user_id'";
+  $results = mysqli_query($db, $query);
+
+
+  $tokenData = $results->fetch_assoc();
+
+  return $tokenData['access_token']; // Return new access token
+}
+
+
+//cronserver
+// /usr/bin/curl -X POST -H "Content-Type: application/json" -d '{"key1":"value1"}' https://example.com/api/endpoint
+
+
+if (isset($_POST['senaraitemujanji'])) {
+
+  $data = array();
+
+  $today = date('Y-m-d');
+  // echo $today;
+  $query =
+    "SELECT a.* , b.nama,  b.ndp, b.image_url FROM kaunselor_jadual a INNER JOIN  user b ON a.user_id = b.id  WHERE a.tarikh ='$today'  ";
+  $results = mysqli_query($db, $query);
+  if (mysqli_num_rows($results) > 0) {
+
+    while ($row = $results->fetch_assoc()) {
+
+      $timestamp = strtotime($row['tarikh']);
+      $formattedDate = date('d / m / Y', $timestamp);
+
+      $data[] = array(
+
+        "a" => '<div class="avatar avatar-md"><img class="avatar-img" src="' . $site_url . 'assets/img/user/' . $row['user_id'] . '/' . $row['image_url'] . '"
+              alt="user@email.com"></div>',
+        "b" => '<div class="text-nowrap">' . $row['nama'] . '</div>' . '<div class="small text-body-secondary text-nowrap">' . $row['ndp'] . '</div>',
+        "c" => '<div class="text-center">' . $row['masalah'] . '</div>',
+        "d" => '<div class="text-center">' . $formattedDate . '</div>' . '<div class="small text-body-secondary text-nowrap">' . date("h:i") . '</div>',
+        "e" => '
+              <a class="btn btn-success" href="' . $site_url . 'kaunseling/temujanji/' . $row['id'] . '">
+                  <svg class="icon">
+                      <use xlink:href="icons.svg#icon-view"></use>
+                  </svg>
+              </a>
+          '
+      );
+    }
+  }
+
+  echo json_encode(array('data' => $data));
+  die();
+
+}
+
+
+if (isset($_POST['senaraitemujanji2'])) {
+
+  $data = array();
+
+  $today = date('Y-m-d');
+  // echo $today;
+  $query =
+    "SELECT a.* , b.nama,  b.ndp, b.image_url FROM kaunselor_jadual a INNER JOIN  user b ON a.user_id = b.id  WHERE a.tarikh >'$today'  ";
+  $results = mysqli_query($db, $query);
+  if (mysqli_num_rows($results) > 0) {
+
+    while ($row = $results->fetch_assoc()) {
+
+      $timestamp = strtotime($row['tarikh']);
+      $formattedDate = date('d / m / Y', $timestamp);
+
+      $data[] = array(
+
+        "a" => '<div class="avatar avatar-md"><img class="avatar-img" src="' . $site_url . 'assets/img/user/' . $row['user_id'] . '/' . $row['image_url'] . '"
+              alt="user@email.com"></div>',
+        "b" => '<div class="text-nowrap">' . $row['nama'] . '</div>' . '<div class="small text-body-secondary text-nowrap">' . $row['ndp'] . '</div>',
+        "c" => '<div class="text-center">' . $row['masalah'] . '</div>',
+        "d" => '<div class="text-center">' . $formattedDate . '</div>' . '<div class="small text-body-secondary text-nowrap">' . date("h:i") . '</div>',
+        "e" => '
+              <a class="btn btn-success" href="' . $site_url . 'kaunseling/temujanji/' . $row['id'] . '">
+                  <svg class="icon">
+                      <use xlink:href="icons.svg#icon-view"></use>
+                  </svg>
+              </a>
+          '
+      );
+    }
+  }
+
+  echo json_encode(array('data' => $data));
+  die();
+
+}
+
+if (isset($_POST['senaraitemujanji3'])) {
+
+  $data = array();
+
+  $today = date('Y-m-d');
+  // echo $today;
+  $query =
+    "SELECT a.* , b.nama,  b.ndp, b.image_url FROM kaunselor_jadual a INNER JOIN  user b ON a.user_id = b.id  WHERE a.tarikh <'$today'  ";
+  $results = mysqli_query($db, $query);
+  if (mysqli_num_rows($results) > 0) {
+
+    while ($row = $results->fetch_assoc()) {
+
+      $timestamp = strtotime($row['tarikh']);
+      $formattedDate = date('d / m / Y', $timestamp);
+
+      $data[] = array(
+
+        "a" => '<div class="avatar avatar-md"><img class="avatar-img" src="' . $site_url . 'assets/img/user/' . $row['user_id'] . '/' . $row['image_url'] . '"
+              alt="user@email.com"></div>',
+        "b" => '<div class="text-nowrap">' . $row['nama'] . '</div>' . '<div class="small text-body-secondary text-nowrap">' . $row['ndp'] . '</div>',
+        "c" => '<div class="text-center">' . $row['masalah'] . '</div>',
+        "d" => '<div class="text-center">' . $formattedDate . '</div>' . '<div class="small text-body-secondary text-nowrap">' . date("h:i") . '</div>',
+        "e" => '
+              <a class="btn btn-success" href="' . $site_url . 'kaunseling/temujanji/' . $row['id'] . '">
+                  <svg class="icon">
+                      <use xlink:href="icons.svg#icon-view"></use>
+                  </svg>
+              </a>
+          '
+      );
+    }
+  }
+
+  echo json_encode(array('data' => $data));
+  die();
+
+}
+if (isset($_POST['temujanji_update'])) {
+
+
+
+  $meeting_id = $_POST['temujanji_update']['meeting_id'];
+
+  $manual = $_POST['temujanji_update']['manual'];
+
+  $start = date('Y-m-d\TH:i:sP', strtotime($_POST['temujanji_update']['start']));
+  $end = date('Y-m-d\TH:i:sP', strtotime($_POST['temujanji_update']['end']));
+  $user_id = $_POST['temujanji_update']['user_id'];
+  $user_mail = $_POST['temujanji_update']['user_mail'];
+
+
+  // echo $start;
+  // debug_to_console($start);
+
+  if (!$manual) {
+    if (isset($_SESSION['user_details']['access_token'])) {
+
+
+      $client = new Google_Client();
+      $client->setAuthConfig('../client_secret.json');
+      $client->addScope(Google_Service_Calendar::CALENDAR);
+      $client->setAccessToken(getAccessTokenFromDatabase($_SESSION['user_details']['id'], $db));
+
+      $calendarService = new Google_Service_Calendar($client);
+      // Create a Google Meet event
+      $event = new Google_Service_Calendar_Event(array(
+        'summary' => 'Kaunseling ADTEC Meeting',
+        'start' => array(
+          'dateTime' => $start, // Specify your date and time here
+          'timeZone' => 'Asia/Kuala_Lumpur',
+        ),
+        'end' => array(
+          'dateTime' => $end,
+          'timeZone' => 'Asia/Kuala_Lumpur',
+        ),
+        'conferenceData' => array(
+          'createRequest' => array(
+            'requestId' => 'random-string',
+            'conferenceSolutionKey' => array(
+              'type' => 'hangoutsMeet'
+            ),
+          ),
+        ),
+      ));
+
+      try {
+        // Insert the event into the calendar
+        $event = $calendarService->events->insert('primary', $event, array('conferenceDataVersion' => 1));
+
+        // Get the Google Meet link
+        $googleMeetLink = $event->getHangoutLink();
+        $meeting_link = $googleMeetLink; // Store the meeting link
+        echo $user_mail;
+        // echo 'Meet Link: ' . $meeting_link; // Output the meeting link
+
+        sendmail($user_mail, "Meeting Link", "Meeting anda seudah bermula , sila tekan link ini : ", $site_url);
+
+
+      } catch (Exception $e) {
+        // Handle error
+        echo 'Error creating event: ' . $e->getMessage();
+
+      }
+    }
+  } else {
+    // showtoast("asdasdas", $toast); // Use actual NULL for the database
+
+  }
+
+  $now = date('Y-m-d H:i:s');
+
+  // if ($manual) {
+  // echo $manual;
+  // $query =
+  //   "UPDATE kaunselor_jadual SET event_status = '3', masa_mula2 = '$now', meeting_link='$meeting_link' , time_edit='$now' WHERE id = '$meeting_id'";
+
+  // $results = mysqli_query($db, $query);
+
+  // $query =
+  //   "UPDATE kaunselor_jadual SET event_status = '3', masa_mula2 = '$now', meeting_link='$meeting_link' , time_edit='$now' WHERE id = '$meeting_id'";
+
+  // $results = mysqli_query($db, $query);
+
+  // } else {
+  // echo "wow";
+  // }
+
+
+  die();
+
+
+
+
+}
 
 ?>

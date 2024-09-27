@@ -40,8 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.getElementById("kaunselor_updateevent_title").innerHTML =
       info.event.title;
-    document.getElementById("kaunselor_updateevent_id").value =
-      info.event.id;
+    document.getElementById("kaunselor_updateevent_id").value = info.event.id;
     document.getElementById("kaunselor_updateevent_date").value = new Date(
       info.event.startStr
     ).toLocaleDateString("en-MY");
@@ -50,6 +49,12 @@ document.addEventListener("DOMContentLoaded", () => {
       info.event.extendedProps.nama;
     document.getElementById("kaunselor_updateevent_ndp").value =
       info.event.extendedProps.ndp;
+
+    if (info.event.extendedProps.jenis == 1) {
+      document.getElementById("kaunselor_updateevent_type").value = "Online";
+    } else {
+      document.getElementById("kaunselor_updateevent_type").value = "Offline";
+    }
 
     showmodal("kaunselor_updateevent");
 
@@ -83,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
     headerToolbar: {
       left: "prev,next today",
       center: "title",
-      right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
+      right: "dayGridMonth,timeGridWeek,timeGridDay,listDay",
     },
     // allDay: true,
     events: getAllEvents,
@@ -94,7 +99,14 @@ document.addEventListener("DOMContentLoaded", () => {
     //   start: "00:01",
     //   end: "23:59",
     // },
+    
+    eventOrder: function(a, b) {
+       const order = [1, 2, 0];
+      const statusA = parseInt(a.extendedProps.event_status);
+      const statusB = parseInt(b.extendedProps.event_status);
 
+      return order.indexOf(statusA) - order.indexOf(statusB);
+  },
     // select: selectDate,
     eventClick: clickonEvent,
     hiddenDays: [0, 6],
@@ -105,26 +117,89 @@ document.addEventListener("DOMContentLoaded", () => {
     // calendar_add("user_calendaradd");
     console.log("reject");
     hidemodal();
+    var event_id = document.getElementById("kaunselor_updateevent_id").value;
+    var sebab = document.getElementById("kaunselor_updateevent_sebabreject").value;
     //  coreui.Modal("#kaunselor_updateevent");
     $.ajax({
       type: "POST",
       url: "kaunselor_reject",
       data: {
         kaunselor_reject: {
-          start: info.startStr,
-          end: info.endStr,
+          id: event_id,
+          sebab: sebab,
         },
       },
       success: function (response) {
-        console.log(JSON.parse(response));
+        console.log(response);
+        calendar.refetchEvents();
 
-        successCallback(JSON.parse(response));
       },
     });
+    // calendar.render();
+
   });
 
   $("#kaunselor_updateevent_button2").click(function () {
     console.log("approve");
+
+    hidemodal();
+    var event_id = document.getElementById("kaunselor_updateevent_id").value;
+    var mula = document.getElementById("timeInput1").value;
+    var tamat = document.getElementById("timeInput2").value;
+    console.log(mula);
+
+    $.ajax({
+      type: "POST",
+      url: "kaunselor_approve",
+      data: {
+        kaunselor_approve: {
+          id: event_id,
+          mula: mula,
+          tamat: tamat,
+        },
+      },
+      success: function (response) {
+        console.log(response);
+        calendar.refetchEvents();
+
+      },
+    });
+    // calendar.render();
+
     // calendar_delete("user_calendarevent");
+  });
+
+  $('input[name="options-outlined"]').click(function () {
+    // alert('You selected: ' + $(this).val());
+    if ($(this).val() == 1) {
+      if (!$("#kaunselor_updateevent_reject").hasClass("d-none")) {
+        $("#kaunselor_updateevent_reject").addClass("d-none");
+      }
+      if ($("#kaunselor_updateevent_approve").hasClass("d-none")) {
+        $("#kaunselor_updateevent_approve").removeClass("d-none");
+      }
+      if (!$("#kaunselor_updateevent_button1").hasClass("d-none")) {
+        $("#kaunselor_updateevent_button1").addClass("d-none");
+      }
+      if ($("#kaunselor_updateevent_button2").hasClass("d-none")) {
+        $("#kaunselor_updateevent_button2").removeClass("d-none");
+      } 
+      
+    }else{
+      if (!$("#kaunselor_updateevent_approve").hasClass("d-none")) {
+        $("#kaunselor_updateevent_approve").addClass("d-none");
+      }
+      if ($("#kaunselor_updateevent_reject").hasClass("d-none")) {
+        $("#kaunselor_updateevent_reject").removeClass("d-none");
+      } 
+
+      if (!$("#kaunselor_updateevent_button2").hasClass("d-none")) {
+        $("#kaunselor_updateevent_button2").addClass("d-none");
+      }
+      if ($("#kaunselor_updateevent_button1").hasClass("d-none")) {
+        $("#kaunselor_updateevent_button1").removeClass("d-none");
+      } 
+      
+    }
   });
 });

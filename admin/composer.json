@@ -4,6 +4,7 @@
         "phpmailer/phpmailer": "^6.9",
         "ddeboer/imap": "^1.19",
         "cboden/ratchet": "^0.4.4",
-        "pusher/pusher-php-server": "^7.2"
+        "pusher/pusher-php-server": "^7.2",
+        "google/apiclient": "2.15.0"
     }
 }
