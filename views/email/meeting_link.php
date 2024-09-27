@@ -179,7 +179,8 @@ include(getcwd() . '/admin/server.php');
                             <tbody>
                               <tr>
                                 <td style="line-height: 48px; font-size: 32px; margin: 0;" align="left">
-                                  <img class="w-48" src="<?php echo $site_url ?>/assets/img/logo3.png"
+                                  <img class="w-48" src="<?php
+                                  echo $site_url ?>/assets/img/logo3.png"
                                     style="height: auto; line-height: 100%; outline: none; text-decoration: none; display: block; width: 300px; border-style: none; border-width: 0;"
                                     >
                                 </td>

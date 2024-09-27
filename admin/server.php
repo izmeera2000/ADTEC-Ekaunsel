@@ -880,17 +880,16 @@ if (isset($_POST['addsoalan'])) {
 }
 
 
-function getEmailContent($filePath,$url)
+function getEmailContent($filePath)
 {
   ob_start(); // Start output buffering
-  $site_url = $url;
   include(getcwd() . '/views/email/' . $filePath); // Include the PHP file
   $content = ob_get_clean(); // Get the content of the output buffer and clean it
   return $content;
 
 
 }
-function sendmail($receiver, $title, $message = "", $url)
+function sendmail($receiver, $title, $message = "", $site_url = "")
 {
 
 
@@ -914,10 +913,12 @@ function sendmail($receiver, $title, $message = "", $url)
     $mail->setFrom('appointment@kaunselingadtectaiping.com.my', 'Temu Janji');
     $mail->addAddress($receiver);
 
-    $site_url = $url;
-    $emailBodyContent = getEmailContent('meeting_link.php', $url);
 
 
+    $emailBodyContent = getEmailContent('meeting_link.php');
+
+
+    // $mail->addEmbeddedImage(getcwd() . '/assets/img/logo3.png', 'logo_cid'); // 'logo_cid' is a unique ID
 
 
 
@@ -1350,5 +1351,30 @@ if (isset($_POST['temujanji_update'])) {
 
 
 }
+function convertImageToBase64($imagePath)
+{
+  // $imageData = file_get_contents($imagePath); // Read the image file
+  // return base64_encode($imageData); // Encode the image data in base64
+  if (getimagesize($imagePath)) {
+    echo "Image exists: " . $imagePath;
+  } else {
+    echo "Image not found: " . $imagePath;
+  }
+  if (file_exists($imagePath)) {
+    $imageData = file_get_contents($imagePath);
 
+    $imageType = exif_imagetype($imagePath);
+
+    // Check if the image type is PNG or JPG
+    if ($imageType === IMAGETYPE_PNG) {
+      return "data:image/png;base64," . base64_encode($imageData);
+    } elseif ($imageType === IMAGETYPE_JPEG) {
+      return "data:image/jpeg;base64," . base64_encode($imageData);
+    } else {
+      return 'Unsupported image type';
+    }
+  } else {
+    throw new Exception('Image not found: ' . $imagePath);
+  }
+}
 ?>
