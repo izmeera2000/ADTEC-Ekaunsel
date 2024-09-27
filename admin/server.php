@@ -880,7 +880,7 @@ if (isset($_POST['addsoalan'])) {
 }
 
 
-function getEmailContent($filePath)
+function getEmailContent($filePath,$site_url)
 {
   ob_start(); // Start output buffering
   include(getcwd() . '/views/email/' . $filePath); // Include the PHP file
@@ -915,7 +915,7 @@ function sendmail($receiver, $title, $message = "", $site_url = "")
 
 
 
-    $emailBodyContent = getEmailContent('meeting_link.php');
+    $emailBodyContent = getEmailContent('meeting_link.php',$site_url);
 
 
     // $mail->addEmbeddedImage(getcwd() . '/assets/img/logo3.png', 'logo_cid'); // 'logo_cid' is a unique ID
