@@ -98,22 +98,43 @@ function kaunseling_student()
 }
 function kaunseling_senarai()
 {
-	check_session($site_url, 1);
-	require_once('views/kaunseling/senarai.php');
+	check_session($site_url);
+	if (($_SESSION['user_details']['role'] != 1)) {
+		require_once('views/kaunseling/senarai_student.php');
+
+	} else {
+		require_once('views/kaunseling/senarai.php');
+
+	}
+
+}
+
+function kaunseling_senarai_student()
+{
+	check_session($site_url);
+	require_once('views/kaunseling/senarai_student.php');
 
 }
 function kaunseling_temujanji($request)
 {
 
-	check_session($site_url, 1);
+	check_session($site_url);
 	$product_id = basename($request);
 
-	require_once('views/kaunseling/temujanji.php');
+	if (($_SESSION['user_details']['role'] == 1)) {
+
+
+	require_once('views/kaunseling/temujanji.php');}
+
+	else{
+
+		require_once('views/kaunseling/temujanji_student.php');
+	}
 
 }
 
 //email
-function email_meeting_link($request,$site_url)
+function email_meeting_link($request, $site_url)
 {
 
 	require_once('views/email/meeting_link.php');
@@ -368,7 +389,11 @@ switch (true) {
 	case str_contains($request, 'temujanji_update'):
 		server();
 		break;
-	
+
+
+	case str_contains($request, 'temujanji_end'):
+		server();
+		break;
 
 
 
@@ -389,9 +414,9 @@ switch (true) {
 		break;
 
 
-		case str_contains($request, 'email/meeting_link'):
-			email_meeting_link($request,$site_url);
-			break;
+	case str_contains($request, 'email/meeting_link'):
+		email_meeting_link($request, $site_url);
+		break;
 
 	//t estend
 

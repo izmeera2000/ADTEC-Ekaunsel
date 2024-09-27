@@ -38,11 +38,11 @@
                 </use>
               </svg><span>Booking</span></a></li>
 
-          <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>kaunseling/booking" target="_top">
+          <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>kaunseling/senarai" target="_top">
               <svg class="nav-icon">
                 <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout">
                 </use>
-              </svg><span>Sejarah</span></a></li>
+              </svg><span>Senarai</span></a></li>
           <!-- <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>kaunseling/kaunselor" target="_top">
               <svg class="nav-icon">
                 <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout">

@@ -880,7 +880,7 @@ if (isset($_POST['addsoalan'])) {
 }
 
 
-function getEmailContent($filePath,$site_url,$link = "")
+function getEmailContent($filePath, $site_url, $link = "")
 {
   ob_start(); // Start output buffering
   $meeting_link = $link;
@@ -890,7 +890,7 @@ function getEmailContent($filePath,$site_url,$link = "")
 
 
 }
-function sendmail($receiver, $title, $message = "", $site_url = "")
+function sendmail($receiver, $title, $filepath, $message = "", $site_url = "")
 {
 
 
@@ -915,7 +915,7 @@ function sendmail($receiver, $title, $message = "", $site_url = "")
     $mail->addAddress($receiver);
 
 
-    $emailBodyContent = getEmailContent('meeting_link.php',$site_url,$message);
+    $emailBodyContent = getEmailContent($filepath, $site_url, $message);
 
 
     // $mail->addEmbeddedImage(getcwd() . '/assets/img/logo3.png', 'logo_cid'); // 'logo_cid' is a unique ID
@@ -1142,9 +1142,16 @@ if (isset($_POST['senaraitemujanji'])) {
   $data = array();
 
   $today = date('Y-m-d');
+
+  $user_id = $_POST['senaraitemujanji']['user_id'];
   // echo $today;
+  if ($user_id != "test") {
+    $quser_id = "AND user_id='$user_id'";
+  } else {
+    $quser_id = " ";
+  }
   $query =
-    "SELECT a.* , b.nama,  b.ndp, b.image_url FROM kaunselor_jadual a INNER JOIN  user b ON a.user_id = b.id  WHERE a.tarikh ='$today'  ";
+    "SELECT a.* , b.nama,  b.ndp, b.image_url FROM kaunselor_jadual a INNER JOIN  user b ON a.user_id = b.id  WHERE a.tarikh ='$today'   " . $quser_id;
   $results = mysqli_query($db, $query);
   if (mysqli_num_rows($results) > 0) {
 
@@ -1183,8 +1190,16 @@ if (isset($_POST['senaraitemujanji2'])) {
 
   $today = date('Y-m-d');
   // echo $today;
+  $user_id = $_POST['senaraitemujanji2']['user_id'];
+  // echo $today;
+  if ($user_id != "test") {
+    $quser_id = "AND a.user_id='$user_id'";
+  } else {
+    $quser_id = " ";
+  }
+
   $query =
-    "SELECT a.* , b.nama,  b.ndp, b.image_url FROM kaunselor_jadual a INNER JOIN  user b ON a.user_id = b.id  WHERE a.tarikh >'$today'  ";
+    "SELECT a.* , b.nama,  b.ndp, b.image_url FROM kaunselor_jadual a INNER JOIN  user b ON a.user_id = b.id  WHERE a.tarikh >'$today'  " . $quser_id;
   $results = mysqli_query($db, $query);
   if (mysqli_num_rows($results) > 0) {
 
@@ -1222,8 +1237,17 @@ if (isset($_POST['senaraitemujanji3'])) {
 
   $today = date('Y-m-d');
   // echo $today;
+
+  $user_id = $_POST['senaraitemujanji3']['user_id'];
+  // echo $today;
+  if ($user_id != "test") {
+    $quser_id = "AND user_id='$user_id'";
+  } else {
+    $quser_id = " ";
+  }
+
   $query =
-    "SELECT a.* , b.nama,  b.ndp, b.image_url FROM kaunselor_jadual a INNER JOIN  user b ON a.user_id = b.id  WHERE a.tarikh <'$today'  ";
+    "SELECT a.* , b.nama,  b.ndp, b.image_url FROM kaunselor_jadual a INNER JOIN  user b ON a.user_id = b.id  WHERE a.tarikh <'$today'   " . $quser_id;
   $results = mysqli_query($db, $query);
   if (mysqli_num_rows($results) > 0) {
 
@@ -1261,6 +1285,7 @@ if (isset($_POST['temujanji_update'])) {
   $meeting_id = $_POST['temujanji_update']['meeting_id'];
 
   $manual = $_POST['temujanji_update']['manual'];
+  $selector = $_POST['temujanji_update']['selector'];
 
   $start = date('Y-m-d\TH:i:sP', strtotime($_POST['temujanji_update']['start']));
   $end = date('Y-m-d\TH:i:sP', strtotime($_POST['temujanji_update']['end']));
@@ -1271,7 +1296,7 @@ if (isset($_POST['temujanji_update'])) {
   // echo $start;
   // debug_to_console($start);
 
-  if (!$manual) {
+  if (!$selector) {
     if (isset($_SESSION['user_details']['access_token'])) {
 
 
@@ -1309,72 +1334,75 @@ if (isset($_POST['temujanji_update'])) {
         // Get the Google Meet link
         $googleMeetLink = $event->getHangoutLink();
         $meeting_link = $googleMeetLink; // Store the meeting link
-        echo $user_mail;
+        // echo $user_mail;
         // echo 'Meet Link: ' . $meeting_link; // Output the meeting link
 
-        sendmail($user_mail, "Meeting Link", $meeting_link, $site_url);
+        $now = date('Y-m-d H:i:s');
+
+
+        $query =
+          "UPDATE kaunselor_jadual SET event_status = '3', masa_mula2 = '$now', meeting_link='$meeting_link' , time_edit='$now' WHERE id = '$meeting_id'";
+
+        $results = mysqli_query($db, $query);
+
+        sendmail($user_mail, "Meeting Link", 'meeting_link.php', $meeting_link, $site_url);
+
 
 
       } catch (Exception $e) {
         // Handle error
-        echo 'Error creating event: ' . $e->getMessage();
+        // echo 'Error creating event: ' . $e->getMessage();
 
       }
-    }
+
+
+    } 
   } else {
-    // showtoast("asdasdas", $toast); // Use actual NULL for the database
+
+
+    if (!$manual){
+
+      // showtoast("Please Enter The Google Meeting Link Manually", $toast); // Use actual NULL for the database
+
+      echo "Please Enter The Google Meeting Link Manually";
+
+    } else{
+      $now = date('Y-m-d H:i:s');
+      
+      $meeting_link = $manual;
+      $query =
+        "UPDATE kaunselor_jadual SET event_status = '3', masa_mula2 = '$now', meeting_link='$meeting_link' , time_edit='$now' WHERE id = '$meeting_id'";
+  
+      $results = mysqli_query($db, $query);
+      sendmail($user_mail, "Meeting Link", 'meeting_link.php', $meeting_link, $site_url);
+
+    }
 
   }
 
-  $now = date('Y-m-d H:i:s');
 
-  // if ($manual) {
-  // echo $manual;
-  // $query =
-  //   "UPDATE kaunselor_jadual SET event_status = '3', masa_mula2 = '$now', meeting_link='$meeting_link' , time_edit='$now' WHERE id = '$meeting_id'";
-
-  // $results = mysqli_query($db, $query);
-
-  // $query =
-  //   "UPDATE kaunselor_jadual SET event_status = '3', masa_mula2 = '$now', meeting_link='$meeting_link' , time_edit='$now' WHERE id = '$meeting_id'";
-
-  // $results = mysqli_query($db, $query);
-
-  // } else {
-  // echo "wow";
-  // }
 
 
   die();
 
 
 
-
 }
-function convertImageToBase64($imagePath)
-{
-  // $imageData = file_get_contents($imagePath); // Read the image file
-  // return base64_encode($imageData); // Encode the image data in base64
-  if (getimagesize($imagePath)) {
-    echo "Image exists: " . $imagePath;
-  } else {
-    echo "Image not found: " . $imagePath;
-  }
-  if (file_exists($imagePath)) {
-    $imageData = file_get_contents($imagePath);
+if (isset($_POST['temujanji_end'])) {
+ 
 
-    $imageType = exif_imagetype($imagePath);
+  $now = date('Y-m-d H:i:s');
+  $user_mail = $_POST['temujanji_end']['user_mail'];
+  $meeting_id = $_POST['temujanji_end']['meeting_id'];
 
-    // Check if the image type is PNG or JPG
-    if ($imageType === IMAGETYPE_PNG) {
-      return "data:image/png;base64," . base64_encode($imageData);
-    } elseif ($imageType === IMAGETYPE_JPEG) {
-      return "data:image/jpeg;base64," . base64_encode($imageData);
-    } else {
-      return 'Unsupported image type';
-    }
-  } else {
-    throw new Exception('Image not found: ' . $imagePath);
-  }
+
+  $query =
+    "UPDATE kaunselor_jadual SET event_status = '4', masa_tamat2 = '$now' , time_edit='$now' WHERE id = '$meeting_id'";
+
+  $results = mysqli_query($db, $query);
+
+  // sendmail($user_mail, "Meeting Link", 'meeting_link.php', $meeting_link, $site_url);
+  die();
+
 }
 ?>

@@ -76,10 +76,10 @@ if (mysqli_num_rows($results) == 1) {
                         if (!$kaunselor_jadual['meeting_link']) {
 
                           if ($kaunselor_jadual['jenis'] == "0") {
-                            echo '<button type="button" class="btn btn-success" id="mulaoffline">Bersedia Untuk Mula</button>';
+                            echo '<button type="button" class="btn btn-success">Bersedia Untuk Mula</button>';
 
                           } else {
-                            echo '<button type="button" class="btn btn-success" id="mulaonline">Bersedia Untuk Mula</button>';
+                            echo '<button type="button" class="btn btn-success">Bersedia Untuk Mula</button>';
 
                           }
                         } else {
@@ -88,7 +88,7 @@ if (mysqli_num_rows($results) == 1) {
                         }
                         // echo '<button type="button" class="btn btn-success">Bersedia Untuk Mula</button>';
                       } else if ($kaunselor_jadual['event_status'] == "3") {
-                        echo '<button type="button" class="btn btn-info" id="event_status_3">Sedang Berjalan</button>';
+                        echo '<button type="button" class="btn btn-info"  >Sedang Berjalan</button>';
                       } else {
                         echo '<button type="button" class="btn btn-secondary">Tamat</button>';
 
@@ -289,9 +289,8 @@ if (mysqli_num_rows($results) == 1) {
 
                       <?php
                       $user_id = $kaunselor_jadual['user_id'];
-                      // echo $user_id . "asas";
                       $query =
-                        "SELECT a.*, b.ndp, COUNT(a.id) FROM `kaunselor_jadual` a INNER JOIN user b ON a.user_id = b.id WHERE event_status ='4'  AND b.id ='$user_id' AND a.id !='$product_id' ORDER BY a.id DESC ";
+                        "SELECT a.*, b.ndp, COUNT(a.id) FROM `kaunselor_jadual` a INNER JOIN user b ON a.user_id = b.id WHERE event_status ='4'  AND b.ndp ='$user_id' AND a.id !='$product_id' ORDER BY a.id DESC ";
                       $results = mysqli_query($db, $query);
                       if (mysqli_num_rows($results) > 0) {
 
@@ -321,7 +320,7 @@ if (mysqli_num_rows($results) == 1) {
                       </tr>
                     </thead>
                     <tbody>
-                      <?php
+                    <?php
                       // $results = mysqli_query($db, $query);
                       $user_id = $kaunselor_jadual['user_id'];
  

@@ -318,7 +318,7 @@
             <div class="mb-3" id="temujanji_manual">
               <label for="temujanji_manual_input" class="col-form-label">Meeting Link</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="temujanji_manual_input" >
+                <input type="text" class="form-control" id="temujanji_manual_input"  >
               </div>
             </div>
 

@@ -681,7 +681,7 @@ table3 = new DataTable("#senaraitemujanji2", {
   ],
 });
 
-table3 = new DataTable("#senaraitemujanji3", {
+table4 = new DataTable("#senaraitemujanji3", {
   // rowReorder: {
   //   selector: "td:nth-child(1), td:nth-child(2), td:nth-child(3)", // This allows reordering by dragging either the first or second column
   //   update: false,
@@ -710,6 +710,101 @@ table3 = new DataTable("#senaraitemujanji3", {
     { data: "e", className: "text-center" },
   ],
 });
+
+if (document.getElementById("student_id_senarai")) {
+  var user_id = $("#student_id_senarai").data("id");
+
+  table5 = new DataTable("#senaraitemujanjib", {
+    // rowReorder: {
+    //   selector: "td:nth-child(1), td:nth-child(2), td:nth-child(3)", // This allows reordering by dragging either the first or second column
+    //   update: false,
+    // },
+    ajax: {
+      type: "POST",
+      url: "senaraitemujanji",
+      data: {
+        senaraitemujanji: {
+          user_id: user_id,
+          // title: title,
+          // start: date,
+        },
+      },
+    },
+    // pageLength: 1000,
+    // dom:'frtip',
+
+    responsive: true,
+    paging: false,
+    columns: [
+      { data: "a", className: "text-center  " },
+      { data: "b", className: "   " },
+      { data: "c", className: "text-center  " },
+      { data: "d", className: "text-center  " },
+      { data: "e", className: "text-center" },
+    ],
+  });
+
+  table6 = new DataTable("#senaraitemujanji2b", {
+    // rowReorder: {
+    //   selector: "td:nth-child(1), td:nth-child(2), td:nth-child(3)", // This allows reordering by dragging either the first or second column
+    //   update: false,
+    // },
+    ajax: {
+      type: "POST",
+      url: "senaraitemujanji2",
+      data: {
+        senaraitemujanji2: {
+          user_id: user_id,
+          // title: title,
+          // start: date,
+        },
+      },
+    },
+    // pageLength: 1000,
+    // dom:'frtip',
+
+    responsive: true,
+    paging: false,
+    columns: [
+      { data: "a", className: "text-center  " },
+      { data: "b", className: "   " },
+      { data: "c", className: "text-center  " },
+      { data: "d", className: "text-center  " },
+      { data: "e", className: "text-center" },
+    ],
+  });
+
+  table7 = new DataTable("#senaraitemujanji3b", {
+    // rowReorder: {
+    //   selector: "td:nth-child(1), td:nth-child(2), td:nth-child(3)", // This allows reordering by dragging either the first or second column
+    //   update: false,
+    // },
+    ajax: {
+      type: "POST",
+      url: "senaraitemujanji3",
+      data: {
+        senaraitemujanji3: {
+          user_id: user_id,
+          // title: title,
+          // start: date,
+        },
+      },
+    },
+    // pageLength: 1000,
+    // dom:'frtip',
+
+    responsive: true,
+    paging: false,
+    columns: [
+      { data: "a", className: "text-center  " },
+      { data: "b", className: "   " },
+      { data: "c", className: "text-center  " },
+      { data: "d", className: "text-center  " },
+      { data: "e", className: "text-center" },
+    ],
+  });
+}
+
 //# sourceMappingURL=main.js.map
 
 if (document.getElementById("event_status_3")) {
@@ -756,6 +851,9 @@ $("#temujanji_mula_submit").click(function () {
   var end = $("#tamatmasa").val();
   var user_id = $("#user_id").val();
   var user_mail = $("#user_mail").val();
+  var selector = $('input[name="options-outlined2"]:checked').val();
+
+  console.log(selector);
 
   $.ajax({
     url: "temujanji_update", // URL to your PHP script that returns data
@@ -764,6 +862,7 @@ $("#temujanji_mula_submit").click(function () {
       temujanji_update: {
         meeting_id: meeting_id,
         manual: manual,
+        selector: selector,
         start: start,
         end: end,
         user_id: user_id,
@@ -774,9 +873,14 @@ $("#temujanji_mula_submit").click(function () {
     success: function (response) {
       // Check if response contains the expected datasets
       console.log(response);
+
+      showtoast(response);
+
       // console.log("as");
       // $("#temujanji_mula").modal("hide");
-      location.reload();
+      if (!response) {
+        location.reload();
+      }
     },
     error: function (error) {
       console.error("Error fetching data", error);
@@ -787,6 +891,7 @@ $("#temujanji_mula_submit").click(function () {
 
 $('input[name="options-outlined2"]').click(function () {
   // alert('You selected: ' + $(this).val());
+
   if ($(this).val() == 0) {
     if (!$("#temujanji_manual").hasClass("d-none")) {
       $("#temujanji_manual").addClass("d-none");
@@ -796,4 +901,51 @@ $('input[name="options-outlined2"]').click(function () {
       $("#temujanji_manual").removeClass("d-none");
     }
   }
+});
+
+$("#event_status_3").click(function () {
+
+
+  var meeting_id = $("#temujanji_mula_id").val();
+
+  // var manual = $("#temujanji_manual_input").val();
+  // var start = $("#mulamasa").val();
+  // var end = $("#tamatmasa").val();
+  var user_id = $("#user_id").val();
+  var user_mail = $("#user_mail").val();
+  // var selector = $('input[name="options-outlined2"]:checked').val();
+
+  // console.log(selector);
+
+  $.ajax({
+    url: "temujanji_end", // URL to your PHP script that returns data
+    method: "POST",
+    data: {
+      temujanji_end: {
+        meeting_id: meeting_id,
+        // manual: manual,
+        // selector: selector,
+        // start: start,
+        // end: end,
+        user_id: user_id,
+        user_mail: user_mail,
+      },
+    },
+
+    success: function (response) {
+      // Check if response contains the expected datasets
+      console.log(response);
+
+      // showtoast(response);
+
+
+      // if (!response) {
+        // location.reload();
+      // }
+    },
+    error: function (error) {
+      console.error("Error fetching data", error);
+    },
+  });
+
 });
