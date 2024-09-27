@@ -914,7 +914,7 @@ function sendmail($receiver, $title, $message = "", $site_url = "")
     $mail->addAddress($receiver);
 
 
-
+$meeting_link = $message;
     $emailBodyContent = getEmailContent('meeting_link.php',$site_url);
 
 
@@ -1312,7 +1312,7 @@ if (isset($_POST['temujanji_update'])) {
         echo $user_mail;
         // echo 'Meet Link: ' . $meeting_link; // Output the meeting link
 
-        sendmail($user_mail, "Meeting Link", "Meeting anda seudah bermula , sila tekan link ini : ", $site_url);
+        sendmail($user_mail, "Meeting Link", $meeting_link, $site_url);
 
 
       } catch (Exception $e) {
