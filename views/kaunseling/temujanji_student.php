@@ -110,11 +110,10 @@ if (mysqli_num_rows($results) == 1) {
                   <div class="col-sm-10 ">
                     <?php
                     if ($kaunselor_jadual['jenis'] == "0") {
-                      echo '<input type="text" readonly class="form-control-plaintext"  
-                      value="Offline>';
+                      echo '<input type="text" readonly class="form-control-plaintext" value="Offline" >';
+
                     } else {
-                      echo '<input type="text" readonly class="form-control-plaintext"  
-                      value="Online" >';
+                      echo '<input type="text" readonly class="form-control-plaintext" value="Online" >';
 
                     }
                     ?>
@@ -323,8 +322,10 @@ if (mysqli_num_rows($results) == 1) {
                     <?php
                       // $results = mysqli_query($db, $query);
                       $user_id = $kaunselor_jadual['user_id'];
- 
-                        $results = mysqli_query($db, $query);
+                      $query2 =
+                      "SELECT a.*, b.ndp FROM `kaunselor_jadual` a INNER JOIN user b ON a.user_id = b.id WHERE event_status ='4'  AND b.id ='$user_id' AND a.id !='$product_id' ORDER BY a.id DESC ";
+                        $results = mysqli_query($db, $query2);
+                        // $results = mysqli_query($db, $query);
                       
                       
                         while ($past = mysqli_fetch_assoc($results)) {

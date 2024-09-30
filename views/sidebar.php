@@ -8,7 +8,7 @@
 
     </div>
     <button class="sidebar-toggler" type="button" data-coreui-toggle="unfoldable"></button>
-    <button class="btn-close d-lg-none" type="button"  aria-label="Close"
+    <button class="btn-close d-lg-none" type="button" aria-label="Close"
       onclick="coreui.Sidebar.getInstance(document.querySelector(&quot;#sidebar&quot;)).toggle()"></button>
   </div>
   <ul class="sidebar-nav border-end" data-coreui="navigation" data-simplebar="">
@@ -51,7 +51,7 @@
 
 
         </ul>
-
+      </li>
       <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>kaunseling/borang" target="_top">
           <svg class="nav-icon">
             <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout">
@@ -112,6 +112,7 @@
 
 
         </ul>
+      </li>
 
       <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>kaunseling/editborang" target="_top">
           <svg class="nav-icon">
@@ -134,15 +135,29 @@
             <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout">
             </use>
           </svg><span>Senarai</span></a></li>
-      <!-- 
-      <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>kaunselor/booking" target="_top">
-            <svg class="nav-icon">
-              <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout">
-              </use>
-            </svg><span>Jadual</span></a></li>   -->
+
+
+      <li class="nav-title">Email</li>
 
 
 
+      <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
+          <svg class="nav-icon">
+            <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-star"></use>
+          </svg><span>Temu Janji</span></a>
+        <ul class="nav-group-items compact">
+          <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>email/meeting_link" target="_top">
+              <svg class="nav-icon">
+                <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout">
+                </use>
+              </svg><span>Link</span></a></li>
+
+
+
+
+
+        </ul>
+      </li>
 
 
       <li class="nav-title">User</li>

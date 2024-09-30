@@ -835,7 +835,52 @@ if (document.getElementById("event_status_3")) {
   }
 }
 
-$("#mulaoffline").click(function () {});
+$("#mulaoffline").click(function () {
+
+  var meeting_id = $("#p_id").attr("data-id");
+
+  // var manual = $("#temujanji_manual_input").val();
+  var start = $("#mulamasa").val();
+  var end = $("#tamatmasa").val();
+  var user_id = $("#user_id").val();
+  var user_mail = $("#user_mail").val();
+  // var selector = $('input[name="options-outlined2"]:checked').val();
+
+  // console.log(selector);
+
+  $.ajax({
+    url: "temujanji_update", // URL to your PHP script that returns data
+    method: "POST",
+    data: {
+      temujanji_update: {
+        meeting_id: meeting_id,
+        // manual: manual,
+        // selector: selector,
+        start: start,
+        end: end,
+        user_id: user_id,
+        user_mail: user_mail,
+      },
+    },
+
+    success: function (response) {
+      // Check if response contains the expected datasets
+      console.log(response);
+
+      // showtoast(response);
+
+      // console.log("as");
+      // $("#temujanji_mula").modal("hide");
+      // if (!response) {
+        // location.reload();
+      // }
+    },
+    error: function (error) {
+      console.error("Error fetching data", error);
+    },
+  });
+
+});
 
 $("#mula2").click(function () {});
 

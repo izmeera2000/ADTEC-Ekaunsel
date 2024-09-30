@@ -1151,7 +1151,7 @@ if (isset($_POST['senaraitemujanji'])) {
     $quser_id = " ";
   }
   $query =
-    "SELECT a.* , b.nama,  b.ndp, b.image_url FROM kaunselor_jadual a INNER JOIN  user b ON a.user_id = b.id  WHERE a.tarikh ='$today'   " . $quser_id;
+    "SELECT a.* , b.nama,  b.ndp, b.image_url FROM kaunselor_jadual a INNER JOIN  user b ON a.user_id = b.id  WHERE a.tarikh ='$today'  AND event_status <='1' " . $quser_id;
   $results = mysqli_query($db, $query);
   if (mysqli_num_rows($results) > 0) {
 
@@ -1199,7 +1199,7 @@ if (isset($_POST['senaraitemujanji2'])) {
   }
 
   $query =
-    "SELECT a.* , b.nama,  b.ndp, b.image_url FROM kaunselor_jadual a INNER JOIN  user b ON a.user_id = b.id  WHERE a.tarikh >'$today'  " . $quser_id;
+    "SELECT a.* , b.nama,  b.ndp, b.image_url FROM kaunselor_jadual a INNER JOIN  user b ON a.user_id = b.id  WHERE a.tarikh >'$today' AND event_status <='1'  " . $quser_id;
   $results = mysqli_query($db, $query);
   if (mysqli_num_rows($results) > 0) {
 
@@ -1247,7 +1247,7 @@ if (isset($_POST['senaraitemujanji3'])) {
   }
 
   $query =
-    "SELECT a.* , b.nama,  b.ndp, b.image_url FROM kaunselor_jadual a INNER JOIN  user b ON a.user_id = b.id  WHERE a.tarikh <'$today'   " . $quser_id;
+    "SELECT a.* , b.nama,  b.ndp, b.image_url FROM kaunselor_jadual a INNER JOIN  user b ON a.user_id = b.id  WHERE a.tarikh <'$today'  AND event_status <='1'  " . $quser_id;
   $results = mysqli_query($db, $query);
   if (mysqli_num_rows($results) > 0) {
 
@@ -1281,11 +1281,14 @@ if (isset($_POST['senaraitemujanji3'])) {
 if (isset($_POST['temujanji_update'])) {
 
 
-
   $meeting_id = $_POST['temujanji_update']['meeting_id'];
 
-  $manual = $_POST['temujanji_update']['manual'];
-  $selector = $_POST['temujanji_update']['selector'];
+
+
+
+  if (isset($_POST['temujanji_update']['selector'])) {
+    $selector = $_POST['temujanji_update']['selector'];
+  }
 
   $start = date('Y-m-d\TH:i:sP', strtotime($_POST['temujanji_update']['start']));
   $end = date('Y-m-d\TH:i:sP', strtotime($_POST['temujanji_update']['end']));
@@ -1295,88 +1298,100 @@ if (isset($_POST['temujanji_update'])) {
 
   // echo $start;
   // debug_to_console($start);
+  if (isset($_POST['temujanji_update']['manual'])) {
+    $manual = $_POST['temujanji_update']['manual'];
 
-  if (!$selector) {
-    if (isset($_SESSION['user_details']['access_token'])) {
+
+    if (!$selector) {
+      if (isset($_SESSION['user_details']['access_token'])) {
 
 
-      $client = new Google_Client();
-      $client->setAuthConfig('../client_secret.json');
-      $client->addScope(Google_Service_Calendar::CALENDAR);
-      $client->setAccessToken(getAccessTokenFromDatabase($_SESSION['user_details']['id'], $db));
+        $client = new Google_Client();
+        $client->setAuthConfig('../client_secret.json');
+        $client->addScope(Google_Service_Calendar::CALENDAR);
+        $client->setAccessToken(getAccessTokenFromDatabase($_SESSION['user_details']['id'], $db));
 
-      $calendarService = new Google_Service_Calendar($client);
-      // Create a Google Meet event
-      $event = new Google_Service_Calendar_Event(array(
-        'summary' => 'Kaunseling ADTEC Meeting',
-        'start' => array(
-          'dateTime' => $start, // Specify your date and time here
-          'timeZone' => 'Asia/Kuala_Lumpur',
-        ),
-        'end' => array(
-          'dateTime' => $end,
-          'timeZone' => 'Asia/Kuala_Lumpur',
-        ),
-        'conferenceData' => array(
-          'createRequest' => array(
-            'requestId' => 'random-string',
-            'conferenceSolutionKey' => array(
-              'type' => 'hangoutsMeet'
+        $calendarService = new Google_Service_Calendar($client);
+        // Create a Google Meet event
+        $event = new Google_Service_Calendar_Event(array(
+          'summary' => 'Kaunseling ADTEC Meeting',
+          'start' => array(
+            'dateTime' => $start, // Specify your date and time here
+            'timeZone' => 'Asia/Kuala_Lumpur',
+          ),
+          'end' => array(
+            'dateTime' => $end,
+            'timeZone' => 'Asia/Kuala_Lumpur',
+          ),
+          'conferenceData' => array(
+            'createRequest' => array(
+              'requestId' => 'random-string',
+              'conferenceSolutionKey' => array(
+                'type' => 'hangoutsMeet'
+              ),
             ),
           ),
-        ),
-      ));
+        ));
 
-      try {
-        // Insert the event into the calendar
-        $event = $calendarService->events->insert('primary', $event, array('conferenceDataVersion' => 1));
+        try {
+          // Insert the event into the calendar
+          $event = $calendarService->events->insert('primary', $event, array('conferenceDataVersion' => 1));
 
-        // Get the Google Meet link
-        $googleMeetLink = $event->getHangoutLink();
-        $meeting_link = $googleMeetLink; // Store the meeting link
-        // echo $user_mail;
-        // echo 'Meet Link: ' . $meeting_link; // Output the meeting link
+          // Get the Google Meet link
+          $googleMeetLink = $event->getHangoutLink();
+          $meeting_link = $googleMeetLink; // Store the meeting link
+          // echo $user_mail;
+          // echo 'Meet Link: ' . $meeting_link; // Output the meeting link
 
+          $now = date('Y-m-d H:i:s');
+
+
+          $query =
+            "UPDATE kaunselor_jadual SET event_status = '3', masa_mula2 = '$now', meeting_link='$meeting_link' , time_edit='$now' WHERE id = '$meeting_id'";
+
+          $results = mysqli_query($db, $query);
+
+          sendmail($user_mail, "Meeting Link", 'meeting_link.php', $meeting_link, $site_url);
+
+
+
+        } catch (Exception $e) {
+          // Handle error
+          // echo 'Error creating event: ' . $e->getMessage();
+
+        }
+
+
+      }
+    } else {
+
+
+      if (!$manual) {
+
+        // showtoast("Please Enter The Google Meeting Link Manually", $toast); // Use actual NULL for the database
+
+        echo "Please Enter The Google Meeting Link Manually";
+
+      } else {
         $now = date('Y-m-d H:i:s');
 
-
+        $meeting_link = $manual;
         $query =
           "UPDATE kaunselor_jadual SET event_status = '3', masa_mula2 = '$now', meeting_link='$meeting_link' , time_edit='$now' WHERE id = '$meeting_id'";
 
         $results = mysqli_query($db, $query);
-
         sendmail($user_mail, "Meeting Link", 'meeting_link.php', $meeting_link, $site_url);
-
-
-
-      } catch (Exception $e) {
-        // Handle error
-        // echo 'Error creating event: ' . $e->getMessage();
 
       }
 
-
-    } 
-  } else {
-
-
-    if (!$manual){
-
-      // showtoast("Please Enter The Google Meeting Link Manually", $toast); // Use actual NULL for the database
-
-      echo "Please Enter The Google Meeting Link Manually";
-
-    } else{
-      $now = date('Y-m-d H:i:s');
-      
-      $meeting_link = $manual;
-      $query =
-        "UPDATE kaunselor_jadual SET event_status = '3', masa_mula2 = '$now', meeting_link='$meeting_link' , time_edit='$now' WHERE id = '$meeting_id'";
-  
-      $results = mysqli_query($db, $query);
-      sendmail($user_mail, "Meeting Link", 'meeting_link.php', $meeting_link, $site_url);
-
     }
+  } else {
+    $now = date('Y-m-d H:i:s');
+echo $meeting_id;
+    // $meeting_link = $manual;
+    $query =
+      "UPDATE kaunselor_jadual SET event_status = '3', masa_mula2 = '$now', time_edit='$now' WHERE id = '$meeting_id'";
+      $results = mysqli_query($db, $query);
 
   }
 
@@ -1389,7 +1404,7 @@ if (isset($_POST['temujanji_update'])) {
 
 }
 if (isset($_POST['temujanji_end'])) {
- 
+
 
   $now = date('Y-m-d H:i:s');
   $user_mail = $_POST['temujanji_end']['user_mail'];

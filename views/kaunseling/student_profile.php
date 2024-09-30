@@ -146,8 +146,11 @@ if (mysqli_num_rows($results) == 1) {
 
                       <?php
 
+                      $user_id = $user['id'];
+
                       $query =
-                        "SELECT a.*, b.ndp, COUNT(a.id) FROM `kaunselor_jadual` a INNER JOIN user b ON a.user_id = b.id WHERE event_status ='2'  AND b.ndp ='$product_id' ORDER BY a.id DESC ";
+                        "SELECT a.*, b.ndp, COUNT(a.id) FROM `kaunselor_jadual` a INNER JOIN user b ON a.user_id = b.id WHERE  a.user_id ='$user_id'   ORDER BY a.id DESC ";
+
                       $results = mysqli_query($db, $query);
                       if (mysqli_num_rows($results) > 0) {
 
@@ -182,19 +185,23 @@ if (mysqli_num_rows($results) == 1) {
 
                         <th>Tarikh</th>
                         <th class="text-center">Masalah</th>
+                        <th class="text-center">Status</th>
                       </tr>
                     </thead>
                     <tbody>
                       <?php
-                      $results = mysqli_query($db, $query);
+                      $query2 =
+                        "SELECT a.*, b.ndp  FROM `kaunselor_jadual` a INNER JOIN user b ON a.user_id = b.id WHERE  a.user_id ='$user_id'   ORDER BY a.id DESC ";
+                      $results2 = mysqli_query($db, $query2);
 
-                      while ($users = mysqli_fetch_assoc($results)) {
+                      while ($users2 = mysqli_fetch_assoc($results2)) {
                         ?>
 
                         <tr class="align-middle">
 
-                          <td><?php echo $users['tarikh'] ?></td>
-                          <td class="text-center"><?php echo $users['masalah'] ?></td>
+                          <td><?php echo $users2['tarikh'] ?></td>
+                          <td class="text-center"><?php echo mb_strimwidth($users2['masalah'], 0, 10, "...") ?></td>
+                          <td class="text-center"><?php echo $users2['event_status'] ?></td>
                         </tr>
 
                         <?php
