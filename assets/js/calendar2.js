@@ -99,14 +99,14 @@ document.addEventListener("DOMContentLoaded", () => {
     //   start: "00:01",
     //   end: "23:59",
     // },
-    
-    eventOrder: function(a, b) {
-       const order = [1, 2, 0];
+
+    eventOrder: function (a, b) {
+      const order = [1, 2, 0];
       const statusA = parseInt(a.extendedProps.event_status);
       const statusB = parseInt(b.extendedProps.event_status);
 
       return order.indexOf(statusA) - order.indexOf(statusB);
-  },
+    },
     // select: selectDate,
     eventClick: clickonEvent,
     hiddenDays: [0, 6],
@@ -116,37 +116,47 @@ document.addEventListener("DOMContentLoaded", () => {
   $("#kaunselor_updateevent_button1").click(function () {
     // calendar_add("user_calendaradd");
     console.log("reject");
-    hidemodal();
+
     var event_id = document.getElementById("kaunselor_updateevent_id").value;
-    var sebab = document.getElementById("kaunselor_updateevent_sebabreject").value;
-    //  coreui.Modal("#kaunselor_updateevent");
-    $.ajax({
-      type: "POST",
-      url: "kaunselor_reject",
-      data: {
-        kaunselor_reject: {
-          id: event_id,
-          sebab: sebab,
+    var sebab = document.getElementById(
+      "kaunselor_updateevent_sebabreject"
+    ).value;
+
+    if (sebab != '') {
+      hidemodal();
+
+      //  coreui.Modal("#kaunselor_updateevent");
+      $.ajax({
+        type: "POST",
+        url: "kaunselor_reject",
+        data: {
+          kaunselor_reject: {
+            id: event_id,
+            sebab: sebab,
+          },
         },
-      },
-      success: function (response) {
-        console.log(response);
-        calendar.refetchEvents();
+        success: function (response) {
+          console.log(response);
+          calendar.refetchEvents();
+        },
+      });
+    } else{
+      showtoast("Sila Masukkan Sebab");
+    }
 
-      },
-    });
     // calendar.render();
-
   });
 
   $("#kaunselor_updateevent_button2").click(function () {
     console.log("approve");
 
-    hidemodal();
     var event_id = document.getElementById("kaunselor_updateevent_id").value;
     var mula = document.getElementById("timeInput1").value;
     var tamat = document.getElementById("timeInput2").value;
-    console.log(mula);
+    // console.log(mula);
+
+    if (mula !='' && tamat!=''){
+    hidemodal();
 
     $.ajax({
       type: "POST",
@@ -161,9 +171,12 @@ document.addEventListener("DOMContentLoaded", () => {
       success: function (response) {
         console.log(response);
         calendar.refetchEvents();
-
       },
-    });
+    });}
+    else{
+      
+      showtoast("Sila Masukkan Masa Mula Dan Tamat");
+    }
     // calendar.render();
 
     // calendar_delete("user_calendarevent");
@@ -183,23 +196,21 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       if ($("#kaunselor_updateevent_button2").hasClass("d-none")) {
         $("#kaunselor_updateevent_button2").removeClass("d-none");
-      } 
-      
-    }else{
+      }
+    } else {
       if (!$("#kaunselor_updateevent_approve").hasClass("d-none")) {
         $("#kaunselor_updateevent_approve").addClass("d-none");
       }
       if ($("#kaunselor_updateevent_reject").hasClass("d-none")) {
         $("#kaunselor_updateevent_reject").removeClass("d-none");
-      } 
+      }
 
       if (!$("#kaunselor_updateevent_button2").hasClass("d-none")) {
         $("#kaunselor_updateevent_button2").addClass("d-none");
       }
       if ($("#kaunselor_updateevent_button1").hasClass("d-none")) {
         $("#kaunselor_updateevent_button1").removeClass("d-none");
-      } 
-      
+      }
     }
   });
 });

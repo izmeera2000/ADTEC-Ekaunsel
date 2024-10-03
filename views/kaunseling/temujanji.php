@@ -12,14 +12,15 @@ $results = mysqli_query($db, $query);
 if (mysqli_num_rows($results) == 1) {
   // $_SESSION['success'] = "You are now logged in";
   $kaunselor_jadual = mysqli_fetch_assoc($results);
-  // debug_to_console("test2");
-  // $user['password'] = "";
-  // $_SESSION['user_details'] = $user;
-  // $_SESSION['username'] = $user["username"];
-  // $user_id = $user['id'];
-  // var_dump($_SESSION['username2']);
+
+  if($kaunselor_jadual['masa_mula'] != ""){
+    
   $start = date('Y/m/d H:i:s', strtotime($kaunselor_jadual['masa_mula']));
+}
+if($kaunselor_jadual['masa_tamat'] != ""){
+ 
   $end = date('Y/m/d H:i:s', strtotime($kaunselor_jadual['masa_tamat']));
+}
 }
 ?>
 <!DOCTYPE html><!--
@@ -120,28 +121,32 @@ if (mysqli_num_rows($results) == 1) {
                     ?>
                   </div>
                 </div>
-                <div class="mb-3 row">
-                  <div class="col">
-                    <div class=" row">
-
-                      <label for="2" class="col-4 col-form-label fw-semibold">Mula</label>
-                      <div class="col-8">
-                        <input type="text" readonly class="form-control-plaintext"  
-                          value="<?php echo $start ?>" id="mulamasa">
+                <?php
+                if ($kaunselor_jadual['event_status'] > "1") {
+                  ?>
+                  <div class="mb-3 row">
+                    <div class="col">
+                      <div class=" row">
+                
+                        <label for="2" class="col-4 col-form-label fw-semibold">Mula</label>
+                        <div class="col-8">
+                          <input type="text" readonly class="form-control-plaintext" value="<?php echo $start ?>" id="mulamasa">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class=" row">
+                        <label for="2" class="col-4 col-form-label fw-semibold">Tamat</label>
+                        <div class="col-8">
+                
+                          <input type="text" readonly class="form-control-plaintext" value="<?php echo $end ?>" id="tamatmasa">
+                        </div>
                       </div>
                     </div>
                   </div>
-                  <div class="col">
-                    <div class=" row">
-                      <label for="2" class="col-4 col-form-label fw-semibold">Tamat</label>
-                      <div class="col-8">
+                  <?php
 
-                        <input type="text" readonly class="form-control-plaintext"  
-                          value="<?php echo $end ?>" id="tamatmasa">
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                }?>
 
                 <?php
                 if ($kaunselor_jadual['event_status'] == "3") {
@@ -353,8 +358,9 @@ if (mysqli_num_rows($results) == 1) {
 
 
         </div>
-      </div>
-    </div>
+
+
+     </div>
 
   </div>
 

@@ -89,14 +89,11 @@
                       <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-media-play"></use>
                     </svg>Upcoming</button></li>
               </ul>
+
               <div class="tab-content mt-2" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab"
                   tabindex="0">
-                  <?php
-
-                  echo $today = date('Y-m-d');
-
-                  ?>
+ 
                   <table class="table mb-0 table-hover " id="senaraitemujanji">
                     <thead class="fw-semibold text-body-secondary">
                       <tr class="align-middle">
@@ -126,13 +123,9 @@
                     </tbody>
                   </table>
                 </div>
-                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab"
-                  tabindex="0">
-                  <?php
-
-                  echo $today = date('Y-m-d');
-
-                  ?>
+                <div class="tab-pane fade" id="nav-old" role="tabpanel" aria-labelledby="nav-old-tab"
+                  tabindex="1">
+ 
                   <table class="table mb-0 table-hover " id="senaraitemujanji2">
                     <thead class="fw-semibold text-body-secondary">
                       <tr class="align-middle">
@@ -152,23 +145,12 @@
                       </tr>
                     </thead>
                     <tbody>
-
-                      <!-- <td>asd</td>
-<td>asd</td>
-<td>asd</td>
-<td>asd</td>
-<td>asd</td> -->
-
                     </tbody>
                   </table>
                 </div>
-                <div class="tab-pane fade" id="nav-old" role="tabpanel" aria-labelledby="nav-old-tab" tabindex="0">
-                  <?php
+                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="2">
 
-                  echo $today = date('Y-m-d');
-
-                  ?>
-                  <table class="table mb-0 table-hover " id="senaraitemujanji3">
+                <table class="table mb-0 table-hover " id="senaraitemujanji3">
                     <thead class="fw-semibold text-body-secondary">
                       <tr class="align-middle">
                         <th class="text-center">
@@ -189,10 +171,10 @@
                     <tbody>
 
                       <!-- <td>asd</td>
-<td>asd</td>
-<td>asd</td>
-<td>asd</td>
-<td>asd</td> -->
+      <td>asd</td>
+      <td>asd</td>
+      <td>asd</td>
+      <td>asd</td> -->
 
                     </tbody>
                   </table>

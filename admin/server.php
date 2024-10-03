@@ -762,8 +762,12 @@ if (isset($_POST['senaraistudent'])) {
 
   $students = array();
 
+  $limit = $_POST['senaraistudent']['limit'];  // Records per page
+  $offset = $_POST['senaraistudent']['offset'];  // Record starting point
+  $draw = $_POST['senaraistudent']['draw'];
+
   $query =
-    "SELECT id,role,ndp,nama,email,phone,kp,jantina,agama,status_kahwin,bangsa,image_url,time_add FROM user WHERE  role='2'";
+    "SELECT id,role,ndp,nama,email,phone,kp,jantina,agama,status_kahwin,bangsa,image_url,time_add FROM user WHERE  role='2'   LIMIT $limit OFFSET $offset";
   $results = mysqli_query($db, $query);
   if (mysqli_num_rows($results) > 0) {
 
@@ -796,7 +800,7 @@ if (isset($_POST['senaraistudent'])) {
 
 
   $response = [
-    "draw" => intval($_POST['draw'] ?? 1),
+    "draw" => $draw,
     "recordsTotal" => count($students),
     "recordsFiltered" => count($students),
     "data" => $students
@@ -1021,14 +1025,28 @@ if (isset($_POST['test3'])) {
 }
 if (isset($_POST['kaunselor_reject'])) {
 
+  $now = date('Y-m-d H:i:s');
 
   $event_id = $_POST['kaunselor_reject']['id'];
   $sebab = $_POST['kaunselor_reject']['sebab'];
-
+  $kaunselor_id = $_SESSION['user_details']['id'];
   // echo $event_id;
   $query =
-    "UPDATE kaunselor_jadual SET event_status = 0 , sebab = '$sebab' WHERE id = '$event_id'";
+    "UPDATE kaunselor_jadual SET event_status = 0 , sebab = '$sebab' , time_edit='$now' ,kaunselor_id='$kaunselor_id'  WHERE id = '$event_id'";
   $results = mysqli_query($db, $query);
+
+
+  $query =
+    "SELECT a.* , b.nama,  b.email FROM kaunselor_jadual a INNER JOIN  user b ON a.user_id = b.id  WHERE a.id ='$event_id'";
+  $filteredResult = mysqli_query($db, $query);
+
+
+  while ($user = mysqli_fetch_assoc($filteredResult)) {
+    // sendmail($user['email'], "Meeting Link", 'meeting_link.php', "sdfsdf", "sdfsdf");
+  }
+
+
+
 }
 
 if (isset($_POST['kaunselor_approve'])) {
@@ -1037,6 +1055,7 @@ if (isset($_POST['kaunselor_approve'])) {
   $event_id = $_POST['kaunselor_approve']['id'];
   $mula1 = $_POST['kaunselor_approve']['mula'];
   $tamat1 = $_POST['kaunselor_approve']['tamat'];
+  $kaunselor_id = $_SESSION['user_details']['id'];
 
   if ($mula1 && $tamat1) {
     // echo $event_id;
@@ -1055,10 +1074,12 @@ if (isset($_POST['kaunselor_approve'])) {
 
 
     // $rows[] = json_decode($psikologi['keputusan'], true);
+    $now = date('Y-m-d H:i:s');
 
     $query1 =
-      "UPDATE kaunselor_jadual SET event_status = 2, masa_mula ='$mula', masa_tamat = '$tamat'  WHERE id = '$event_id'";
+      "UPDATE kaunselor_jadual SET event_status = 2, masa_mula ='$mula', masa_tamat = '$tamat', time_edit='$now',kaunselor_id='$kaunselor_id'   WHERE id = '$event_id'";
     $results = mysqli_query($db, $query1);
+
   }
 
 
@@ -1139,19 +1160,35 @@ function refreshAccessToken($refreshToken, $user_id, $db)
 
 if (isset($_POST['senaraitemujanji'])) {
 
+
+
+  $limit = $_POST['senaraitemujanji']['limit'];  // Records per page
+  $offset = $_POST['senaraitemujanji']['offset'];  // Record starting point
+  $draw = $_POST['senaraitemujanji']['draw'];
+
+
   $data = array();
 
   $today = date('Y-m-d');
-
+  // echo $today;
   $user_id = $_POST['senaraitemujanji']['user_id'];
   // echo $today;
   if ($user_id != "test") {
-    $quser_id = "AND user_id='$user_id'";
+    $quser_id = "AND event_status >='1' AND user_id='$user_id'";
   } else {
-    $quser_id = " ";
+    $quser_id = "AND event_status >='1' ";
   }
+  $totalQuery = "SELECT COUNT(*) as total FROM kaunselor_jadual a WHERE a.tarikh = '$today' $quser_id";
+  $totalResult = mysqli_query($db, $totalQuery);
+  $totalRecords = mysqli_fetch_assoc($totalResult)['total'];
+
+  // Query to count filtered records
+  $filteredQuery = "SELECT COUNT(*) as filtered FROM kaunselor_jadual a WHERE a.tarikh = '$today' $quser_id";
+  $filteredResult = mysqli_query($db, $filteredQuery);
+  $filteredRecords = mysqli_fetch_assoc($filteredResult)['filtered'];
+
   $query =
-    "SELECT a.* , b.nama,  b.ndp, b.image_url FROM kaunselor_jadual a INNER JOIN  user b ON a.user_id = b.id  WHERE a.tarikh ='$today'  AND event_status <='1' " . $quser_id;
+    "SELECT a.* , b.nama,  b.ndp, b.image_url FROM kaunselor_jadual a INNER JOIN  user b ON a.user_id = b.id  WHERE a.tarikh ='$today'     $quser_id  LIMIT $limit OFFSET  $offset";
   $results = mysqli_query($db, $query);
   if (mysqli_num_rows($results) > 0) {
 
@@ -1170,7 +1207,7 @@ if (isset($_POST['senaraitemujanji'])) {
         "e" => '
               <a class="btn btn-success" href="' . $site_url . 'kaunseling/temujanji/' . $row['id'] . '">
                   <svg class="icon">
-                      <use xlink:href="icons.svg#icon-view"></use>
+                      <use xlink:href="' . $site_url . 'assets/vendors/@coreui/icons/svg/free.svg#cil-people"></use>
                   </svg>
               </a>
           '
@@ -1178,13 +1215,25 @@ if (isset($_POST['senaraitemujanji'])) {
     }
   }
 
-  echo json_encode(array('data' => $data));
+  $output = array(
+    "draw" => $draw,  // Return the draw parameter back
+    "recordsTotal" => intval($totalRecords),   // Total number of records
+    "recordsFiltered" => intval($filteredRecords), // Total number of filtered records
+    "data" => $data   // Actual data to be displayed
+  );
+
+  echo json_encode($output);
   die();
 
 }
 
 
 if (isset($_POST['senaraitemujanji2'])) {
+
+  $limit = $_POST['senaraitemujanji2']['limit'];  // Records per page
+  $offset = $_POST['senaraitemujanji2']['offset'];  // Record starting point
+  $draw = $_POST['senaraitemujanji2']['draw'];
+
 
   $data = array();
 
@@ -1193,13 +1242,21 @@ if (isset($_POST['senaraitemujanji2'])) {
   $user_id = $_POST['senaraitemujanji2']['user_id'];
   // echo $today;
   if ($user_id != "test") {
-    $quser_id = "AND a.user_id='$user_id'";
+    $quser_id = "AND event_status >='1' AND user_id='$user_id'";
   } else {
-    $quser_id = " ";
+    $quser_id = "AND event_status >='1' ";
   }
+  $totalQuery = "SELECT COUNT(*) as total FROM kaunselor_jadual a WHERE a.tarikh < '$today' $quser_id";
+  $totalResult = mysqli_query($db, $totalQuery);
+  $totalRecords = mysqli_fetch_assoc($totalResult)['total'];
+
+  // Query to count filtered records
+  $filteredQuery = "SELECT COUNT(*) as filtered FROM kaunselor_jadual a WHERE a.tarikh < '$today' $quser_id";
+  $filteredResult = mysqli_query($db, $filteredQuery);
+  $filteredRecords = mysqli_fetch_assoc($filteredResult)['filtered'];
 
   $query =
-    "SELECT a.* , b.nama,  b.ndp, b.image_url FROM kaunselor_jadual a INNER JOIN  user b ON a.user_id = b.id  WHERE a.tarikh >'$today' AND event_status <='1'  " . $quser_id;
+    "SELECT a.* , b.nama,  b.ndp, b.image_url FROM kaunselor_jadual a INNER JOIN  user b ON a.user_id = b.id  WHERE a.tarikh <'$today'     $quser_id  LIMIT $limit OFFSET  $offset";
   $results = mysqli_query($db, $query);
   if (mysqli_num_rows($results) > 0) {
 
@@ -1218,7 +1275,7 @@ if (isset($_POST['senaraitemujanji2'])) {
         "e" => '
               <a class="btn btn-success" href="' . $site_url . 'kaunseling/temujanji/' . $row['id'] . '">
                   <svg class="icon">
-                      <use xlink:href="icons.svg#icon-view"></use>
+                      <use xlink:href="' . $site_url . 'assets/vendors/@coreui/icons/svg/free.svg#cil-people"></use>
                   </svg>
               </a>
           '
@@ -1226,28 +1283,48 @@ if (isset($_POST['senaraitemujanji2'])) {
     }
   }
 
-  echo json_encode(array('data' => $data));
+  $output = array(
+    "draw" => $draw,  // Return the draw parameter back
+    "recordsTotal" => intval($totalRecords),   // Total number of records
+    "recordsFiltered" => intval($filteredRecords), // Total number of filtered records
+    "data" => $data   // Actual data to be displayed
+  );
+
+  echo json_encode($output);
   die();
 
 }
 
 if (isset($_POST['senaraitemujanji3'])) {
 
+
+  $limit = $_POST['senaraitemujanji3']['limit'];  // Records per page
+  $offset = $_POST['senaraitemujanji3']['offset'];  // Record starting point
+  $draw = $_POST['senaraitemujanji3']['draw'];
+
+
   $data = array();
 
   $today = date('Y-m-d');
   // echo $today;
-
   $user_id = $_POST['senaraitemujanji3']['user_id'];
   // echo $today;
   if ($user_id != "test") {
-    $quser_id = "AND user_id='$user_id'";
+    $quser_id = "AND event_status >='1' AND user_id='$user_id'";
   } else {
-    $quser_id = " ";
+    $quser_id = "AND event_status >='1' ";
   }
+  $totalQuery = "SELECT COUNT(*) as total FROM kaunselor_jadual a WHERE a.tarikh > '$today' $quser_id";
+  $totalResult = mysqli_query($db, $totalQuery);
+  $totalRecords = mysqli_fetch_assoc($totalResult)['total'];
+
+  // Query to count filtered records
+  $filteredQuery = "SELECT COUNT(*) as filtered FROM kaunselor_jadual a WHERE a.tarikh > '$today' $quser_id";
+  $filteredResult = mysqli_query($db, $filteredQuery);
+  $filteredRecords = mysqli_fetch_assoc($filteredResult)['filtered'];
 
   $query =
-    "SELECT a.* , b.nama,  b.ndp, b.image_url FROM kaunselor_jadual a INNER JOIN  user b ON a.user_id = b.id  WHERE a.tarikh <'$today'  AND event_status <='1'  " . $quser_id;
+    "SELECT a.* , b.nama,  b.ndp, b.image_url FROM kaunselor_jadual a INNER JOIN  user b ON a.user_id = b.id  WHERE a.tarikh >'$today'     $quser_id  LIMIT $limit OFFSET  $offset";
   $results = mysqli_query($db, $query);
   if (mysqli_num_rows($results) > 0) {
 
@@ -1266,7 +1343,7 @@ if (isset($_POST['senaraitemujanji3'])) {
         "e" => '
               <a class="btn btn-success" href="' . $site_url . 'kaunseling/temujanji/' . $row['id'] . '">
                   <svg class="icon">
-                      <use xlink:href="icons.svg#icon-view"></use>
+                      <use xlink:href="' . $site_url . 'assets/vendors/@coreui/icons/svg/free.svg#cil-people"></use>
                   </svg>
               </a>
           '
@@ -1274,10 +1351,20 @@ if (isset($_POST['senaraitemujanji3'])) {
     }
   }
 
-  echo json_encode(array('data' => $data));
+  $output = array(
+    "draw" => $draw,  // Return the draw parameter back
+    "recordsTotal" => intval($totalRecords),   // Total number of records
+    "recordsFiltered" => intval($filteredRecords), // Total number of filtered records
+    "data" => $data   // Actual data to be displayed
+  );
+
+  echo json_encode($output);
   die();
 
 }
+
+
+
 if (isset($_POST['temujanji_update'])) {
 
 
@@ -1387,11 +1474,11 @@ if (isset($_POST['temujanji_update'])) {
     }
   } else {
     $now = date('Y-m-d H:i:s');
-echo $meeting_id;
+    echo $meeting_id;
     // $meeting_link = $manual;
     $query =
       "UPDATE kaunselor_jadual SET event_status = '3', masa_mula2 = '$now', time_edit='$now' WHERE id = '$meeting_id'";
-      $results = mysqli_query($db, $query);
+    $results = mysqli_query($db, $query);
 
   }
 

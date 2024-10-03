@@ -1,11 +1,5 @@
 <?php include(getcwd() . '/admin/server.php'); ?>
-<!DOCTYPE html><!--
-* CoreUI PRO Bootstrap Admin Template
-* @version v5.0.0
-* @link https://coreui.io/product/bootstrap-dashboard-template/
-* Copyright (c) 2023 creativeLabs Łukasz Holeczek
-* License (https://coreui.io/pro/license/)
--->
+<!DOCTYPE html> 
 <html lang="en">
 <?php include(getcwd() . '/views/head.php'); ?>
 
@@ -34,23 +28,12 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="card-title fs-4 fw-semibold">Temu Janji</div>
-                                    <!-- <div class="card-subtitle text-body-secondary mb-4"> -->
-
-                                        <?php
-                                        $id = $_SESSION['user_details']['id'];
-                                        ?>
-                                    <!-- </div> -->
-                                </div>
-
-                                <!-- <div class="col-auto ms-auto">
-                  <button class="btn btn-secondary" onclick="showmodal('add_soalan')">
-                    <svg class="icon me-2">
-                      <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-user-plus">
-                      </use>
-                    </svg>
-                    <span>Tambah Soalan</span>
-                  </button>
-                </div> -->
+ 
+                                    <?php
+                                    $id = $_SESSION['user_details']['id'];
+                                    ?>
+                                 </div>
+ 
                             </div>
                             <div id="student_id_senarai" class="d-none" data-id="<?php echo $id ?>"></div>
                             <ul class="nav nav-underline-border" id="nav-tab" role="tablist">
@@ -78,7 +61,7 @@
                                     aria-labelledby="nav-home-tab" tabindex="0">
                                     <?php
 
-                                    // echo $today = date('Y-m-d');
+
 
                                     ?>
                                     <table class="table mb-0 table-hover " id="senaraitemujanjib">
@@ -100,13 +83,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-
-                                            <!-- <td>asd</td>
-      <td>asd</td>
-      <td>asd</td>
-      <td>asd</td>
-      <td>asd</td> -->
-
+ 
                                         </tbody>
                                     </table>
                                 </div>
@@ -114,7 +91,7 @@
                                     aria-labelledby="nav-profile-tab" tabindex="0">
                                     <?php
 
-                                    // echo $today = date('Y-m-d');
+
 
                                     ?>
                                     <table class="table mb-0 table-hover " id="senaraitemujanji2b">
@@ -136,12 +113,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-
-                                            <!-- <td>asd</td>
-<td>asd</td>
-<td>asd</td>
-<td>asd</td>
-<td>asd</td> -->
+ 
 
                                         </tbody>
                                     </table>
@@ -150,7 +122,7 @@
                                     tabindex="0">
                                     <?php
 
-                                    // echo $today = date('Y-m-d');
+
 
                                     ?>
                                     <table class="table mb-0 table-hover " id="senaraitemujanji3b">
@@ -172,13 +144,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-
-                                            <!-- <td>asd</td>
-<td>asd</td>
-<td>asd</td>
-<td>asd</td>
-<td>asd</td> -->
-
+ 
                                         </tbody>
                                     </table>
                                 </div>

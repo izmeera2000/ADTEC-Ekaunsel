@@ -122,6 +122,8 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         success: function (response) {
           showtoast("added");
+          calendar.refetchEvents();
+
         },
       });
     }

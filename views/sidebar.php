@@ -27,7 +27,7 @@
 
 
 
-      <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
+      <li class="nav-group"><a class="nav-link nav-group-toggle"  >
           <svg class="nav-icon">
             <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-star"></use>
           </svg><span data-coreui-i18n="pages">Temu Janji</span></a>
@@ -92,7 +92,7 @@
 
       <li class="nav-title">Kaunseling</li>
 
-      <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
+      <li class="nav-group"><a class="nav-link nav-group-toggle"  >
           <svg class="nav-icon">
             <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-star"></use>
           </svg><span data-coreui-i18n="pages">Temu Janji</span></a>
@@ -141,7 +141,7 @@
 
 
 
-      <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
+      <li class="nav-group"><a class="nav-link nav-group-toggle" >
           <svg class="nav-icon">
             <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-star"></use>
           </svg><span>Temu Janji</span></a>
@@ -167,7 +167,7 @@
             </use>
           </svg><span>Profile</span></a></li>
 
-      <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
+      <li class="nav-group"><a class="nav-link nav-group-toggle"  >
           <svg class="nav-icon">
             <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-star"></use>
           </svg><span data-coreui-i18n="pages">Email</span></a>

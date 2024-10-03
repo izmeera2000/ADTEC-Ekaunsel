@@ -1,14 +1,11 @@
-/* global Chart, coreui, i18next */
-
 /**
  * --------------------------------------------------------------------------
  * CoreUI PRO Boostrap Admin Template main.js
- * License (https://coreui.io/pro/license/)
+ * License (https:
  * --------------------------------------------------------------------------
  */
 
-// Disable the on-canvas tooltip
-let myModal; // Declare the modal instance outside of the function
+let myModal;
 
 Chart.defaults.pointHitDetectionRadius = 1;
 Chart.defaults.plugins.tooltip.enabled = false;
@@ -49,7 +46,6 @@ const updateCharts = () => {
   }
 };
 if (document.getElementById("card-chart-new1")) {
-  // eslint-disable-next-line no-unused-vars
   const cardChartNew1 = new Chart(document.getElementById("card-chart-new1"), {
     type: "line",
     data: {
@@ -370,12 +366,15 @@ $(document).ready(() => {
     ajax: {
       type: "POST",
       url: "senaraistudent",
-      data: {
-        senaraistudent: {
-          user_id: "test",
-          // title: title,
-          // start: date,
-        },
+      data: function (d) {
+        return {
+          senaraistudent: {
+            user_id: "test",
+            limit: d.length,
+            offset: d.start,
+            draw: d.draw,
+          },
+        };
       },
     },
     columns: [
@@ -384,26 +383,13 @@ $(document).ready(() => {
       { data: "c", className: "text-center" },
       { data: "d", className: "text-center" },
     ],
+    processing: true,
+    serverSide: true,
   });
-
-  // console.log(table1.rows().data().toArray())
-
-  // $.ajax({
-  //   type: "POST",
-  //   url: "editborang/reorder",
-  //   data: {
-  //     order: {
-  //       user_id: "user_id",
-  //     },
-  //   },
-  //   success: function (response) {
-  //     console.log(response);
-  //   },
-  // });
 
   table1 = new DataTable("#editborang", {
     rowReorder: {
-      selector: "td:nth-child(1), td:nth-child(2), td:nth-child(3)", // This allows reordering by dragging either the first or second column
+      selector: "td:nth-child(1), td:nth-child(2), td:nth-child(3)",
       update: false,
     },
     ajax: {
@@ -412,13 +398,10 @@ $(document).ready(() => {
       data: {
         senaraisoalan: {
           user_id: "test",
-          // title: title,
-          // start: date,
         },
       },
     },
-    // pageLength: 1000,
-    // dom:'frtip',
+
     responsive: true,
     paging: false,
     columns: [
@@ -428,17 +411,16 @@ $(document).ready(() => {
       { data: "d", className: "text-center" },
     ],
     createdRow: function (row, data, dataIndex) {
-      $(row).attr("data-id", data.id); // Set data-id attribute on each row
+      $(row).attr("data-id", data.id);
     },
   });
 
   table1.on("row-reorder", function (e, diff, edit) {
     var result = [];
 
-    // Iterate over the rows that were reordered
     diff.forEach(function (rowData) {
-      var id = $(rowData.node).data("id"); // Get the 'id' from the data attribute
-      var newPosition = rowData.newPosition + 1; // Use 1-based index for re_order
+      var id = $(rowData.node).data("id");
+      var newPosition = rowData.newPosition + 1;
 
       if (id !== undefined) {
         result.push({
@@ -448,7 +430,6 @@ $(document).ready(() => {
       }
     });
 
-    // Send the reordered data to the server to update the database
     $.ajax({
       url: "editborang/reorder",
       method: "POST",
@@ -458,32 +439,113 @@ $(document).ready(() => {
 
       success: function (response) {
         showtoast("order changed");
-        table1.ajax.reload(); // Reload DataTable data
+        table1.ajax.reload();
       },
     });
     console.log(result);
   });
+
+  table2 = new DataTable("#senaraitemujanji", {
+    ajax: {
+      type: "POST",
+      url: "senaraitemujanji",
+      data: function (d) {
+        return {
+          senaraitemujanji: {
+            user_id: "test",
+            limit: d.length,
+            offset: d.start,
+            draw: d.draw,
+          },
+        };
+      },
+    },
+    stateSave: true,
+    processing: true,
+    serverSide: true,
+    responsive: true,
+  
+    columns: [
+      { data: "a", className: "text-center  " },
+      { data: "b", className: "   " , responsivePriority: 1},
+      { data: "c", className: "text-center  ", responsivePriority: 1 },
+      { data: "d", className: "text-center  " },
+      { data: "e", className: "text-center" , responsivePriority: 1},
+    ],
+  });
+  
+  table3 = new DataTable("#senaraitemujanji2", {
+    ajax: {
+      type: "POST",
+      url: "senaraitemujanji2",
+      data: function (d) {
+        return {
+          senaraitemujanji2: {
+            user_id: "test",
+            limit: d.length,
+            offset: d.start,
+            draw: d.draw,
+          },
+        };
+      },
+    },
+  
+    processing: true,
+    serverSide: true,
+    responsive: true,
+    stateSave: true,
+  
+    columns: [
+      { data: "a", className: "text-center  " },
+      { data: "b", className: "   " , responsivePriority: 1},
+      { data: "c", className: "text-center  ", responsivePriority: 1 },
+      { data: "d", className: "text-center  " },
+      { data: "e", className: "text-center" , responsivePriority: 1},
+    ],
+  });
+  
+  table4 = new DataTable("#senaraitemujanji3", {
+    ajax: {
+      type: "POST",
+      url: "senaraitemujanji3",
+      data: function (d) {
+        return {
+          senaraitemujanji3: {
+            user_id: "test",
+            limit: d.length,
+            offset: d.start,
+            draw: d.draw,
+          },
+        };
+      },
+    },
+  
+    processing: true,
+    serverSide: true,
+    responsive: true,
+    stateSave: true,
+  
+    columns: [
+      { data: "a", className: "text-center  " },
+      { data: "b", className: "   " , responsivePriority: 1},
+      { data: "c", className: "text-center  ", responsivePriority: 1 },
+      { data: "d", className: "text-center  " },
+      { data: "e", className: "text-center" , responsivePriority: 1},
+    ],
+  });
+
 });
 
 const toastTrigger = document.getElementById("liveToastBtn");
 const toastLiveExample = document.getElementById("liveToast");
 
 if (toastTrigger) {
-  // const toastCoreUI = coreui.Toast.getOrCreateInstance($('.toast'))
   toastTrigger.addEventListener("click", () => {
     $.each($(".toast"), function (i, item) {
       coreui.Toast.getOrCreateInstance(item).show();
     });
   });
 }
-// document.addEventListener("DOMContentLoaded", function(event){
-//   $.each($(".toast"), function (i, item) {coreui.Toast.getOrCreateInstance(item).show();});
-// });
-
-// document.addEventListener("DOMContentLoaded", function(event){
-//   const myModal = new coreui.Modal("#calendaradd")
-//   myModal.show();
-// });
 
 function showtoast($message) {
   document.getElementById("jstoastmessage").innerHTML = $message;
@@ -499,7 +561,7 @@ function showmodal($main) {
 
 function hidemodal() {
   if (myModal) {
-    myModal.hide(); // Hide the modal
+    myModal.hide();
   }
 }
 
@@ -518,8 +580,6 @@ $("#add_soalan_button").click(function () {
       addsoalan: {
         soalan: soalan,
         kategori: kategori,
-        // title: title,
-        // start: date,
       },
     },
     success: function (response) {
@@ -528,29 +588,28 @@ $("#add_soalan_button").click(function () {
       $("#add_soalan_content").prop("selectedIndex", 0);
       $("#add_soalan_soalan").val("");
       $("#add_soalan").modal("hide");
-      table1.ajax.reload(); // Reload DataTable data
+      table1.ajax.reload();
     },
   });
 });
 
-// Create the Radar Chart
 if (document.getElementById("radarChart")) {
   const ctx = document.getElementById("radarChart").getContext("2d");
   const radarChart = new Chart(ctx, {
     type: "radar",
     data: {
-      labels: [], // Labels will be set dynamically
+      labels: [],
       datasets: [
         {
-          label: "Latest", // Label for the first dataset
-          data: [], // Data will be set dynamically
+          label: "Latest",
+          data: [],
           backgroundColor: "rgba(255, 99, 132, 0.5)",
           borderColor: "rgba(255, 99, 132, 1)",
           borderWidth: 2,
         },
         {
-          label: "First", // Label for the second dataset
-          data: [], // Data will be set dynamically
+          label: "First",
+          data: [],
           backgroundColor: "rgba(54, 162, 235, 0.5)",
           borderColor: "rgba(54, 162, 235, 1)",
           borderWidth: 2,
@@ -568,27 +627,21 @@ if (document.getElementById("radarChart")) {
     },
   });
 
-  // Fetch data via AJAX
-
   var ndp = document.getElementById("3").value;
 
-  // console.log(ndp);
   $.ajax({
-    url: "kaunselor/student/psikologi", // URL to your PHP script that returns data
+    url: "kaunselor/student/psikologi",
     method: "POST",
     data: {
       test3: {
         ndp: ndp,
-        // title: title,
-        // start: date,
       },
     },
 
     success: function (response) {
-      // Check if response contains the expected datasets
       if (response.firstRow && response.lastRow) {
         console.log(response);
-        // Process firstRow
+
         let labels = [];
         let dataValues1 = [];
         response.firstRow.forEach(function (item) {
@@ -596,20 +649,16 @@ if (document.getElementById("radarChart")) {
           dataValues1.push(item.value);
         });
 
-        // Process lastRow
         let dataValues2 = [];
         response.lastRow.forEach(function (item) {
           dataValues2.push(item.value);
         });
 
-        // Set labels for the chart
         radarChart.data.labels = labels;
 
-        // Set data for the datasets
-        radarChart.data.datasets[0].data = dataValues1; // Dataset 1
-        radarChart.data.datasets[1].data = dataValues2; // Dataset 2
+        radarChart.data.datasets[0].data = dataValues1;
+        radarChart.data.datasets[1].data = dataValues2;
 
-        // Update the chart with new data
         radarChart.update();
       } else {
         console.error("Response does not contain expected datasets:");
@@ -621,191 +670,101 @@ if (document.getElementById("radarChart")) {
   });
 }
 
-table2 = new DataTable("#senaraitemujanji", {
-  // rowReorder: {
-  //   selector: "td:nth-child(1), td:nth-child(2), td:nth-child(3)", // This allows reordering by dragging either the first or second column
-  //   update: false,
-  // },
-  ajax: {
-    type: "POST",
-    url: "senaraitemujanji",
-    data: {
-      senaraitemujanji: {
-        user_id: "test",
-        // title: title,
-        // start: date,
-      },
-    },
-  },
-  // pageLength: 1000,
-  // dom:'frtip',
 
-  responsive: true,
-  paging: false,
-  columns: [
-    { data: "a", className: "text-center  " },
-    { data: "b", className: "   " },
-    { data: "c", className: "text-center  " },
-    { data: "d", className: "text-center  " },
-    { data: "e", className: "text-center" },
-  ],
-});
-
-table3 = new DataTable("#senaraitemujanji2", {
-  // rowReorder: {
-  //   selector: "td:nth-child(1), td:nth-child(2), td:nth-child(3)", // This allows reordering by dragging either the first or second column
-  //   update: false,
-  // },
-  ajax: {
-    type: "POST",
-    url: "senaraitemujanji2",
-    data: {
-      senaraitemujanji2: {
-        user_id: "test",
-        // title: title,
-        // start: date,
-      },
-    },
-  },
-  // pageLength: 1000,
-  // dom:'frtip',
-
-  responsive: true,
-  paging: false,
-  columns: [
-    { data: "a", className: "text-center  " },
-    { data: "b", className: "   " },
-    { data: "c", className: "text-center  " },
-    { data: "d", className: "text-center  " },
-    { data: "e", className: "text-center" },
-  ],
-});
-
-table4 = new DataTable("#senaraitemujanji3", {
-  // rowReorder: {
-  //   selector: "td:nth-child(1), td:nth-child(2), td:nth-child(3)", // This allows reordering by dragging either the first or second column
-  //   update: false,
-  // },
-  ajax: {
-    type: "POST",
-    url: "senaraitemujanji3",
-    data: {
-      senaraitemujanji3: {
-        user_id: "test",
-        // title: title,
-        // start: date,
-      },
-    },
-  },
-  // pageLength: 1000,
-  // dom:'frtip',
-
-  responsive: true,
-  paging: false,
-  columns: [
-    { data: "a", className: "text-center  " },
-    { data: "b", className: "   " },
-    { data: "c", className: "text-center  " },
-    { data: "d", className: "text-center  " },
-    { data: "e", className: "text-center" },
-  ],
-});
 
 if (document.getElementById("student_id_senarai")) {
   var user_id = $("#student_id_senarai").data("id");
 
   table5 = new DataTable("#senaraitemujanjib", {
-    // rowReorder: {
-    //   selector: "td:nth-child(1), td:nth-child(2), td:nth-child(3)", // This allows reordering by dragging either the first or second column
-    //   update: false,
-    // },
     ajax: {
       type: "POST",
       url: "senaraitemujanji",
-      data: {
-        senaraitemujanji: {
-          user_id: user_id,
-          // title: title,
-          // start: date,
-        },
+      data: function (d) {
+        return {
+          senaraitemujanji: {
+            user_id: user_id,
+            limit: d.length,
+            offset: d.start,
+            draw: d.draw,
+          },
+        };
       },
     },
-    // pageLength: 1000,
-    // dom:'frtip',
 
+    processing: true,
+    serverSide: true,
     responsive: true,
-    paging: false,
+    stateSave: true,
+
     columns: [
       { data: "a", className: "text-center  " },
-      { data: "b", className: "   " },
-      { data: "c", className: "text-center  " },
+      { data: "b", className: "   " , responsivePriority: 1},
+      { data: "c", className: "text-center  ", responsivePriority: 1 },
       { data: "d", className: "text-center  " },
-      { data: "e", className: "text-center" },
+      { data: "e", className: "text-center" , responsivePriority: 1},
     ],
   });
 
   table6 = new DataTable("#senaraitemujanji2b", {
-    // rowReorder: {
-    //   selector: "td:nth-child(1), td:nth-child(2), td:nth-child(3)", // This allows reordering by dragging either the first or second column
-    //   update: false,
-    // },
     ajax: {
       type: "POST",
       url: "senaraitemujanji2",
-      data: {
-        senaraitemujanji2: {
-          user_id: user_id,
-          // title: title,
-          // start: date,
-        },
+      data: function (d) {
+        return {
+          senaraitemujanji2: {
+            user_id: user_id,
+            limit: d.length,
+            offset: d.start,
+            draw: d.draw,
+          },
+        };
       },
     },
-    // pageLength: 1000,
-    // dom:'frtip',
 
+    processing: true,
+    serverSide: true,
     responsive: true,
-    paging: false,
+    stateSave: true,
+
     columns: [
       { data: "a", className: "text-center  " },
-      { data: "b", className: "   " },
-      { data: "c", className: "text-center  " },
+      { data: "b", className: "   " , responsivePriority: 1},
+      { data: "c", className: "text-center  ", responsivePriority: 1 },
       { data: "d", className: "text-center  " },
-      { data: "e", className: "text-center" },
+      { data: "e", className: "text-center" , responsivePriority: 1},
     ],
   });
 
   table7 = new DataTable("#senaraitemujanji3b", {
-    // rowReorder: {
-    //   selector: "td:nth-child(1), td:nth-child(2), td:nth-child(3)", // This allows reordering by dragging either the first or second column
-    //   update: false,
-    // },
     ajax: {
       type: "POST",
       url: "senaraitemujanji3",
-      data: {
-        senaraitemujanji3: {
-          user_id: user_id,
-          // title: title,
-          // start: date,
-        },
+      data: function (d) {
+        return {
+          senaraitemujanji3: {
+            user_id: user_id,
+            limit: d.length,
+            offset: d.start,
+            draw: d.draw,
+          },
+        };
       },
     },
-    // pageLength: 1000,
-    // dom:'frtip',
 
+    processing: true,
+    serverSide: true,
     responsive: true,
-    paging: false,
+    stateSave: true,
+
     columns: [
       { data: "a", className: "text-center  " },
-      { data: "b", className: "   " },
-      { data: "c", className: "text-center  " },
+      { data: "b", className: "   " , responsivePriority: 1},
+      { data: "c", className: "text-center  ", responsivePriority: 1 },
       { data: "d", className: "text-center  " },
-      { data: "e", className: "text-center" },
+      { data: "e", className: "text-center" , responsivePriority: 1},
     ],
   });
 }
-
-//# sourceMappingURL=main.js.map
 
 if (document.getElementById("event_status_3")) {
   const now = new Date();
@@ -818,7 +777,6 @@ if (document.getElementById("event_status_3")) {
   const totalTime = endTime - startTime;
   const elapsedTime = now - startTime;
 
-  // Calculate progress percentage
   const progressPercentage = Math.floor((elapsedTime / totalTime) * 100, 100);
   console.log(progressPercentage);
 
@@ -836,26 +794,20 @@ if (document.getElementById("event_status_3")) {
 }
 
 $("#mulaoffline").click(function () {
-
   var meeting_id = $("#p_id").attr("data-id");
 
-  // var manual = $("#temujanji_manual_input").val();
   var start = $("#mulamasa").val();
   var end = $("#tamatmasa").val();
   var user_id = $("#user_id").val();
   var user_mail = $("#user_mail").val();
-  // var selector = $('input[name="options-outlined2"]:checked').val();
-
-  // console.log(selector);
 
   $.ajax({
-    url: "temujanji_update", // URL to your PHP script that returns data
+    url: "temujanji_update",
     method: "POST",
     data: {
       temujanji_update: {
         meeting_id: meeting_id,
-        // manual: manual,
-        // selector: selector,
+
         start: start,
         end: end,
         user_id: user_id,
@@ -864,22 +816,12 @@ $("#mulaoffline").click(function () {
     },
 
     success: function (response) {
-      // Check if response contains the expected datasets
       console.log(response);
-
-      // showtoast(response);
-
-      // console.log("as");
-      // $("#temujanji_mula").modal("hide");
-      // if (!response) {
-        // location.reload();
-      // }
     },
     error: function (error) {
       console.error("Error fetching data", error);
     },
   });
-
 });
 
 $("#mula2").click(function () {});
@@ -901,7 +843,7 @@ $("#temujanji_mula_submit").click(function () {
   console.log(selector);
 
   $.ajax({
-    url: "temujanji_update", // URL to your PHP script that returns data
+    url: "temujanji_update",
     method: "POST",
     data: {
       temujanji_update: {
@@ -916,13 +858,10 @@ $("#temujanji_mula_submit").click(function () {
     },
 
     success: function (response) {
-      // Check if response contains the expected datasets
       console.log(response);
 
       showtoast(response);
 
-      // console.log("as");
-      // $("#temujanji_mula").modal("hide");
       if (!response) {
         location.reload();
       }
@@ -931,12 +870,9 @@ $("#temujanji_mula_submit").click(function () {
       console.error("Error fetching data", error);
     },
   });
-  // console.log(manual);
 });
 
 $('input[name="options-outlined2"]').click(function () {
-  // alert('You selected: ' + $(this).val());
-
   if ($(this).val() == 0) {
     if (!$("#temujanji_manual").hasClass("d-none")) {
       $("#temujanji_manual").addClass("d-none");
@@ -949,48 +885,41 @@ $('input[name="options-outlined2"]').click(function () {
 });
 
 $("#event_status_3").click(function () {
-
-
   var meeting_id = $("#temujanji_mula_id").val();
 
-  // var manual = $("#temujanji_manual_input").val();
-  // var start = $("#mulamasa").val();
-  // var end = $("#tamatmasa").val();
   var user_id = $("#user_id").val();
   var user_mail = $("#user_mail").val();
-  // var selector = $('input[name="options-outlined2"]:checked').val();
-
-  // console.log(selector);
 
   $.ajax({
-    url: "temujanji_end", // URL to your PHP script that returns data
+    url: "temujanji_end",
     method: "POST",
     data: {
       temujanji_end: {
         meeting_id: meeting_id,
-        // manual: manual,
-        // selector: selector,
-        // start: start,
-        // end: end,
+
         user_id: user_id,
         user_mail: user_mail,
       },
     },
 
     success: function (response) {
-      // Check if response contains the expected datasets
       console.log(response);
-
-      // showtoast(response);
-
-
-      // if (!response) {
-        // location.reload();
-      // }
     },
     error: function (error) {
       console.error("Error fetching data", error);
     },
   });
+});
+$("#sejarahkaunseling").DataTable();
 
+
+
+$('button[data-coreui-toggle="tab"]').on('shown.coreui.tab', function (e) {
+  // console.log("test");
+  $('#senaraitemujanji').DataTable().columns.adjust().responsive.recalc();
+  $('#senaraitemujanji2').DataTable().columns.adjust().responsive.recalc();
+  $('#senaraitemujanji3').DataTable().columns.adjust().responsive.recalc();
+  $('#senaraitemujanjib').DataTable().columns.adjust().responsive.recalc();
+  $('#senaraitemujanji2b').DataTable().columns.adjust().responsive.recalc();
+  $('#senaraitemujanji3b').DataTable().columns.adjust().responsive.recalc();
 });
