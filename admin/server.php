@@ -325,7 +325,7 @@ if (isset($_POST['calendarfetch'])) {
 
     if ($row['event_status'] == "0") {
 
-      $row['color'] = "red";
+      $row['color'] = "	#ef376e";
 
     }
     if ($row['event_status'] == "1") {
@@ -335,16 +335,17 @@ if (isset($_POST['calendarfetch'])) {
     }
 
     if ($row['event_status'] == "2") {
-      $row['color'] = "green";
+      $row['color'] = "#51cc8a";
 
     }
 
     if ($row['event_status'] == "3") {
-      $row['color'] = "blue";
+      $row['color'] = "#747af2";
+      $row['textColor'] = "black";
 
     }
     if ($row['event_status'] == "4") {
-      $row['color'] = "gray";
+      $row['color'] = "	#6b7785";
 
     }
     if ($row['jenis'] == "1") {
@@ -423,7 +424,7 @@ if (isset($_POST['calendarfetch2'])) {
 
     if ($row['event_status'] == "0") {
 
-      $row['color'] = "red";
+      $row['color'] = "	#ef376e";
 
     }
     if ($row['event_status'] == "1") {
@@ -433,16 +434,17 @@ if (isset($_POST['calendarfetch2'])) {
     }
 
     if ($row['event_status'] == "2") {
-      $row['color'] = "green";
+      $row['color'] = "#51cc8a";
 
     }
 
     if ($row['event_status'] == "3") {
-      $row['color'] = "blue";
+      $row['color'] = "#747af2";
+      $row['textColor'] = "black";
 
     }
     if ($row['event_status'] == "4") {
-      $row['color'] = "gray";
+      $row['color'] = "	#6b7785";
 
     }
     $row['allDay'] = "true";
@@ -778,19 +780,13 @@ if (isset($_POST['senaraistudent'])) {
         "a" => '<div class="avatar avatar-md"><img class="avatar-img"
                                                                 src="' . $site_url . 'assets/img/user/' . $user['id'] . '/' . $user['image_url'] . '"
                                                                 alt="' . $user['nama'] . '"></div>',
-        "b" => '<div class="text-nowrap">' . $user['nama'] . '</div>
-                                                        <div class="small text-body-secondary text-nowrap">
-                                                            <span >Registered:
-                                                            </span><span>' . $user['time_add'] . '</span>
+        "b" => '<div class="text-nowrap text-truncate " >' . $user['nama'] . '</div>
+                                                        <div class="small text-body-secondary text-nowrap"><span>' . $user['ndp'] . '</span>
                                                         </div>',
         "c" => $user['email'],
         "d" => '
-            <a class="btn btn-success me-2" href="' . $site_url . 'student/' . $user['ndp'] . '">
-        <svg class="icon">
-            <use
-                xlink:href="' . $site_url . '/assets/vendors/@coreui/icons/svg/free.svg#cil-magnifying-glass">
-            </use>
-        </svg></a>
+            <a class="btn btn-primary me-2" href="' . $site_url . 'student/' . $user['ndp'] . '">
+        <i class="icon bi bi-person-bounding-box"></i></a>
         ',
       );
 
@@ -884,17 +880,17 @@ if (isset($_POST['addsoalan'])) {
 }
 
 
-function getEmailContent($filePath, $site_url, $link = "")
+function getEmailContent($filePath, $var = "")
 {
   ob_start(); // Start output buffering
-  $meeting_link = $link;
+  extract($var);
   include(getcwd() . '/views/email/' . $filePath); // Include the PHP file
   $content = ob_get_clean(); // Get the content of the output buffer and clean it
   return $content;
 
 
 }
-function sendmail($receiver, $title, $filepath, $message = "", $site_url = "")
+function sendmail($receiver, $title, $filepath, $var = "" )
 {
 
 
@@ -906,7 +902,7 @@ function sendmail($receiver, $title, $filepath, $message = "", $site_url = "")
   try {
 
     $mail->isSMTP();
-    $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+    $mail->SMTPDebug = SMTP::DEBUG_OFF;
     $mail->Host = 'kaunselingadtectaiping.com.my';
     $mail->SMTPAuth = true;
     $mail->Username = $_ENV['email2_username'];
@@ -919,7 +915,7 @@ function sendmail($receiver, $title, $filepath, $message = "", $site_url = "")
     $mail->addAddress($receiver);
 
 
-    $emailBodyContent = getEmailContent($filepath, $site_url, $message);
+    $emailBodyContent = getEmailContent($filepath, $var);
 
 
     // $mail->addEmbeddedImage(getcwd() . '/assets/img/logo3.png', 'logo_cid'); // 'logo_cid' is a unique ID
@@ -931,17 +927,17 @@ function sendmail($receiver, $title, $filepath, $message = "", $site_url = "")
     $mail->isHTML(true);
 
     $mail->Subject = $title;
-    if (!$message) {
+    if (!$var) {
 
 
       $mail->Body = 'This is the HTML message body <b>in bold!</b>';
       $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
     } else {
       $mail->Body = $emailBodyContent;         // Set the body with the content from the .php file
-      $mail->AltBody = $message;
+      $mail->AltBody = $title;
     }
     $mail->send();
-    echo 'Message has been sent';
+    // echo 'Message has been sent';
   } catch (Exception $e) {
     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
   }
@@ -1382,6 +1378,7 @@ if (isset($_POST['temujanji_update'])) {
   $user_id = $_POST['temujanji_update']['user_id'];
   $user_mail = $_POST['temujanji_update']['user_mail'];
 
+  $start_modified = date('j F Y gA', strtotime($_POST['temujanji_update']['start']));
 
   // echo $start;
   // debug_to_console($start);
@@ -1426,7 +1423,10 @@ if (isset($_POST['temujanji_update'])) {
 
           // Get the Google Meet link
           $googleMeetLink = $event->getHangoutLink();
-          $meeting_link = $googleMeetLink; // Store the meeting link
+          // $meeting_link = $googleMeetLink; // Store the meeting link
+          $var = array(
+            'meeting_link' => $googleMeetLink // Example variable
+        );
           // echo $user_mail;
           // echo 'Meet Link: ' . $meeting_link; // Output the meeting link
 
@@ -1434,11 +1434,11 @@ if (isset($_POST['temujanji_update'])) {
 
 
           $query =
-            "UPDATE kaunselor_jadual SET event_status = '3', masa_mula2 = '$now', meeting_link='$meeting_link' , time_edit='$now' WHERE id = '$meeting_id'";
+            "UPDATE kaunselor_jadual SET event_status = '3', masa_mula2 = '$now', meeting_link='$googleMeetLink' , time_edit='$now' WHERE id = '$meeting_id'";
 
           $results = mysqli_query($db, $query);
 
-          sendmail($user_mail, "Meeting Link", 'meeting_link.php', $meeting_link, $site_url);
+          sendmail($user_mail, "Link Of Google Meet Appointment in $start_modified", 'meeting_link.php', $var);
 
 
 
@@ -1462,12 +1462,16 @@ if (isset($_POST['temujanji_update'])) {
       } else {
         $now = date('Y-m-d H:i:s');
 
-        $meeting_link = $manual;
+        // $meeting_link = $manual;
+
+        $var = array(
+          'meeting_link' => $googleMeetLink // Example variable
+      );
         $query =
-          "UPDATE kaunselor_jadual SET event_status = '3', masa_mula2 = '$now', meeting_link='$meeting_link' , time_edit='$now' WHERE id = '$meeting_id'";
+          "UPDATE kaunselor_jadual SET event_status = '3', masa_mula2 = '$now', meeting_link='$manual' , time_edit='$now' WHERE id = '$meeting_id'";
 
         $results = mysqli_query($db, $query);
-        sendmail($user_mail, "Meeting Link", 'meeting_link.php', $meeting_link, $site_url);
+        sendmail($user_mail, "Link Of Google Meet Appointment in $start_modified", 'meeting_link.php', $var);
 
       }
 

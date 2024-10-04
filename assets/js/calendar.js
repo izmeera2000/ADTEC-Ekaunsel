@@ -36,9 +36,39 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("user_calendarevent_type").value =
           info.event.extendedProps.jenis;
 
+        var button1 = document.getElementById("user_calendarevent_button");
+        var button2 = document.getElementById("user_calendarevent_button2");
+
+        if (info.event.extendedProps.event_status == 1) {
+          if (button1.classList.contains("d-none")) {
+            button1.classList.remove("d-none");
+          }
+          if (!button2.classList.contains("d-none")) {
+            button2.classList.add("d-none");
+          }
+        } else {
+          button2.classList.remove("btn-success", "btn-secondary", "btn-info");
+
+          if (button2.classList.contains("d-none")) {
+            button2.classList.remove("d-none");
+          }
+          if (!button1.classList.contains("d-none")) {
+            button1.classList.add("d-none");
+          }
+          if (info.event.extendedProps.event_status == 2) {
+            button2.classList.add("btn-success");
+          }
+          if (info.event.extendedProps.event_status == 3) {
+            button2.classList.add("btn-info");
+          }
+          if (info.event.extendedProps.event_status == 4) {
+            button2.classList.add("btn-secondary");
+          }
+        }
+
         showmodal("user_calendarevent");
       } else {
-        showtoast("rejected");
+        showtoast("Rejected");
       }
     }
   }
@@ -54,7 +84,6 @@ document.addEventListener("DOMContentLoaded", () => {
       // calendar.unselect();
     }
     calendar.unselect();
-
   }
 
   function checkoverlapself(info) {
@@ -63,43 +92,55 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const calendarEl = document.getElementById("calendar");
 
-    const calendar = new FullCalendar.Calendar(calendarEl, {
-      initialView: "dayGridMonth",
-      headerToolbar: {
-        left: "prev,next today",
-        center: "title",
-        right: "dayGridMonth,timeGridWeek,timeGridDay",
-      },
+  const calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: "dayGridMonth",
+    headerToolbar: {
+      left: "prev,next today",
+      center: "title",
+      right: "dayGridMonth,timeGridWeek,timeGridDay",
+    },
 
-      dayMaxEventRows: 2,
-      eventOrder: "-title",
-      events: getAllEvents,
-      lazyFetching: true,
-      selectable: true,
-      selectHelper: true,
-      selectConstraint: {
-        start: "00:01",
-        end: "23:59",
-      },
-      height: "auto",
-      selectOverlap: checkoverlapself,
-      eventOverlap: false,
-      select: selectDate,
-      eventClick: clickonEvent,
-      hiddenDays: [0, 6],
-      windowResize: function (arg) {
-        calendar.render();
-      },
-    });
-    calendar.render();
-  
+    dayMaxEventRows: 2,
+    eventOrder: "-title",
+    events: getAllEvents,
+    lazyFetching: true,
+    selectable: true,
+    selectHelper: true,
+    unselectAuto: false, // Prevent auto unselect on page click
+    eventLongPressDelay: 500, // Helps with touch responsiveness
+    LongPressDelay: 500, // Helps with touch responsiveness
+    selectLongPressDelay: 500,
+
+    selectConstraint: {
+      start: "00:00", // Start at the beginning of the day
+      end: "24:00", // End at the last moment of the day
+    },
+    height: "auto",
+    selectOverlap: true,
+    eventOverlap: false,
+    select: selectDate,
+    eventClick: clickonEvent,
+    hiddenDays: [0, 6],
+    windowResize: function (arg) {
+      calendar.render();
+    },
+  });
+  calendar.render();
+
   $("#user_calendaradd_button").click(function () {
     calendar_add("user_calendaradd");
   });
 
   $("#user_calendarevent_button").click(function () {
-    console.log("testasda");
+    // console.log("testasda");
     calendar_delete("user_calendarevent");
+  });
+  $("#user_calendarevent_button2").click(function () {
+    // var url = window.location.protocol + "//" + window.location.host;
+
+    var id = document.getElementById("user_calendarevent_id").value;
+
+    window.location.href = "temujanji/" + id;
   });
 
   function calendar_add(id) {
@@ -123,7 +164,6 @@ document.addEventListener("DOMContentLoaded", () => {
         success: function (response) {
           showtoast("added");
           calendar.refetchEvents();
-
         },
       });
     }
@@ -169,5 +209,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("dayViewBtn").addEventListener("click", function () {
     calendar.changeView("timeGridDay");
+  });
+  document.getElementById("listdayViewBtn").addEventListener("click", function () {
+    calendar.changeView("listDay");
   });
 });

@@ -84,8 +84,10 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-danger" id="user_calendarevent_button"
+          <button type="button" class="btn btn-danger d-none" id="user_calendarevent_button"
             data-coreui-dismiss="modal">Delete</button>
+          <button type="button" class="btn   d-none" id="user_calendarevent_button2"
+            data-coreui-dismiss="modal">Goto</button>
           <!-- <button type="button" class="btn btn-primary" onclick="" >Save changes</button> -->
         </div>
       </div>
@@ -100,17 +102,17 @@
           <button type="button" class="btn-close" data-coreui-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <button id="prevBtn" class="btn btn-secondary">Previous</button>
-          <button id="nextBtn" class="btn btn-secondary">Next</button>
-          <button id="todayBtn" class="btn btn-secondary">Today</button>
-          <button id="monthViewBtn" class="btn btn-secondary">Month View</button>
-          <button id="weekViewBtn" class="btn btn-secondary">Week View</button>
-          <button id="dayViewBtn" class="btn btn-secondary">Day View</button>
+          <button id="prevBtn" class="btn btn-primary m-2">Previous</button>
+          <button id="nextBtn" class="btn btn-primary m-2">Next</button>
+          <button id="todayBtn" class="btn btn-primary m-2">Today</button>
+          <button id="monthViewBtn" class="btn btn-primary m-2">Month View</button>
+          <button id="weekViewBtn" class="btn btn-primary m-2">Week View</button>
+          <button id="dayViewBtn" class="btn btn-primary m-2">Day View</button>
 
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-danger" data-coreui-dismiss="modal">Delete</button>
+          <!-- <button type="button" class="btn btn-danger" data-coreui-dismiss="modal">Delete</button> -->
           <!-- <button type="button" class="btn btn-primary" onclick="" >Save changes</button> -->
         </div>
       </div>
@@ -219,6 +221,81 @@
       </div>
     </div>
   </div>
+
+
+  <div class="modal fade" id="user_calendarevent" tabindex="-1" aria-labelledby="user_calendarevent_title"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="user_calendarevent_title">Book Kaunseling</h5>
+          <button type="button" class="btn-close" data-coreui-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <input type="hidden" class="form-control" id="user_calendarevent_id" value="">
+
+            <div class="mb-3 row">
+              <label for="user_calendarevent_date" class="col-sm-2 col-form-label">Date</label>
+              <div class="col-sm-10">
+                <input type="text" readonly class="form-control-plaintext" id="user_calendarevent_date"
+                  value="email@example.com">
+              </div>
+            </div>
+
+
+            <div class="mb-3 row">
+              <label for="user_calendarevent_type" class="col-sm-2 col-form-label">Jenis</label>
+              <div class="col-sm-10">
+                <input type="text" readonly class="form-control-plaintext" id="user_calendarevent_type"
+                  value="email@example.com">
+              </div>
+            </div>
+
+
+          </form>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-danger d-none" id="user_calendarevent_button"
+            data-coreui-dismiss="modal">Delete</button>
+          <button type="button" class="btn   d-none" id="user_calendarevent_button2"
+            data-coreui-dismiss="modal">Goto</button>
+          <!-- <button type="button" class="btn btn-primary" onclick="" >Save changes</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="calendarModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Book Kaunseling</h5>
+          <button type="button" class="btn-close" data-coreui-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <button id="prevBtn" class="btn btn-primary m-2">Previous</button>
+          <button id="nextBtn" class="btn btn-primary m-2">Next</button>
+          <button id="todayBtn" class="btn btn-primary m-2">Today</button>
+          <button id="monthViewBtn" class="btn btn-primary m-2">Month View</button>
+          <button id="weekViewBtn" class="btn btn-primary m-2">Week View</button>
+          <button id="dayViewBtn" class="btn btn-primary m-2">Day View</button>
+          <button id="listdayViewBtn" class="btn btn-primary m-2">List View</button>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">Close</button>
+          <!-- <button type="button" class="btn btn-danger" data-coreui-dismiss="modal">Delete</button> -->
+          <!-- <button type="button" class="btn btn-primary" onclick="" >Save changes</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 <?php } ?>
 
 <?php if ($request == 'kaunseling/editborang') { ?>
@@ -286,8 +363,7 @@
 
 
 <?php if (str_starts_with($request, 'kaunseling/temujanji')) { ?>
-  <div class="modal fade" id="temujanji_mula" tabindex="-1" aria-labelledby="temujanji_mula_title"
-    aria-hidden="true">
+  <div class="modal fade" id="temujanji_mula" tabindex="-1" aria-labelledby="temujanji_mula_title" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
         <form>
@@ -318,7 +394,7 @@
             <div class="mb-3" id="temujanji_manual">
               <label for="temujanji_manual_input" class="col-form-label">Meeting Link</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="temujanji_manual_input"  >
+                <input type="text" class="form-control" id="temujanji_manual_input">
               </div>
             </div>
 

@@ -17,116 +17,10 @@
           aria-describedby="search-addon" data-coreui-i18n="[placeholder]search">
       </div>
     </form> -->
+
     <ul class="header-nav d-none d-md-flex ms-auto">
-      <li class="nav-item dropdown"><a class="nav-link" data-coreui-toggle="dropdown" href="#" role="button"
-          aria-haspopup="true" aria-expanded="false"><span class="d-inline-block my-1 mx-2 position-relative">
-            <svg class="icon icon-lg">
-              <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-bell"></use>
-            </svg><span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger rounded-circle"><span
-                class="visually-hidden">New alerts</span></span></span></a>
-        <div class="dropdown-menu dropdown-menu-end dropdown-menu-lg pt-0">
-          <div class="dropdown-header bg-body-tertiary text-body-secondary fw-semibold rounded-top mb-2"
-            data-coreui-i18n="notificationsCounter, { 'counter': 5 }">You have 5 notifications</div><a
-            class="dropdown-item" href="#">
-            <svg class="icon me-2 text-success">
-              <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-user-follow"></use>
-            </svg><span data-coreui-i18n="newUserRegistered">New user registered</span></a><a class="dropdown-item"
-            href="#">
-            <svg class="icon me-2 text-danger">
-              <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-user-unfollow">
-              </use>
-            </svg><span data-coreui-i18n="userDeleted">User deleted</span></a><a class="dropdown-item" href="#">
-            <svg class="icon me-2 text-info">
-              <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-chart"></use>
-            </svg><span data-coreui-i18n="salesReportIsReady">Sales report is ready</span></a><a class="dropdown-item"
-            href="#">
-            <!-- <svg class="icon me-2 text-success">
-              <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-basket"></use>
-            </svg><span data-coreui-i18n="newClient">New client</span></a><a class="dropdown-item" href="#">
-            <svg class="icon me-2 text-warning">
-              <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-speedometer"></use>
-            </svg><span data-coreui-i18n="serverOverloaded">Server overloaded</span></a>
-          <div class="dropdown-header bg-body-tertiary text-body-secondary fw-semibold my-2" data-coreui-i18n="server">
-            Server</div><a class="dropdown-item d-block py-2" href="#">
-            <div class="text-uppercase small fw-semibold mb-1" data-coreui-i18n="cpuUsage">CPU Usage</div>
-            <div class="progress progress-thin">
-              <div class="progress-bar bg-info-gradient" role="progressbar" style="width: 25%" aria-valuenow="25"
-                aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-            <div class="small text-body-secondary"
-              data-coreui-i18n="cpuUsageDescription, { 'number_of_processes': 358, 'number_of_cores': '1/4' }">348
-              Processes. 1/4 Cores.</div>
-          </a><a class="dropdown-item d-block py-2" href="#">
-            <div class="text-uppercase small fw-semibold mb-1" data-coreui-i18n="memoryUsage">Memory Usage</div>
-            <div class="progress progress-thin">
-              <div class="progress-bar bg-warning-gradient" role="progressbar" style="width: 70%" aria-valuenow="70"
-                aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-            <div class="small text-body-secondary">11444MB/16384MB</div>
-          </a><a class="dropdown-item d-block py-2" href="#">
-            <div class="text-uppercase small fw-semibold mb-1" data-coreui-i18n="ssdUsage">SSD Usage</div>
-            <div class="progress progress-thin">
-              <div class="progress-bar bg-danger-gradient" role="progressbar" style="width: 95%" aria-valuenow="95"
-                aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-            <div class="small text-body-secondary">243GB/256GB</div> -->
-          </a>
-        </div>
-      </li>
-      <li class="nav-item dropdown"><a class="nav-link" data-coreui-toggle="dropdown" href="#" role="button"
-          aria-haspopup="true" aria-expanded="false"><span class="d-inline-block my-1 mx-2 position-relative">
-            <svg class="icon icon-lg">
-              <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-list-rich"></use>
-            </svg><span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger rounded-circle"><span
-                class="visually-hidden">New alerts</span></span></span></a>
-        <div class="dropdown-menu dropdown-menu-end dropdown-menu-lg py-0">
-          <div class="dropdown-header bg-body-tertiary text-body-secondary fw-semibold rounded-top mb-2"
-            data-coreui-i18n="taskCounter, { 'counter': 5 }">You have 5 pending tasks</div><a
-            class="dropdown-item d-block" href="#">
-            <div class="small mb-1">Upgrade NPM
-              <div class="fw-semibold">0%</div>
-            </div><span class="progress progress-thin">
-              <div class="progress-bar bg-info" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0"
-                aria-valuemax="100"></div>
-            </span>
-          </a><a class="dropdown-item d-block py-2" href="#">
-            <div class="d-flex justify-content-between mb-1">
-              <div class="small">ReactJS Version</div>
-              <div class="fw-semibold">25%</div>
-            </div><span class="progress progress-thin">
-              <div class="progress-bar bg-danger" role="progressbar" style="width: 25%" aria-valuenow="25"
-                aria-valuemin="0" aria-valuemax="100"></div>
-            </span>
-          </a><a class="dropdown-item d-block py-2" href="#">
-            <div class="d-flex justify-content-between mb-1">
-              <div class="small">VueJS Version</div>
-              <div class="fw-semibold">50%</div>
-            </div><span class="progress progress-thin">
-              <div class="progress-bar bg-warning" role="progressbar" style="width: 50%" aria-valuenow="50"
-                aria-valuemin="0" aria-valuemax="100"></div>
-            </span>
-          </a><a class="dropdown-item d-block py-2" href="#">
-            <div class="d-flex justify-content-between mb-1">
-              <div class="small">Add new layouts</div>
-              <div class="fw-semibold">75%</div>
-            </div><span class="progress progress-thin">
-              <div class="progress-bar bg-info" role="progressbar" style="width: 75%" aria-valuenow="75"
-                aria-valuemin="0" aria-valuemax="100"></div>
-            </span>
-          </a><a class="dropdown-item d-block py-2" href="#">
-            <div class="d-flex justify-content-between mb-1">
-              <div class="small">Angular Version</div>
-              <div class="fw-semibold">100%</div>
-            </div><span class="progress progress-thin">
-              <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100"
-                aria-valuemin="0" aria-valuemax="100"></div>
-            </span>
-          </a>
-          <div class="p-2"><a class="btn btn-outline-primary w-100" href="#" data-coreui-i18n="viewAllTasks">View all
-              tasks</a></div>
-        </div>
-      </li>
-      <li class="nav-item dropdown"><a class="nav-link" data-coreui-toggle="dropdown" href="#" role="button"
+
+      <!-- <li class="nav-item dropdown"><a class="nav-link" data-coreui-toggle="dropdown" href="#" role="button"
           aria-haspopup="true" aria-expanded="false"><span class="d-inline-block my-1 mx-2 position-relative">
             <svg class="icon icon-lg">
               <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-envelope-open">
@@ -215,8 +109,10 @@
           <div class="p-2"> <a class="btn btn-outline-primary w-100" href="#" data-coreui-i18n="viewAllMessages">View
               all messages</a></div>
         </div>
-      </li>
+      </li> -->
     </ul>
+
+
     <!-- <ul class="header-nav ms-auto ms-md-0"> -->
     <!-- <li class="nav-item py-1">
         <div class="vr h-100 mx-2 text-white text-opacity-75"></div>
@@ -286,16 +182,18 @@
       </li> -->
     <!-- </ul> -->
     <ul class="header-nav">
-      <li class="nav-item dropdown"><button  class="nav-link py-0 " type="button"  data-coreui-toggle="dropdown"   role="button"
-          aria-haspopup="true" aria-expanded="false">
+      <li class="nav-item dropdown"><button class="nav-link py-0 " type="button" data-coreui-toggle="dropdown"
+          role="button" aria-haspopup="true" aria-expanded="false">
           <div class="avatar avatar-md"><img class="avatar-img"
               src="<?php echo $site_url ?>assets/img/user/<?php echo $_SESSION['user_details']['id'] ?>/<?php echo $_SESSION['user_details']['image_url'] ?>"
-              alt="user@email.com"><span class="avatar-status bg-success"></span></div>
+              alt="user@email.com"></div>
         </button>
         <div class="dropdown-menu dropdown-menu-end pt-0">
           <div class="dropdown-header bg-body-tertiary text-body-secondary fw-semibold rounded-top mb-2"
             data-coreui-i18n="account">Account</div>
-          <a class="dropdown-item" href="#">
+            <a class="dropdown-item" href="<?php echo $site_url ?>user/profile">
+            <i class="nav-icon bi bi-person"></i> <span>Profile</span></a>
+          <!-- <a class="dropdown-item" href="#">
             <svg class="icon me-2">
               <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-bell"></use>
             </svg><span data-coreui-i18n="updates">Updates</span><span
@@ -310,7 +208,7 @@
             <svg class="icon me-2">
               <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-task"></use>
             </svg><span data-coreui-i18n="tasks">Tasks</span><span
-              class="badge badge-sm bg-danger-gradient ms-2">42</span></a>
+              class="badge badge-sm bg-danger-gradient ms-2">42</span></a> -->
 
           <!-- <a class="dropdown-item" href="#">
             <svg class="icon me-2">
@@ -319,14 +217,12 @@
             </svg><span data-coreui-i18n="comments">Comments</span><span
               class="badge badge-sm bg-warning-gradient ms-2">42</span></a> -->
 
-          <div class="dropdown-header bg-body-tertiary text-body-secondary fw-semibold my-2">Settings</div><a
-            class="dropdown-item" href="<?php echo $site_url ?>user/profile">
-            <svg class="icon me-2">
-              <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-user"></use>
-            </svg><span>Profile</span></a><a class="dropdown-item" href="#">
+          <!-- <div class="dropdown-header bg-body-tertiary text-body-secondary fw-semibold my-2">Settings</div>
+
+            <a class="dropdown-item" href="#">
             <svg class="icon me-2">
               <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-settings"></use>
-            </svg><span>Settings</span></a>
+            </svg><span>Settings</span></a> -->
           <!-- <a class="dropdown-item" href="#">
             <svg class="icon me-2">
               <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-credit-card"></use>
@@ -344,10 +240,7 @@
               <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-lock-locked"></use>
             </svg><span data-coreui-i18n="lockAccount">Lock Account</span></a> -->
           <a class="dropdown-item" href="<?php echo $site_url ?>logout">
-            <svg class="icon me-2">
-              <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout">
-              </use>
-            </svg><span>Logout</span></a>
+          <i class="nav-icon bi bi-box-arrow-left"></i> <span>Logout</span></a>
         </div>
       </li>
     </ul>

@@ -70,14 +70,10 @@
                                     <thead class="fw-semibold text-body-secondary">
                                         <tr class="align-middle">
                                             <th class="text-center">
-                                                <svg class="icon">
-                                                    <use
-                                                        xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-people">
-                                                    </use>
-                                                </svg>
+                                            <i class="icon bi bi-people"></i>
                                             </th>
                                             <th data-coreui-i18n="user">User</th>
-                                            <th class="text-center">NDP</th>
+                                            <th class="text-center">Email</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>

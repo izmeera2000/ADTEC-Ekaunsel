@@ -29,7 +29,7 @@
   --cui-gray-700: #4a566d;
   --cui-gray-800: #323a49;
   --cui-gray-900: #312121;
-  --cui-primary: #5046e5;
+  --cui-primary: #fe0000;
   --cui-secondary: #6b7785;
   --cui-success: #51cc8a;
   --cui-info: #747af2;
@@ -37,7 +37,7 @@
   --cui-danger: #ef376e;
   --cui-light: #f3f4f7;
   --cui-dark: #212631;
-  --cui-primary-rgb: 80, 70, 229;
+  --cui-primary-rgb: 254,0,0;
   --cui-secondary-rgb: 107, 119, 133;
   --cui-success-rgb: 81, 204, 138;
   --cui-info-rgb: 116, 122, 242;
@@ -3600,19 +3600,19 @@ select.form-multi-select {
 
 .btn-primary, .fc .fc-button-primary {
   --cui-btn-color: #fff;
-  --cui-btn-bg: #5046e5;
-  --cui-btn-border-color: #5046e5;
+  --cui-btn-bg: #e54646;
+  --cui-btn-border-color: #e54646;
   --cui-btn-hover-color: #fff;
-  --cui-btn-hover-bg: #443cc3;
-  --cui-btn-hover-border-color: #4038b7;
+  --cui-btn-hover-bg: #c33c3c;
+  --cui-btn-hover-border-color: #b73838;
   --cui-btn-focus-shadow-rgb: 106, 98, 233;
   --cui-btn-active-color: #fff;
-  --cui-btn-active-bg: #4038b7;
-  --cui-btn-active-border-color: #3c35ac;
+  --cui-btn-active-bg: #b73838;
+  --cui-btn-active-border-color: #ac3535;
   --cui-btn-active-shadow: inset 0 3px 5px rgba(8, 10, 12, 0.125);
   --cui-btn-disabled-color: #fff;
-  --cui-btn-disabled-bg: #5046e5;
-  --cui-btn-disabled-border-color: #5046e5;
+  --cui-btn-disabled-bg: #e54646;
+  --cui-btn-disabled-border-color: #e54646;
 }
 
 .btn-secondary {
@@ -15577,8 +15577,34 @@ select.form-multi-select {
 @media (max-width: 767.98px) {
  
   /* Optionally, hide other FullCalendar buttons like the view switcher */
-  .fc-dayGridMonth-button, .fc-timeGridWeek-button, .fc-timeGridDay-button ,.fc-listMonth-button {
+  .fc-dayGridMonth-button, .fc-timeGridWeek-button, .fc-timeGridDay-button ,.fc-listDay-button {
       display: none !important;
   }
+.fc-today-button {
+    margin-top: 0.5rem !important; /* This is equivalent to Bootstrap's m-2 class */
+}
 }
 /*# sourceMappingURL=style.css.map */
+
+.fc-daygrid-block-event .fc-event-time, .fc-daygrid-block-event .fc-event-title {
+    padding-left: 10px; /* Adds more space for these specific views */
+}
+
+
+@media (max-width: 576px) {
+  .text-truncate {
+      max-width: 100px; /* Truncate more aggressively on small screens */
+  }
+}
+
+@media (min-width: 576px) and (max-width: 768px) {
+  .text-truncate {
+      max-width: 150px; /* Moderate truncation on medium screens */
+  }
+}
+
+@media (min-width: 768px) {
+  .text-truncate {
+      max-width: 250px; /* Less aggressive truncation on large screens */
+  }
+}

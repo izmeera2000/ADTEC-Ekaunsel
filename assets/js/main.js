@@ -379,12 +379,17 @@ $(document).ready(() => {
     },
     columns: [
       { data: "a", className: "text-center" },
-      { data: "b" },
+      { data: "b" , responsivePriority: 1},
       { data: "c", className: "text-center" },
-      { data: "d", className: "text-center" },
+      { data: "d", className: "text-center", responsivePriority: 1  },
     ],
     processing: true,
     serverSide: true,
+    stateSave: true,
+    responsive: true,
+
+ 
+
   });
 
   table1 = new DataTable("#editborang", {
@@ -723,8 +728,8 @@ if (document.getElementById("student_id_senarai")) {
 
     processing: true,
     serverSide: true,
-    responsive: true,
     stateSave: true,
+    responsive: true,
 
     columns: [
       { data: "a", className: "text-center  " },
@@ -903,13 +908,18 @@ $("#event_status_3").click(function () {
     },
 
     success: function (response) {
-      console.log(response);
+      // console.log(response);
+      if (!response) {
+        location.reload();
+      }
     },
     error: function (error) {
       console.error("Error fetching data", error);
     },
   });
 });
+
+
 $("#sejarahkaunseling").DataTable();
 
 

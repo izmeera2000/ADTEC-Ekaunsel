@@ -70,9 +70,10 @@
                     <div class="valid-feedback">Looks good!</div>
                     <div class="invalid-feedback"><?php formvalidateerr("gambar", $errors) ?></div>
                     <button class="btn btn-primary" type="submit" name="change_pic">Change</button>
-                    <div class="text-body-secondary small">Only JPG, JPEG & PNG files are allowed. And Under 5MB</div>
 
                   </div>
+                  <div class="text-body-secondary small">Only JPG, JPEG & PNG files are allowed. And Under 5MB</div>
+
                 </form>
               </div>
             </div>

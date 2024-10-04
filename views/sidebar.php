@@ -17,9 +17,7 @@
     <?php if (($_SESSION['user_details']['role'] != 1)) { ?>
 
       <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>">
-          <svg class="nav-icon">
-            <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-speedometer"></use>
-          </svg><span data-coreui-i18n="dashboard">Dashboard</span></a></li>
+      <i class="nav-icon bi bi-house"></i><span data-coreui-i18n="dashboard">Dashboard</span></a></li>
 
 
       <li class="nav-title">Kaunseling</li>
@@ -27,22 +25,14 @@
 
 
 
-      <li class="nav-group"><a class="nav-link nav-group-toggle"  >
-          <svg class="nav-icon">
-            <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-star"></use>
-          </svg><span data-coreui-i18n="pages">Temu Janji</span></a>
+      <li class="nav-group"><a class="nav-link nav-group-toggle">
+          <i class="nav-icon bi bi-calendar"></i><span data-coreui-i18n="pages">Temu Janji</span></a>
         <ul class="nav-group-items compact">
           <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>kaunseling/booking" target="_top">
-              <svg class="nav-icon">
-                <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout">
-                </use>
-              </svg><span>Booking</span></a></li>
+              <i class="nav-icon bi bi-calendar-week"></i><span>Booking</span></a></li>
 
           <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>kaunseling/senarai" target="_top">
-              <svg class="nav-icon">
-                <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout">
-                </use>
-              </svg><span>Senarai</span></a></li>
+              <i class="nav-icon bi bi-list-ul"></i><span>Senarai</span></a></li>
           <!-- <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>kaunseling/kaunselor" target="_top">
               <svg class="nav-icon">
                 <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout">
@@ -53,19 +43,13 @@
         </ul>
       </li>
       <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>kaunseling/borang" target="_top">
-          <svg class="nav-icon">
-            <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout">
-            </use>
-          </svg><span>Borang</span></a></li>
+          <i class="nav-icon bi bi-file-earmark"></i><span>Borang</span></a></li>
 
       </li>
 
       <li class="nav-title">User</li>
       <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>user/profile" target="_top">
-          <svg class="nav-icon">
-            <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout">
-            </use>
-          </svg><span>Profile</span></a></li>
+          <i class="nav-icon bi bi-person"></i><span>Profile</span></a></li>
       <!-- <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>user/kaunseling" target="_top">
           <svg class="nav-icon">
             <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout">
@@ -75,38 +59,25 @@
 
       <li class="nav-title">Help</li>
       <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>user/profile" target="_top">
-          <svg class="nav-icon">
-            <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout">
-            </use>
-          </svg><span>Guide</span></a></li>
+          <i class="nav-icon bi bi-question-circle"></i><span>Guide</span></a></li>
 
 
 
     <?php } else { ?>
 
       <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>">
-          <svg class="nav-icon">
-            <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-speedometer"></use>
-          </svg><span data-coreui-i18n="dashboard">Dashboard</span></a></li>
+      <i class="nav-icon bi bi-house"></i><span data-coreui-i18n="dashboard">Dashboard</span></a></li>
 
 
       <li class="nav-title">Kaunseling</li>
 
-      <li class="nav-group"><a class="nav-link nav-group-toggle"  >
-          <svg class="nav-icon">
-            <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-star"></use>
-          </svg><span data-coreui-i18n="pages">Temu Janji</span></a>
+      <li class="nav-group"><a class="nav-link nav-group-toggle">
+          <i class="nav-icon bi bi-calendar"></i><span>Temu Janji</span></a>
         <ul class="nav-group-items compact">
           <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>kaunseling/manage" target="_top">
-              <svg class="nav-icon">
-                <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout">
-                </use>
-              </svg><span>Urus</span></a></li>
+              <i class="nav-icon bi bi-calendar-check"></i><span>Urus</span></a></li>
           <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>kaunseling/senarai" target="_top">
-              <svg class="nav-icon">
-                <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout">
-                </use>
-              </svg><span>Senarai</span></a></li>
+              <i class="nav-icon bi bi-list-ul"></i><span>Senarai</span></a></li>
 
 
 
@@ -115,42 +86,28 @@
       </li>
 
       <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>kaunseling/editborang" target="_top">
-          <svg class="nav-icon">
-            <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout">
-            </use>
-          </svg><span>Borang</span></a></li>
+          <i class="nav-icon bi bi-file-text"></i><span>Borang</span></a></li>
 
 
       <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>kaunseling/analytics" target="_top">
-          <svg class="nav-icon">
-            <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout">
-            </use>
-          </svg><span>Analytic</span></a></li>
+          <i class="nav-icon bi bi-clipboard-data"></i><span>Analytic</span></a></li>
 
       <li class="nav-title">Student</li>
 
 
       <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>student/senarai" target="_top">
-          <svg class="nav-icon">
-            <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout">
-            </use>
-          </svg><span>Senarai</span></a></li>
+          <i class="nav-icon bi bi-person-lines-fill"></i><span>Senarai</span></a></li>
 
 
       <li class="nav-title">Email</li>
 
 
 
-      <li class="nav-group"><a class="nav-link nav-group-toggle" >
-          <svg class="nav-icon">
-            <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-star"></use>
-          </svg><span>Temu Janji</span></a>
+      <li class="nav-group"><a class="nav-link nav-group-toggle">
+          <span>Temu Janji</span></a>
         <ul class="nav-group-items compact">
           <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>email/meeting_link" target="_top">
-              <svg class="nav-icon">
-                <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout">
-                </use>
-              </svg><span>Link</span></a></li>
+              <span>Link</span></a></li>
 
 
 
@@ -162,12 +119,9 @@
 
       <li class="nav-title">User</li>
       <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>user/profile" target="_top">
-          <svg class="nav-icon">
-            <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout">
-            </use>
-          </svg><span>Profile</span></a></li>
+          <i class="nav-icon bi bi-person"></i><span>Profile</span></a></li>
 
-      <li class="nav-group"><a class="nav-link nav-group-toggle"  >
+      <!-- <li class="nav-group"><a class="nav-link nav-group-toggle">
           <svg class="nav-icon">
             <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-star"></use>
           </svg><span data-coreui-i18n="pages">Email</span></a>
@@ -187,14 +141,11 @@
 
 
         </ul>
-
+        </li> -->
 
       <li class="nav-title">Help</li>
       <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>user/profile" target="_top">
-          <svg class="nav-icon">
-            <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout">
-            </use>
-          </svg><span>Guide</span></a></li>
+      <i class="nav-icon bi bi-question-circle"></i><span>Guide</span></a></li>
     </ul>
 
 

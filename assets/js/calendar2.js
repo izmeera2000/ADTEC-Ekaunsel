@@ -32,31 +32,35 @@ document.addEventListener("DOMContentLoaded", () => {
   function clickonEvent(info) {
     console.log(info.event);
 
-    document.getElementById("user_info").src =
-      document.getElementById("user_info").getAttribute("data-urlsite") +
-      info.event.extendedProps.user_id +
-      "/" +
-      info.event.extendedProps.image_url;
+    if (info.event.extendedProps.event_status == 1) {
+      document.getElementById("user_info").src =
+        document.getElementById("user_info").getAttribute("data-urlsite") +
+        info.event.extendedProps.user_id +
+        "/" +
+        info.event.extendedProps.image_url;
 
-    document.getElementById("kaunselor_updateevent_title").innerHTML =
-      info.event.title;
-    document.getElementById("kaunselor_updateevent_id").value = info.event.id;
-    document.getElementById("kaunselor_updateevent_date").value = new Date(
-      info.event.startStr
-    ).toLocaleDateString("en-MY");
+      document.getElementById("kaunselor_updateevent_title").innerHTML =
+        info.event.title;
+      document.getElementById("kaunselor_updateevent_id").value = info.event.id;
+      document.getElementById("kaunselor_updateevent_date").value = new Date(
+        info.event.startStr
+      ).toLocaleDateString("en-MY");
 
-    document.getElementById("kaunselor_updateevent_nama").value =
-      info.event.extendedProps.nama;
-    document.getElementById("kaunselor_updateevent_ndp").value =
-      info.event.extendedProps.ndp;
+      document.getElementById("kaunselor_updateevent_nama").value =
+        info.event.extendedProps.nama;
+      document.getElementById("kaunselor_updateevent_ndp").value =
+        info.event.extendedProps.ndp;
 
-    if (info.event.extendedProps.jenis == 1) {
-      document.getElementById("kaunselor_updateevent_type").value = "Online";
+      if (info.event.extendedProps.jenis == 1) {
+        document.getElementById("kaunselor_updateevent_type").value = "Online";
+      } else {
+        document.getElementById("kaunselor_updateevent_type").value = "Offline";
+      }
+
+      showmodal("kaunselor_updateevent");
     } else {
-      document.getElementById("kaunselor_updateevent_type").value = "Offline";
+      // document.getElementById("kaunselor_updateevent_type").value = "Offline";
     }
-
-    showmodal("kaunselor_updateevent");
 
     // if (info.event.backgroundColor != "gray") {
     //   if (info.event.extendedProps.event_status != 0) {
@@ -99,13 +103,23 @@ document.addEventListener("DOMContentLoaded", () => {
     //   start: "00:01",
     //   end: "23:59",
     // },
+    height: "auto",
 
+    
+    // eventLongPressDelay: 500, // Helps with touch responsiveness
+    // LongPressDelay: 500, // Helps with touch responsiveness
+    // selectLongPressDelay: 500,
+
+ 
     eventOrder: function (a, b) {
       const order = [1, 2, 0];
       const statusA = parseInt(a.extendedProps.event_status);
       const statusB = parseInt(b.extendedProps.event_status);
 
       return order.indexOf(statusA) - order.indexOf(statusB);
+    },
+    windowResize: function (arg) {
+      calendar.render();
     },
     // select: selectDate,
     eventClick: clickonEvent,
@@ -122,7 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "kaunselor_updateevent_sebabreject"
     ).value;
 
-    if (sebab != '') {
+    if (sebab != "") {
       hidemodal();
 
       //  coreui.Modal("#kaunselor_updateevent");
@@ -140,7 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
           calendar.refetchEvents();
         },
       });
-    } else{
+    } else {
       showtoast("Sila Masukkan Sebab");
     }
 
@@ -155,26 +169,25 @@ document.addEventListener("DOMContentLoaded", () => {
     var tamat = document.getElementById("timeInput2").value;
     // console.log(mula);
 
-    if (mula !='' && tamat!=''){
-    hidemodal();
+    if (mula != "" && tamat != "") {
+      hidemodal();
 
-    $.ajax({
-      type: "POST",
-      url: "kaunselor_approve",
-      data: {
-        kaunselor_approve: {
-          id: event_id,
-          mula: mula,
-          tamat: tamat,
+      $.ajax({
+        type: "POST",
+        url: "kaunselor_approve",
+        data: {
+          kaunselor_approve: {
+            id: event_id,
+            mula: mula,
+            tamat: tamat,
+          },
         },
-      },
-      success: function (response) {
-        console.log(response);
-        calendar.refetchEvents();
-      },
-    });}
-    else{
-      
+        success: function (response) {
+          console.log(response);
+          calendar.refetchEvents();
+        },
+      });
+    } else {
       showtoast("Sila Masukkan Masa Mula Dan Tamat");
     }
     // calendar.render();
@@ -213,4 +226,22 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
   });
+
+  document
+  .getElementById("monthViewBtn")
+  .addEventListener("click", function () {
+    calendar.changeView("dayGridMonth");
+  });
+
+document.getElementById("weekViewBtn").addEventListener("click", function () {
+  calendar.changeView("timeGridWeek");
+});
+
+document.getElementById("dayViewBtn").addEventListener("click", function () {
+  calendar.changeView("timeGridDay");
+});
+document.getElementById("listdayViewBtn").addEventListener("click", function () {
+  calendar.changeView("listDay");
+});
+
 });

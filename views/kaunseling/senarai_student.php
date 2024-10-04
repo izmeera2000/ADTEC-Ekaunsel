@@ -1,5 +1,5 @@
 <?php include(getcwd() . '/admin/server.php'); ?>
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <?php include(getcwd() . '/views/head.php'); ?>
 
@@ -28,12 +28,12 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="card-title fs-4 fw-semibold">Temu Janji</div>
- 
+
                                     <?php
                                     $id = $_SESSION['user_details']['id'];
                                     ?>
-                                 </div>
- 
+                                </div>
+
                             </div>
                             <div id="student_id_senarai" class="d-none" data-id="<?php echo $id ?>"></div>
                             <ul class="nav nav-underline-border" id="nav-tab" role="tablist">
@@ -83,12 +83,12 @@
                                             </tr>
                                         </thead>
                                         <tbody>
- 
+
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="tab-pane fade" id="nav-profile" role="tabpanel"
-                                    aria-labelledby="nav-profile-tab" tabindex="0">
+                                <div class="tab-pane fade" id="nav-old" role="tabpanel" aria-labelledby="nav-old-tab"
+                                    tabindex="1">
                                     <?php
 
 
@@ -113,13 +113,14 @@
                                             </tr>
                                         </thead>
                                         <tbody>
- 
+
 
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="tab-pane fade" id="nav-old" role="tabpanel" aria-labelledby="nav-old-tab"
-                                    tabindex="0">
+                                <div class="tab-pane fade" id="nav-profile" role="tabpanel"
+                                    aria-labelledby="nav-profile-tab" tabindex="2">
+
                                     <?php
 
 
@@ -144,7 +145,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
- 
+
                                         </tbody>
                                     </table>
                                 </div>

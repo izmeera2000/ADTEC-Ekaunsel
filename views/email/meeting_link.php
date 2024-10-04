@@ -1,5 +1,6 @@
 <?php 
 
+$site_url = $_ENV['site1'];
 
 if (isset($request)){
 if (str_contains($request, 'email/meeting_link')) {
@@ -21,6 +22,9 @@ include(getcwd() . '/admin/server.php');
   <meta name="x-apple-disable-message-reformatting">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
+  <title>Meeting Link</title>
+  <link rel="icon" type="image/png" sizes="192x192" href="<?php echo $site_url ?>assets/favicon/android-icon-192x192.png">
+
   <style type="text/css">
     body,
     table,

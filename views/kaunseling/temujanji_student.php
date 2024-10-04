@@ -289,7 +289,7 @@ if (mysqli_num_rows($results) == 1) {
                       <?php
                       $user_id = $kaunselor_jadual['user_id'];
                       $query =
-                        "SELECT a.*, b.ndp, COUNT(a.id) FROM `kaunselor_jadual` a INNER JOIN user b ON a.user_id = b.id WHERE event_status ='4'  AND b.ndp ='$user_id' AND a.id !='$product_id' ORDER BY a.id DESC ";
+                        "SELECT a.*, b.ndp, COUNT(a.id) FROM `kaunselor_jadual` a INNER JOIN user b ON a.user_id = b.id WHERE event_status ='4'  AND b.id ='$user_id' AND a.id !='$product_id' ORDER BY a.id DESC ";
                       $results = mysqli_query($db, $query);
                       if (mysqli_num_rows($results) > 0) {
 
