@@ -40,21 +40,15 @@
                                 <li class="nav-item" role="presentation"><button class="nav-link" id="nav-old-tab"
                                         data-coreui-toggle="tab" data-coreui-target="#nav-old" type="button" role="tab"
                                         aria-controls="nav-old" aria-selected="true">
-                                        <svg class="icon me-2">
-                                            <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-media-play"></use>
-                                        </svg>Past</button></li>
+                                        <i class="icon  me-2 bi bi-calendar2-check"></i>Past</button></li>
                                 <li class="nav-item" role="presentation"><button class="nav-link active"
                                         id="nav-home-tab" data-coreui-toggle="tab" data-coreui-target="#nav-home"
                                         type="button" role="tab" aria-controls="nav-home" aria-selected="true">
-                                        <svg class="icon me-2">
-                                            <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-media-play"></use>
-                                        </svg>Now</button></li>
+                                        <i class="icon  me-2 bi bi-calendar-event"></i>Now</button></li>
                                 <li class="nav-item" role="presentation"><button class="nav-link  " id="nav-profile-tab"
                                         data-coreui-toggle="tab" data-coreui-target="#nav-profile" type="button"
                                         role="tab" aria-controls="nav-profile" aria-selected="false">
-                                        <svg class="icon me-2">
-                                            <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-media-play"></use>
-                                        </svg>Upcoming</button></li>
+                                        <i class="icon  me-2 bi bi-calendar3"></i>Upcoming</button></li>
                             </ul>
                             <div class="tab-content mt-2" id="nav-tabContent">
                                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel"

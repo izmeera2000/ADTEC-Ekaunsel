@@ -17,7 +17,7 @@
     <?php if (($_SESSION['user_details']['role'] != 1)) { ?>
 
       <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>">
-      <i class="nav-icon bi bi-house"></i><span data-coreui-i18n="dashboard">Dashboard</span></a></li>
+          <i class="nav-icon bi bi-house"></i><span data-coreui-i18n="dashboard">Dashboard</span></a></li>
 
 
       <li class="nav-title">Kaunseling</li>
@@ -66,7 +66,7 @@
     <?php } else { ?>
 
       <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>">
-      <i class="nav-icon bi bi-house"></i><span data-coreui-i18n="dashboard">Dashboard</span></a></li>
+          <i class="nav-icon bi bi-house"></i><span data-coreui-i18n="dashboard">Dashboard</span></a></li>
 
 
       <li class="nav-title">Kaunseling</li>
@@ -106,10 +106,13 @@
       <li class="nav-group"><a class="nav-link nav-group-toggle">
           <span>Temu Janji</span></a>
         <ul class="nav-group-items compact">
+
           <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>email/meeting_link" target="_top">
               <span>Link</span></a></li>
-
-
+          <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>email/meeting_approve" target="_top">
+              <span>Approve</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>email/meeting_reject" target="_top">
+              <span>Reject</span></a></li>
 
 
 
@@ -145,7 +148,7 @@
 
       <li class="nav-title">Help</li>
       <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>user/profile" target="_top">
-      <i class="nav-icon bi bi-question-circle"></i><span>Guide</span></a></li>
+          <i class="nav-icon bi bi-question-circle"></i><span>Guide</span></a></li>
     </ul>
 
 

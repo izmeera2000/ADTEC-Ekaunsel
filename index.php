@@ -124,9 +124,8 @@ function kaunseling_temujanji($request)
 	if (($_SESSION['user_details']['role'] == 1)) {
 
 
-	require_once('views/kaunseling/temujanji.php');}
-
-	else{
+		require_once('views/kaunseling/temujanji.php');
+	} else {
 
 		require_once('views/kaunseling/temujanji_student.php');
 	}
@@ -134,14 +133,24 @@ function kaunseling_temujanji($request)
 }
 
 //email
-function email_meeting_link($request, $site_url)
+function email_meeting_link($request)
 {
 
 	require_once('views/email/meeting_link.php');
 
 }
+function email_meeting_approve($request)
+{
 
+	require_once('views/email/meeting_approve.php');
 
+}
+function email_meeting_reject($request)
+{
+
+	require_once('views/email/meeting_reject.php');
+
+}
 //custom pages
 function page404()
 {
@@ -415,9 +424,14 @@ switch (true) {
 
 
 	case str_contains($request, 'email/meeting_link'):
-		email_meeting_link($request, $site_url);
+		email_meeting_link($request);
 		break;
-
+	case str_contains($request, 'email/meeting_approve'):
+		email_meeting_approve($request);
+		break;
+	case str_contains($request, 'email/meeting_reject'):
+		email_meeting_reject($request);
+		break;
 	//t estend
 
 

@@ -890,7 +890,7 @@ function getEmailContent($filePath, $var = "")
 
 
 }
-function sendmail($receiver, $title, $filepath, $var = "" )
+function sendmail($receiver, $title, $filepath, $var = "")
 {
 
 
@@ -1202,9 +1202,7 @@ if (isset($_POST['senaraitemujanji'])) {
         "d" => '<div class="text-center">' . $formattedDate . '</div>' . '<div class="small text-body-secondary text-nowrap">' . date("h:i") . '</div>',
         "e" => '
               <a class="btn btn-success" href="' . $site_url . 'kaunseling/temujanji/' . $row['id'] . '">
-                  <svg class="icon">
-                      <use xlink:href="' . $site_url . 'assets/vendors/@coreui/icons/svg/free.svg#cil-people"></use>
-                  </svg>
+<i class="icon  bi bi-calendar-plus"></i>
               </a>
           '
       );
@@ -1270,9 +1268,7 @@ if (isset($_POST['senaraitemujanji2'])) {
         "d" => '<div class="text-center">' . $formattedDate . '</div>' . '<div class="small text-body-secondary text-nowrap">' . date("h:i") . '</div>',
         "e" => '
               <a class="btn btn-success" href="' . $site_url . 'kaunseling/temujanji/' . $row['id'] . '">
-                  <svg class="icon">
-                      <use xlink:href="' . $site_url . 'assets/vendors/@coreui/icons/svg/free.svg#cil-people"></use>
-                  </svg>
+                <i class="icon  bi bi-calendar-x"></i>
               </a>
           '
       );
@@ -1338,9 +1334,7 @@ if (isset($_POST['senaraitemujanji3'])) {
         "d" => '<div class="text-center">' . $formattedDate . '</div>' . '<div class="small text-body-secondary text-nowrap">' . date("h:i") . '</div>',
         "e" => '
               <a class="btn btn-success" href="' . $site_url . 'kaunseling/temujanji/' . $row['id'] . '">
-                  <svg class="icon">
-                      <use xlink:href="' . $site_url . 'assets/vendors/@coreui/icons/svg/free.svg#cil-people"></use>
-                  </svg>
+                     <i class="icon  bi bi-calendar-plus"></i>
               </a>
           '
       );
@@ -1426,7 +1420,7 @@ if (isset($_POST['temujanji_update'])) {
           // $meeting_link = $googleMeetLink; // Store the meeting link
           $var = array(
             'meeting_link' => $googleMeetLink // Example variable
-        );
+          );
           // echo $user_mail;
           // echo 'Meet Link: ' . $meeting_link; // Output the meeting link
 
@@ -1466,7 +1460,7 @@ if (isset($_POST['temujanji_update'])) {
 
         $var = array(
           'meeting_link' => $googleMeetLink // Example variable
-      );
+        );
         $query =
           "UPDATE kaunselor_jadual SET event_status = '3', masa_mula2 = '$now', meeting_link='$manual' , time_edit='$now' WHERE id = '$meeting_id'";
 
