@@ -29,7 +29,7 @@
             <form method="POST" action="register" enctype="multipart/form-data">
               <div class="card-body p-4">
                 <h1>Register</h1>
-                <p class="text-body-secondary">Create your account</p>
+                <p class="text-body-secondary">Register akaun anda</p>
                 <div class="input-group mb-3"><span class="input-group-text">
                     <svg class="icon">
                       <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-user"></use>
@@ -39,7 +39,7 @@
                     name="ndp" required>
 
 
-                  <div class="valid-feedback">Looks good!</div>
+                  <div class="valid-feedback">Tiada kesilapan</div>
                   <div class="invalid-feedback">
                     <?php formvalidateerr("ndp", $errors) ?>
                   </div>
@@ -57,7 +57,7 @@
                     placeholder="Nama Penuh" name="fullname" required>
 
 
-                  <div class="valid-feedback">Looks good!</div>
+                  <div class="valid-feedback">Tiada kesilapan</div>
                   <div class="invalid-feedback">
                     <?php formvalidateerr("fullname", $errors) ?>
 
@@ -74,7 +74,7 @@
                   <input class="form-control  <?php formvalidatelabel("email", $errors) ?>" type="text"
                     placeholder="Email" name="email" required>
 
-                  <div class="valid-feedback">Looks good!</div>
+                  <div class="valid-feedback">Tiada kesilapan</div>
                   <div class="invalid-feedback"><?php formvalidateerr("email", $errors) ?>
                   </div>
                 </div>
@@ -88,7 +88,7 @@
                   <input class="form-control   <?php formvalidatelabel("phone", $errors) ?>" type="number"
                     placeholder="Nombor Telefon" name="phone" required>
 
-                  <div class="valid-feedback">Looks good!</div>
+                  <div class="valid-feedback">Tiada kesilapan</div>
                   <div class="invalid-feedback">
                     <?php formvalidateerr("phone", $errors) ?>
                   </div>
@@ -103,7 +103,7 @@
                   <input class="form-control <?php formvalidatelabel("kp", $errors) ?>" type="number"
                     placeholder="Nombor Kad Pengenalan" name="kp" required>
 
-                  <div class="valid-feedback">Looks good!</div>
+                  <div class="valid-feedback">Tiada kesilapan</div>
                   <div class="invalid-feedback">
                     <?php formvalidateerr("phone", $errors) ?>
                   </div>
@@ -127,7 +127,7 @@
                     <label for="FS_Jantina">Jantina</label>
 
                   </div>
-                  <div class="valid-feedback">Looks good!</div>
+                  <div class="valid-feedback">Tiada kesilapan</div>
                   <div class="invalid-feedback">
                     <?php formvalidateerr("jantina", $errors) ?>
                   </div>
@@ -152,7 +152,7 @@
 
                     <label for="FS_Agama">Agama</label>
                   </div>
-                  <div class="valid-feedback">Looks good!</div>
+                  <div class="valid-feedback">Tiada kesilapan</div>
                   <div class="invalid-feedback">
                     <?php formvalidateerr("agama", $errors) ?>
 
@@ -177,7 +177,7 @@
 
                     <label for="FS_Status_Perkahwinan">Status Perkahwinan</label>
                   </div>
-                  <div class="valid-feedback">Looks good!</div>
+                  <div class="valid-feedback">Tiada kesilapan</div>
                   <div class="invalid-feedback">
                     <?php formvalidateerr("statuskahwin", $errors) ?>
 
@@ -192,7 +192,7 @@
                   <input class="form-control <?php formvalidatelabel("bangsa", $errors) ?>" type="text"
                     placeholder="Bangsa" name="bangsa" required>
 
-                  <div class="valid-feedback">Looks good!</div>
+                  <div class="valid-feedback">Tiada kesilapan</div>
                   <div class="invalid-feedback">
                     <?php formvalidateerr("bangsa", $errors) ?>
 
@@ -203,8 +203,8 @@
                   <label for="test" class="form-label">Gambar</label>
                   <input class="form-control <?php formvalidatelabel("gambar", $errors) ?>" type="file" id="test"
                     name="gambar" required>
-                  <div class="text-body-secondary small">Only JPG, JPEG & PNG files are allowed. And Under 5MB</div>
-                  <div class="valid-feedback">Looks good!</div>
+                  <div class="text-body-secondary small">Hanya JPG, JPEG & PNG files are dibenarkan dan bawah 5MB</div>
+                  <div class="valid-feedback">Tiada kesilapan</div>
                   <div class="invalid-feedback"><?php formvalidateerr("gambar", $errors) ?></div>
                 </div>
 
@@ -217,7 +217,7 @@
                   <input class="form-control  <?php formvalidatelabel("password1", $errors) ?>" type="password"
                     placeholder="Password" name="password1" required>
 
-                  <div class="valid-feedback">Looks good!</div>
+                  <div class="valid-feedback">Tiada kesilapan</div>
                   <div class="invalid-feedback">
                     <?php formvalidateerr("password1", $errors) ?>
 
@@ -234,7 +234,7 @@
                     placeholder="Repeat password" name="password2" required>
 
 
-                  <div class="valid-feedback">Looks good!</div>
+                  <div class="valid-feedback">Tiada kesilapan</div>
                   <div class="invalid-feedback">
                     <?php formvalidateerr("password2", $errors) ?>
                   </div>
@@ -242,8 +242,7 @@
 
                 <div class="row">
                   <div class="col-6">
-                    <button class="btn btn-primary px-4" type="submit" name="user_register">Create
-                      Account</button>
+                    <button class="btn btn-primary px-4" type="submit" name="user_register">Register Akaun</button>
                   </div>
                   <div class="col-6 text-end">
                     <a class="btn btn-link px-0" type="button" href="<?php echo $site_url ?>login">Login</a>
