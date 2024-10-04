@@ -1,7 +1,10 @@
 <?php 
 
 $site_url = $_ENV['site1'];
-
+if ($_ENV['site1'] == "http://localhost/ADTEC-EKaunsel/"){
+  $site_url ="https://kaunselingadtectaiping.com.my/";
+  
+}
 if (isset($request)){
 if (str_contains($request, 'email/meeting_approve')) {
 

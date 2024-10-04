@@ -15608,3 +15608,8 @@ select.form-multi-select {
       max-width: 250px; /* Less aggressive truncation on large screens */
   }
 }
+.fc-day.grayed-out {
+    background-color: #f0f0f0 !important; /* Light gray background */
+    color: #ccc !important; /* Light gray text */
+    opacity: 0.5; /* Optional: Reduce opacity for a more grayed-out effect */
+}

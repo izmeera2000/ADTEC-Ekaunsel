@@ -78,6 +78,13 @@
               </div>
             </div>
 
+            <div class="mb-3 row d-none" id="rejected_place">
+              <label for="user_calendarevent_type" class="col-sm-2 col-form-label">Sebab</label>
+              <div class="col-sm-10">
+                <input type="text" readonly class="form-control-plaintext" id="user_calendarevent_sebab"
+                  value="email@example.com">
+              </div>
+            </div>
 
           </form>
 

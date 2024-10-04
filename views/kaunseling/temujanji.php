@@ -13,14 +13,14 @@ if (mysqli_num_rows($results) == 1) {
   // $_SESSION['success'] = "You are now logged in";
   $kaunselor_jadual = mysqli_fetch_assoc($results);
 
-  if($kaunselor_jadual['masa_mula'] != ""){
-    
-  $start = date('Y/m/d H:i:s', strtotime($kaunselor_jadual['masa_mula']));
-}
-if($kaunselor_jadual['masa_tamat'] != ""){
- 
-  $end = date('Y/m/d H:i:s', strtotime($kaunselor_jadual['masa_tamat']));
-}
+  if ($kaunselor_jadual['masa_mula'] != "") {
+
+    $start = date('Y/m/d H:i:s', strtotime($kaunselor_jadual['masa_mula']));
+  }
+  if ($kaunselor_jadual['masa_tamat'] != "") {
+
+    $end = date('Y/m/d H:i:s', strtotime($kaunselor_jadual['masa_tamat']));
+  }
 }
 ?>
 <!DOCTYPE html><!--
@@ -51,7 +51,8 @@ if($kaunselor_jadual['masa_tamat'] != ""){
             </li>
             <li class="breadcrumb-item "><span>Temu Janji</span>
             </li>
-            <li class="breadcrumb-item active" id="p_id" data-id="<?php echo $product_id ?>"><span><?php echo $product_id ?></span>
+            <li class="breadcrumb-item active" id="p_id" data-id="<?php echo $product_id ?>">
+              <span><?php echo $product_id ?></span>
             </li>
           </ol>
         </nav>
@@ -59,7 +60,7 @@ if($kaunselor_jadual['masa_tamat'] != ""){
           <div class="col-xl-6">
             <div class="card mb-4  ">
               <div class="card-body p-4 ">
-                <div class="card-title fs-4 fw-semibold" data-coreui-i18n="traffic">Maklumat Temu Janji</div>
+                <div class="card-title fs-4 fw-semibold">Maklumat Temu Janji</div>
                 <p class="text-body-secondary"> Temu Janji</p>
                 <div class="mb-3 row">
                   <label for="1" class="col-sm-2 col-form-label fw-semibold">Status</label>
@@ -127,10 +128,11 @@ if($kaunselor_jadual['masa_tamat'] != ""){
                   <div class="mb-3 row">
                     <div class="col">
                       <div class=" row">
-                
+
                         <label for="2" class="col-4 col-form-label fw-semibold">Mula</label>
                         <div class="col-8">
-                          <input type="text" readonly class="form-control-plaintext" value="<?php echo $start ?>" id="mulamasa">
+                          <input type="text" readonly class="form-control-plaintext" value="<?php echo $start ?>"
+                            id="mulamasa">
                         </div>
                       </div>
                     </div>
@@ -138,17 +140,25 @@ if($kaunselor_jadual['masa_tamat'] != ""){
                       <div class=" row">
                         <label for="2" class="col-4 col-form-label fw-semibold">Tamat</label>
                         <div class="col-8">
-                
-                          <input type="text" readonly class="form-control-plaintext" value="<?php echo $end ?>" id="tamatmasa">
+
+                          <input type="text" readonly class="form-control-plaintext" value="<?php echo $end ?>"
+                            id="tamatmasa">
                         </div>
                       </div>
                     </div>
                   </div>
                   <?php
 
-                }?>
+                } else { ?>
 
-                <?php
+                  <div class="mb-3 row">
+                    <label for="2" class="col-sm-2 col-form-label fw-semibold">Sebab</label>
+                    <div class="col-sm-10">
+                      <input type="text" readonly class="form-control-plaintext" id="2"
+                        value="<?php echo $kaunselor_jadual['sebab'] ?>">
+                    </div>
+                  </div>
+                <?php }
                 if ($kaunselor_jadual['event_status'] == "3") {
                   ?>
 
@@ -254,7 +264,7 @@ if($kaunselor_jadual['masa_tamat'] != ""){
                   </div>
                 </div>
                 <input type="hidden" readonly class="form-control-plaintext" id="user_id"
-                value="<?php echo $kaunselor_jadual['user_id'] ?>">
+                  value="<?php echo $kaunselor_jadual['user_id'] ?>">
                 </p>
                 <!-- <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p> -->
               </div>
@@ -332,11 +342,11 @@ if($kaunselor_jadual['masa_tamat'] != ""){
 
 
                       $query2 =
-                      "SELECT a.*, b.ndp  FROM `kaunselor_jadual` a INNER JOIN user b ON a.user_id = b.id WHERE event_status ='4'  AND b.id ='$user_id' AND a.id !='$product_id' ORDER BY a.id DESC ";
-                        $results = mysqli_query($db, $query2);
-                      
-                      
-                        while ($past = mysqli_fetch_assoc($results)) {
+                        "SELECT a.*, b.ndp  FROM `kaunselor_jadual` a INNER JOIN user b ON a.user_id = b.id WHERE event_status ='4'  AND b.id ='$user_id' AND a.id !='$product_id' ORDER BY a.id DESC ";
+                      $results = mysqli_query($db, $query2);
+
+
+                      while ($past = mysqli_fetch_assoc($results)) {
                         ?>
 
                         <tr class="align-middle">
@@ -360,11 +370,11 @@ if($kaunselor_jadual['masa_tamat'] != ""){
         </div>
 
 
-     </div>
+      </div>
 
-  </div>
+    </div>
 
-  <?php include(getcwd() . '/views/footer.php'); ?>
+    <?php include(getcwd() . '/views/footer.php'); ?>
 
   </div>
 

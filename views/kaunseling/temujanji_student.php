@@ -18,8 +18,11 @@ if (mysqli_num_rows($results) == 1) {
   // $_SESSION['username'] = $user["username"];
   // $user_id = $user['id'];
   // var_dump($_SESSION['username2']);
-  $start = date('Y/m/d H:i:s', strtotime($kaunselor_jadual['masa_mula']));
-  $end = date('Y/m/d H:i:s', strtotime($kaunselor_jadual['masa_tamat']));
+  if ($kaunselor_jadual['event_status'] >= 1){
+
+    $start = date('Y/m/d H:i:s', strtotime($kaunselor_jadual['masa_mula']));
+    $end = date('Y/m/d H:i:s', strtotime($kaunselor_jadual['masa_tamat']));
+  }
 }
 ?>
 <!DOCTYPE html><!--
@@ -119,6 +122,9 @@ if (mysqli_num_rows($results) == 1) {
                     ?>
                   </div>
                 </div>
+                <?php 
+  if ($kaunselor_jadual['event_status'] >= 1){
+?>
                 <div class="mb-3 row">
                   <div class="col">
                     <div class=" row">
@@ -141,7 +147,18 @@ if (mysqli_num_rows($results) == 1) {
                     </div>
                   </div>
                 </div>
+                <?php
+  } else{?>
 
+<div class="mb-3 row">
+                  <label for="3" class="col-sm-2 col-form-label fw-semibold">Sebab</label>
+                  <div class="col-sm-10 ">
+                  <input type="text" readonly class="form-control-plaintext" value="<?php echo $kaunselor_jadual['sebab']?>" >
+                  </div>
+                </div>
+                <?php
+  }
+  ?>
                 <?php
                 if ($kaunselor_jadual['event_status'] == "3") {
                   ?>

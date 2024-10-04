@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function clickonEvent(info) {
     if (info.event.backgroundColor != "gray") {
-      if (info.event.extendedProps.event_status != 0) {
+
         document.getElementById("user_calendarevent_title").innerHTML =
           info.event.extendedProps.masalah;
 
@@ -36,8 +36,13 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("user_calendarevent_type").value =
           info.event.extendedProps.jenis;
 
+          document.getElementById("user_calendarevent_sebab").value =
+          info.event.extendedProps.sebab;
+
+
         var button1 = document.getElementById("user_calendarevent_button");
         var button2 = document.getElementById("user_calendarevent_button2");
+        var reject_place = document.getElementById("rejected_place");
 
         if (info.event.extendedProps.event_status == 1) {
           if (button1.classList.contains("d-none")) {
@@ -55,6 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
           if (!button1.classList.contains("d-none")) {
             button1.classList.add("d-none");
           }
+
           if (info.event.extendedProps.event_status == 2) {
             button2.classList.add("btn-success");
           }
@@ -64,12 +70,19 @@ document.addEventListener("DOMContentLoaded", () => {
           if (info.event.extendedProps.event_status == 4) {
             button2.classList.add("btn-secondary");
           }
+          if (!reject_place.classList.contains("d-none")) {
+            reject_place.classList.add("d-none");
+
+          }
+          if (info.event.extendedProps.event_status == 0) {
+            button2.classList.add("btn-danger");
+            reject_place.classList.remove("d-none");
+
+          }
         }
 
         showmodal("user_calendarevent");
-      } else {
-        showtoast("Rejected");
-      }
+     
     }
   }
 
@@ -80,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       showmodal("user_calendaradd");
     } else {
-      showtoast("date not valid");
+      // showtoast("date not valid");
       // calendar.unselect();
     }
     calendar.unselect();
@@ -110,7 +123,21 @@ document.addEventListener("DOMContentLoaded", () => {
     eventLongPressDelay: 500, // Helps with touch responsiveness
     LongPressDelay: 500, // Helps with touch responsiveness
     selectLongPressDelay: 500,
+    dayCellDidMount: function(info) {
+      // Get today's date without time
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); // Set time to midnight
 
+      // Get the date from the calendar cell
+      const date = info.date;
+      date.setHours(0, 0, 0, 0); // Set time to midnight for comparison
+
+      // Check if the date is before today
+      if (date < today) {
+          // Add a class to gray out the date
+          info.el.classList.add('grayed-out');
+      }
+  },
     selectConstraint: {
       start: "00:00", // Start at the beginning of the day
       end: "24:00", // End at the last moment of the day
@@ -210,7 +237,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("dayViewBtn").addEventListener("click", function () {
     calendar.changeView("timeGridDay");
   });
-  document.getElementById("listdayViewBtn").addEventListener("click", function () {
-    calendar.changeView("listDay");
-  });
+  // document.getElementById("listdayViewBtn").addEventListener("click", function () {
+  //   calendar.changeView("listDay");
+  // });
 });

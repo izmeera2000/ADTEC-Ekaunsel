@@ -1032,14 +1032,21 @@ if (isset($_POST['kaunselor_reject'])) {
   $results = mysqli_query($db, $query);
 
 
-  $query =
-    "SELECT a.* , b.nama,  b.email FROM kaunselor_jadual a INNER JOIN  user b ON a.user_id = b.id  WHERE a.id ='$event_id'";
-  $filteredResult = mysqli_query($db, $query);
+  $query2 =
+    "SELECT a.*, b.email,b.ndp,b.nama FROM `kaunselor_jadual` a INNER JOIN  user b ON a.user_id = b.id  WHERE a.id = '$event_id'";
+  $results2 = mysqli_query($db, $query2);
+
+  $event = mysqli_fetch_assoc($results2);
+
+  $start_modified = date('j F Y gA', strtotime($event['tarikh']));
+
+  $var = array(
+    'link' => $site_url . "kaunseling/temujanji/$event_id" // Example variable
+  );
+  sendmail($event['email'], "Temu Janji Anda Pada $start_modified telah dibatalkan", 'meeting_reject.php', $var);
 
 
-  while ($user = mysqli_fetch_assoc($filteredResult)) {
-    // sendmail($user['email'], "Meeting Link", 'meeting_link.php', "sdfsdf", "sdfsdf");
-  }
+
 
 
 
@@ -1075,6 +1082,21 @@ if (isset($_POST['kaunselor_approve'])) {
     $query1 =
       "UPDATE kaunselor_jadual SET event_status = 2, masa_mula ='$mula', masa_tamat = '$tamat', time_edit='$now',kaunselor_id='$kaunselor_id'   WHERE id = '$event_id'";
     $results = mysqli_query($db, $query1);
+
+
+    $query2 =
+      "SELECT a.*, b.email,b.ndp,b.nama FROM `kaunselor_jadual` a INNER JOIN  user b ON a.user_id = b.id  WHERE a.id = '$event_id'";
+    $results2 = mysqli_query($db, $query2);
+
+    $event = mysqli_fetch_assoc($results2);
+
+    $start_modified = date('j F Y gA', strtotime($event['tarikh']));
+
+    $var = array(
+      'link' => $site_url . "kaunseling/temujanji/$event_id" // Example variable
+    );
+    sendmail($event['email'], "Temu Janji Anda Pada $start_modified telah diluluskan", 'meeting_approve.php', $var);
+
 
   }
 
@@ -1432,7 +1454,7 @@ if (isset($_POST['temujanji_update'])) {
 
           $results = mysqli_query($db, $query);
 
-          sendmail($user_mail, "Link Of Google Meet Appointment in $start_modified", 'meeting_link.php', $var);
+          sendmail($user_mail, "Link Temu Janji Pada $start_modified", 'meeting_link.php', $var);
 
 
 
@@ -1461,11 +1483,12 @@ if (isset($_POST['temujanji_update'])) {
         $var = array(
           'meeting_link' => $googleMeetLink // Example variable
         );
+
         $query =
           "UPDATE kaunselor_jadual SET event_status = '3', masa_mula2 = '$now', meeting_link='$manual' , time_edit='$now' WHERE id = '$meeting_id'";
 
         $results = mysqli_query($db, $query);
-        sendmail($user_mail, "Link Of Google Meet Appointment in $start_modified", 'meeting_link.php', $var);
+        sendmail($user_mail, "Link Temu Janji Pada $start_modified", 'meeting_link.php', $var);
 
       }
 
@@ -1502,6 +1525,22 @@ if (isset($_POST['temujanji_end'])) {
   $results = mysqli_query($db, $query);
 
   // sendmail($user_mail, "Meeting Link", 'meeting_link.php', $meeting_link, $site_url);
+
+
+  $query2 =
+    "SELECT a.*, b.email,b.ndp,b.nama FROM `kaunselor_jadual` a INNER JOIN  user b ON a.user_id = b.id  WHERE a.id = '$event_id'";
+  $results2 = mysqli_query($db, $query2);
+
+  $event = mysqli_fetch_assoc($results2);
+
+  $start_modified = date('j F Y gA', strtotime($event['tarikh']));
+
+  $var = array(
+    'link' => $site_url . "kaunseling/temujanji/$event_id" // Example variable
+  );
+  sendmail($event['email'], "Temu Janji Anda Pada $start_modified telah ditamat", 'meeting_end.php', $var);
+
+
   die();
 
 }
