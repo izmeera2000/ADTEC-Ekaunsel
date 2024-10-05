@@ -8,6 +8,10 @@
  */
 
 document.addEventListener("DOMContentLoaded", () => {
+  function isMobile() {
+    return window.innerWidth <= 768; // Change this value based on your mobile breakpoint
+  }
+
   function getAllEvents(info, successCallback, failureCallback) {
     // console.log((info.startStr));
     // console.log((info.endStr));
@@ -105,18 +109,32 @@ document.addEventListener("DOMContentLoaded", () => {
     // },
     height: "auto",
 
-    
     // eventLongPressDelay: 500, // Helps with touch responsiveness
     // LongPressDelay: 500, // Helps with touch responsiveness
     // selectLongPressDelay: 500,
 
- 
     eventOrder: function (a, b) {
       const order = [1, 2, 0];
       const statusA = parseInt(a.extendedProps.event_status);
       const statusB = parseInt(b.extendedProps.event_status);
 
       return order.indexOf(statusA) - order.indexOf(statusB);
+    },
+    eventContent: function (info) {
+      let eventTitle;
+      let maxTitleLength = 20; 
+      // If on mobile, use extendedProps, otherwise use the default title
+      if (isMobile()) {
+        eventTitle = info.event.extendedProps.ndp; // Replace 'customTitle' with the actual extendedProp you want to display
+      } else {
+        
+       eventTitle = info.event.title.length > maxTitleLength ? info.event.title.substring(0, maxTitleLength) + '...' : info.event.title;
+      }
+
+      // Return the event content as a DOM element
+      let titleElement = document.createElement("div");
+      titleElement.innerHTML = eventTitle;
+      return { domNodes: [titleElement] };
     },
     windowResize: function (arg) {
       calendar.render();
@@ -228,20 +246,21 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   document
-  .getElementById("monthViewBtn")
-  .addEventListener("click", function () {
-    calendar.changeView("dayGridMonth");
+    .getElementById("monthViewBtn")
+    .addEventListener("click", function () {
+      calendar.changeView("dayGridMonth");
+    });
+
+  document.getElementById("weekViewBtn").addEventListener("click", function () {
+    calendar.changeView("timeGridWeek");
   });
 
-document.getElementById("weekViewBtn").addEventListener("click", function () {
-  calendar.changeView("timeGridWeek");
-});
-
-document.getElementById("dayViewBtn").addEventListener("click", function () {
-  calendar.changeView("timeGridDay");
-});
-document.getElementById("listdayViewBtn").addEventListener("click", function () {
-  calendar.changeView("listDay");
-});
-
+  document.getElementById("dayViewBtn").addEventListener("click", function () {
+    calendar.changeView("timeGridDay");
+  });
+  document
+    .getElementById("listdayViewBtn")
+    .addEventListener("click", function () {
+      calendar.changeView("listDay");
+    });
 });

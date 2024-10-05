@@ -420,4 +420,105 @@
       </div>
     </div>
   </div>
+
+
+
+  <div class="modal fade" id="kaunselor_updateevent" tabindex="-1" aria-labelledby="kaunselor_updateevent_title"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <form>
+          <div class="modal-header">
+            <h5 class="modal-title" id="kaunselor_updateevent_title">Book Kaunseling</h5>
+            <button type="button" class="btn-close" data-coreui-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+
+            <input type="hidden" class="form-control" id="kaunselor_updateevent_id" value="<?php echo $kaunselor_jadual['id']?>">
+
+            <div class="mb-3 row">
+              <label for="kaunselor_updateevent_date" class="col-sm-2 col-form-label">Date</label>
+              <div class="col-sm-10">
+                <input type="text" readonly class="form-control-plaintext" id="kaunselor_updateevent_date"
+                  value="<?php echo $kaunselor_jadual['tarikh']?>">
+              </div>
+            </div>
+
+
+
+            <div class="mb-3 row">
+              <img class="img-fluid  mx-auto  d-block" src="<?php echo $site_url ?>assets/img/user/<?php echo $kaunselor_jadual['user_id']?>/<?php echo $kaunselor_jadual['image_url']?>"
+                id="user_info" >
+
+            </div>
+
+            <div class="mb-3 row">
+              <label for="kaunselor_updateevent_date" class="col-sm-2 col-form-label">Nama</label>
+              <div class="col-sm-10">
+                <input type="text" readonly class="form-control-plaintext" id="kaunselor_updateevent_nama"
+                  value="<?php echo $kaunselor_jadual['nama']?>">
+              </div>
+            </div>
+
+            <div class="mb-3 row">
+              <label for="kaunselor_updateevent_date" class="col-sm-2 col-form-label">NDP</label>
+              <div class="col-sm-10">
+                <input type="text" readonly class="form-control-plaintext" id="kaunselor_updateevent_ndp"
+                  value="<?php echo $kaunselor_jadual['ndp']?>">
+              </div>
+            </div>
+
+            <div class="mb-3 row">
+              <label for="kaunselor_updateevent_date" class="col-sm-2 col-form-label">Jenis Modal</label>
+              <div class="col-sm-10">
+                <input type="text" readonly class="form-control-plaintext" id="kaunselor_updateevent_type"
+                  value="<?php echo $kaunselor_jadual['jenis']?>">
+              </div>
+            </div>
+
+            <div class="mb-3  ">
+              <input type="radio" class="btn-check" name="options-outlined" id="success-outlined" autocomplete="off"
+                value="1">
+              <label class="btn btn-outline-success" for="success-outlined">Approve</label>
+
+              <input type="radio" class="btn-check" name="options-outlined" id="danger-outlined" autocomplete="off"
+                value="0">
+              <label class="btn btn-outline-danger" for="danger-outlined">Reject</label>
+            </div>
+
+
+            <div class="mb-3  d-none" id="kaunselor_updateevent_reject">
+              <label for="kaunselor_updateevent_sebabreject" class="col-form-label">Sebab Reject</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="kaunselor_updateevent_sebabreject">
+              </div>
+            </div>
+
+            <div class="row mb-3 d-none " id="kaunselor_updateevent_approve">
+              <div class="col-md-6">
+                <label for="kaunselor_updateevent_content1" class="  col-form-label">Masa Mula</label>
+                <input type="time" class="form-control" id="timeInput1" name="time1" min="08:00" max="17:00" step="1800">
+              </div>
+
+              <div class="col-md-6">
+                <label for="kaunselor_updateevent_content2" class="  col-form-label">Masa Tamat</label>
+                <input type="time" class="form-control" id="timeInput2" name="time2" min="08:00" max="17:00" step="1800">
+              </div>
+
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-danger  d-none" onclick=""
+              id="kaunselor_updateevent_button1">Save</button>
+            <button type="button" class="btn btn-success  d-none " onclick=""
+              id="kaunselor_updateevent_button2">Save</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
 <?php } ?>

@@ -39,7 +39,7 @@
 
               <button id="floatingBtn" class="btn btn-primary rounded-circle d-md-none d-block" data-coreui-toggle="modal"
                 data-coreui-target="#calendarModal">
-                <i class="fas fa-bars">?</i>
+                <i class="  bi bi-sliders"></i>
               </button>
 
 

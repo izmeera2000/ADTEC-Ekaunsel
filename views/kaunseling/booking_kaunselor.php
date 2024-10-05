@@ -37,7 +37,7 @@
 
             <button id="floatingBtn" class="btn btn-primary rounded-circle d-md-none d-block" data-coreui-toggle="modal"
                 data-coreui-target="#calendarModal">
-                <i class="fas fa-bars">?</i>
+                <i class="   bi bi-sliders"></i>
               </button>
 
               <!-- <div class="d-none" id="calendar_user_id"><?php echo $_SESSION['user_details']['id'] ?></div> -->

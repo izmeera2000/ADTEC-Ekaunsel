@@ -933,3 +933,11 @@ $('button[data-coreui-toggle="tab"]').on('shown.coreui.tab', function (e) {
   $('#senaraitemujanji2b').DataTable().columns.adjust().responsive.recalc();
   $('#senaraitemujanji3b').DataTable().columns.adjust().responsive.recalc();
 });
+
+$("#book_temujanji").click(function () {
+
+
+  showmodal("kaunselor_updateevent");
+
+
+});

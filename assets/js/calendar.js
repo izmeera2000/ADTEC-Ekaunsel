@@ -6,6 +6,9 @@
  */
 
 document.addEventListener("DOMContentLoaded", () => {
+  function isMobile() {
+    return window.innerWidth <= 768; // Change this value based on your mobile breakpoint
+  }
   function getAllEvents(info, successCallback, failureCallback) {
     $.ajax({
       type: "POST",
@@ -24,65 +27,60 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function clickonEvent(info) {
     if (info.event.backgroundColor != "gray") {
+      document.getElementById("user_calendarevent_title").innerHTML =
+        info.event.extendedProps.masalah;
 
-        document.getElementById("user_calendarevent_title").innerHTML =
-          info.event.extendedProps.masalah;
+      document.getElementById("user_calendarevent_id").value = info.event.id;
 
-        document.getElementById("user_calendarevent_id").value = info.event.id;
+      document.getElementById("user_calendarevent_date").value =
+        info.event.startStr;
 
-        document.getElementById("user_calendarevent_date").value =
-          info.event.startStr;
+      document.getElementById("user_calendarevent_type").value =
+        info.event.extendedProps.jenis;
 
-        document.getElementById("user_calendarevent_type").value =
-          info.event.extendedProps.jenis;
+      document.getElementById("user_calendarevent_sebab").value =
+        info.event.extendedProps.sebab;
 
-          document.getElementById("user_calendarevent_sebab").value =
-          info.event.extendedProps.sebab;
+      var button1 = document.getElementById("user_calendarevent_button");
+      var button2 = document.getElementById("user_calendarevent_button2");
+      var reject_place = document.getElementById("rejected_place");
 
+      if (info.event.extendedProps.event_status == 1) {
+        if (button1.classList.contains("d-none")) {
+          button1.classList.remove("d-none");
+        }
+        if (!button2.classList.contains("d-none")) {
+          button2.classList.add("d-none");
+        }
+      } else {
+        button2.classList.remove("btn-success", "btn-secondary", "btn-info");
 
-        var button1 = document.getElementById("user_calendarevent_button");
-        var button2 = document.getElementById("user_calendarevent_button2");
-        var reject_place = document.getElementById("rejected_place");
-
-        if (info.event.extendedProps.event_status == 1) {
-          if (button1.classList.contains("d-none")) {
-            button1.classList.remove("d-none");
-          }
-          if (!button2.classList.contains("d-none")) {
-            button2.classList.add("d-none");
-          }
-        } else {
-          button2.classList.remove("btn-success", "btn-secondary", "btn-info");
-
-          if (button2.classList.contains("d-none")) {
-            button2.classList.remove("d-none");
-          }
-          if (!button1.classList.contains("d-none")) {
-            button1.classList.add("d-none");
-          }
-
-          if (info.event.extendedProps.event_status == 2) {
-            button2.classList.add("btn-success");
-          }
-          if (info.event.extendedProps.event_status == 3) {
-            button2.classList.add("btn-info");
-          }
-          if (info.event.extendedProps.event_status == 4) {
-            button2.classList.add("btn-secondary");
-          }
-          if (!reject_place.classList.contains("d-none")) {
-            reject_place.classList.add("d-none");
-
-          }
-          if (info.event.extendedProps.event_status == 0) {
-            button2.classList.add("btn-danger");
-            reject_place.classList.remove("d-none");
-
-          }
+        if (button2.classList.contains("d-none")) {
+          button2.classList.remove("d-none");
+        }
+        if (!button1.classList.contains("d-none")) {
+          button1.classList.add("d-none");
         }
 
-        showmodal("user_calendarevent");
-     
+        if (info.event.extendedProps.event_status == 2) {
+          button2.classList.add("btn-success");
+        }
+        if (info.event.extendedProps.event_status == 3) {
+          button2.classList.add("btn-info");
+        }
+        if (info.event.extendedProps.event_status == 4) {
+          button2.classList.add("btn-secondary");
+        }
+        if (!reject_place.classList.contains("d-none")) {
+          reject_place.classList.add("d-none");
+        }
+        if (info.event.extendedProps.event_status == 0) {
+          button2.classList.add("btn-danger");
+          reject_place.classList.remove("d-none");
+        }
+      }
+
+      showmodal("user_calendarevent");
     }
   }
 
@@ -116,6 +114,26 @@ document.addEventListener("DOMContentLoaded", () => {
     dayMaxEventRows: 2,
     eventOrder: "-title",
     events: getAllEvents,
+    eventContent: function (info) {
+      let eventTitle;
+
+      // If on mobile, use extendedProps, otherwise use the default title
+      if (isMobile()) {
+        maxTitleLength = 5;
+      } else {
+        maxTitleLength = 10;
+      }
+      eventTitle =
+        info.event.extendedProps.masalah.length > maxTitleLength
+          ? info.event.extendedProps.masalah.substring(0, maxTitleLength) +
+            "..."
+          : info.event.extendedProps.masalah;
+
+      // Return the event content as a DOM element
+      let titleElement = document.createElement("div");
+      titleElement.innerHTML = eventTitle;
+      return { domNodes: [titleElement] };
+    },
     lazyFetching: true,
     selectable: true,
     selectHelper: true,
@@ -123,7 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
     eventLongPressDelay: 500, // Helps with touch responsiveness
     LongPressDelay: 500, // Helps with touch responsiveness
     selectLongPressDelay: 500,
-    dayCellDidMount: function(info) {
+    dayCellDidMount: function (info) {
       // Get today's date without time
       const today = new Date();
       today.setHours(0, 0, 0, 0); // Set time to midnight
@@ -134,10 +152,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Check if the date is before today
       if (date < today) {
-          // Add a class to gray out the date
-          info.el.classList.add('grayed-out');
+        // Add a class to gray out the date
+        info.el.classList.add("grayed-out");
       }
-  },
+    },
     selectConstraint: {
       start: "00:00", // Start at the beginning of the day
       end: "24:00", // End at the last moment of the day

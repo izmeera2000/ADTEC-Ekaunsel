@@ -71,7 +71,7 @@ if (mysqli_num_rows($results) == 1) {
                       if ($kaunselor_jadual['event_status'] == "0") {
                         echo '<button type="button" class="btn btn-danger">Rejected</button>';
                       } else if ($kaunselor_jadual['event_status'] == "1") {
-                        echo '<button type="button" class="btn btn-warning">Menunggu Kelulusan</button>';
+                        echo '<button type="button" class="btn btn-warning" id="book_temujanji"> Menunggu Kelulusan</button>';
 
                       } else if ($kaunselor_jadual['event_status'] == "2") {
 

@@ -114,11 +114,11 @@
   --cui-body-bg-rgb-dark: 33, 38, 49;
   --cui-emphasis-color-dark: #fff;
   --cui-emphasis-color-rgb-dark: 255, 255, 255;
-  --cui-secondary-color-dark: rgba(255, 255, 255, 0.6);
+  --cui-secondary-color-dark: rgba(255, 255, 255, 1);
   --cui-secondary-color-rgb-dark: 255, 255, 255;
   --cui-secondary-bg-dark: #323a49;
   --cui-secondary-bg-rgb-dark: 50, 58, 73;
-  --cui-tertiary-color-dark: rgba(255, 255, 255, 0.38);
+  --cui-tertiary-color-dark: rgba(255, 255, 255, 0.9);
   --cui-tertiary-color-rgb-dark: 255, 255, 255;
   --cui-tertiary-bg-dark: #2a303d;
   --cui-tertiary-bg-rgb-dark: 42, 48, 61;
@@ -15587,7 +15587,7 @@ select.form-multi-select {
 /*# sourceMappingURL=style.css.map */
 
 .fc-daygrid-block-event .fc-event-time, .fc-daygrid-block-event .fc-event-title {
-    padding-left: 10px; /* Adds more space for these specific views */
+    padding-left: 15px; /* Adds more space for these specific views */
 }
 
 

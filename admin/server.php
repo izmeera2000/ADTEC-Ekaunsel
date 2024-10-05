@@ -1215,6 +1215,33 @@ if (isset($_POST['senaraitemujanji'])) {
       $timestamp = strtotime($row['tarikh']);
       $formattedDate = date('d / m / Y', $timestamp);
 
+      if ($row['event_status'] == "0") {
+
+        $class = "btn-danger";
+      }
+      if ($row['event_status'] == "1") {
+        $class = "btn-warning";
+
+  
+      }
+  
+      if ($row['event_status'] == "2") {
+        $class = "btn-success";
+
+  
+      }
+  
+      if ($row['event_status'] == "3") {
+        $class = "btn-info";
+
+  
+      }
+      if ($row['event_status'] == "4") {
+        $class = "btn-secondary";
+
+  
+      }
+
       $data[] = array(
 
         "a" => '<div class="avatar avatar-md"><img class="avatar-img" src="' . $site_url . 'assets/img/user/' . $row['user_id'] . '/' . $row['image_url'] . '"
@@ -1223,7 +1250,7 @@ if (isset($_POST['senaraitemujanji'])) {
         "c" => '<div class="text-center">' . $row['masalah'] . '</div>',
         "d" => '<div class="text-center">' . $formattedDate . '</div>' . '<div class="small text-body-secondary text-nowrap">' . date("h:i") . '</div>',
         "e" => '
-              <a class="btn btn-success" href="' . $site_url . 'kaunseling/temujanji/' . $row['id'] . '">
+              <a class="btn '.$class .'" href="' . $site_url . 'kaunseling/temujanji/' . $row['id'] . '">
 <i class="icon  bi bi-calendar-plus"></i>
               </a>
           '
@@ -1280,6 +1307,32 @@ if (isset($_POST['senaraitemujanji2'])) {
 
       $timestamp = strtotime($row['tarikh']);
       $formattedDate = date('d / m / Y', $timestamp);
+      if ($row['event_status'] == "0") {
+
+        $class = "btn-danger";
+      }
+      if ($row['event_status'] == "1") {
+        $class = "btn-warning";
+
+  
+      }
+  
+      if ($row['event_status'] == "2") {
+        $class = "btn-success";
+
+  
+      }
+  
+      if ($row['event_status'] == "3") {
+        $class = "btn-info";
+
+  
+      }
+      if ($row['event_status'] == "4") {
+        $class = "btn-secondary";
+
+  
+      }
 
       $data[] = array(
 
@@ -1289,7 +1342,7 @@ if (isset($_POST['senaraitemujanji2'])) {
         "c" => '<div class="text-center">' . $row['masalah'] . '</div>',
         "d" => '<div class="text-center">' . $formattedDate . '</div>' . '<div class="small text-body-secondary text-nowrap">' . date("h:i") . '</div>',
         "e" => '
-              <a class="btn btn-success" href="' . $site_url . 'kaunseling/temujanji/' . $row['id'] . '">
+              <a class="btn '.$class .'" href="' . $site_url . 'kaunseling/temujanji/' . $row['id'] . '">
                 <i class="icon  bi bi-calendar-x"></i>
               </a>
           '
@@ -1347,6 +1400,33 @@ if (isset($_POST['senaraitemujanji3'])) {
       $timestamp = strtotime($row['tarikh']);
       $formattedDate = date('d / m / Y', $timestamp);
 
+      if ($row['event_status'] == "0") {
+
+        $class = "btn-danger";
+      }
+      if ($row['event_status'] == "1") {
+        $class = "btn-warning";
+
+  
+      }
+  
+      if ($row['event_status'] == "2") {
+        $class = "btn-success";
+
+  
+      }
+  
+      if ($row['event_status'] == "3") {
+        $class = "btn-info";
+
+  
+      }
+      if ($row['event_status'] == "4") {
+        $class = "btn-secondary";
+
+  
+      }
+
       $data[] = array(
 
         "a" => '<div class="avatar avatar-md"><img class="avatar-img" src="' . $site_url . 'assets/img/user/' . $row['user_id'] . '/' . $row['image_url'] . '"
@@ -1355,7 +1435,7 @@ if (isset($_POST['senaraitemujanji3'])) {
         "c" => '<div class="text-center">' . $row['masalah'] . '</div>',
         "d" => '<div class="text-center">' . $formattedDate . '</div>' . '<div class="small text-body-secondary text-nowrap">' . date("h:i") . '</div>',
         "e" => '
-              <a class="btn btn-success" href="' . $site_url . 'kaunseling/temujanji/' . $row['id'] . '">
+              <a class="btn '.$class .'" href="' . $site_url . 'kaunseling/temujanji/' . $row['id'] . '">
                      <i class="icon  bi bi-calendar-plus"></i>
               </a>
           '
