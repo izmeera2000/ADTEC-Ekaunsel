@@ -22,137 +22,175 @@ window.addEventListener("DOMContentLoaded", () => {
 
 const updateCharts = () => {
   if (document.getElementById("card-chart1")) {
+    const cardChart1 = new Chart(document.getElementById("card-chart1"), {
+      type: "line",
+      data: {
+        labels: [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+        ],
+        datasets: [
+          {
+            label: "My First dataset",
+            backgroundColor: "transparent",
+            borderColor: "rgba(255,255,255,.55)",
+            pointBackgroundColor: coreui.Utils.getStyle("--cui-primary"),
+            data: [65, 59, 84, 84, 51, 55, 40],
+          },
+        ],
+      },
+      options: {
+        plugins: {
+          legend: {
+            display: false,
+          },
+        },
+        maintainAspectRatio: false,
+        scales: {
+          x: {
+            border: {
+              display: false,
+            },
+            grid: {
+              display: false,
+            },
+            ticks: {
+              display: false,
+            },
+          },
+          y: {
+            min: 30,
+            max: 89,
+            display: false,
+            grid: {
+              display: false,
+            },
+            ticks: {
+              display: false,
+            },
+          },
+        },
+        elements: {
+          line: {
+            borderWidth: 1,
+            tension: 0.4,
+          },
+          point: {
+            radius: 4,
+            hitRadius: 10,
+            hoverRadius: 4,
+          },
+        },
+      },
+    });
+
     cardChart1.data.datasets[0].pointBackgroundColor =
       coreui.Utils.getStyle("--cui-primary");
     cardChart1.update();
   }
-
-  if (document.getElementById("main-bar-chart")) {
-    mainBarChart.options.scales.x.ticks.color =
-      coreui.Utils.getStyle("--cui-body-color");
-    mainBarChart.options.scales.y.ticks.color =
-      coreui.Utils.getStyle("--cui-body-color");
-    mainBarChart.options.scales.x.grid.color = coreui.Utils.getStyle(
-      "--cui-border-color-translucent"
-    );
-    mainBarChart.options.scales.x.ticks.color =
-      coreui.Utils.getStyle("--cui-body-color");
-    mainBarChart.options.scales.y.grid.color = coreui.Utils.getStyle(
-      "--cui-border-color-translucent"
-    );
-    mainBarChart.options.scales.y.ticks.color =
-      coreui.Utils.getStyle("--cui-body-color");
-    mainBarChart.update();
-  }
 };
-if (document.getElementById("card-chart-new1")) {
-  const cardChartNew1 = new Chart(document.getElementById("card-chart-new1"), {
-    type: "line",
-    data: {
-      labels: ["January", "February", "March", "April", "May", "June", "July"],
-      datasets: [
-        {
-          label: "My First dataset",
-          backgroundColor: `rgba(${coreui.Utils.getStyle(
-            "--cui-primary-rgb"
-          )}, .1)`,
-          borderColor: coreui.Utils.getStyle("--cui-primary"),
-          borderWidth: 3,
-          data: [78, 81, 80, 45, 34, 22, 40],
-          fill: true,
-        },
-      ],
-    },
-    options: {
-      plugins: {
-        legend: {
-          display: false,
-        },
-      },
-      maintainAspectRatio: false,
-      scales: {
-        x: {
-          display: false,
-        },
-        y: {
-          beginAtZero: true,
-          display: false,
-        },
-      },
-      elements: {
-        line: {
-          borderWidth: 2,
-          tension: 0.4,
-        },
-        point: {
-          radius: 0,
-          hitRadius: 10,
-          hoverRadius: 4,
-        },
-      },
-    },
-  });
-}
-{
-  const cardChart1 = new Chart(document.getElementById("card-chart1"), {
-    type: "line",
-    data: {
-      labels: ["January", "February", "March", "April", "May", "June", "July"],
-      datasets: [
-        {
-          label: "My First dataset",
-          backgroundColor: "transparent",
-          borderColor: "rgba(255,255,255,.55)",
-          pointBackgroundColor: coreui.Utils.getStyle("--cui-primary"),
-          data: [65, 59, 84, 84, 51, 55, 40],
-        },
-      ],
-    },
-    options: {
-      plugins: {
-        legend: {
-          display: false,
-        },
-      },
-      maintainAspectRatio: false,
-      scales: {
-        x: {
-          border: {
-            display: false,
-          },
-          grid: {
-            display: false,
-          },
-          ticks: {
-            display: false,
+$(document).ready(function () {
+  if (document.getElementById("card-chart-new1")) {
+    let cardChartNew1;
+    $('#monthSelector').val(new Date().getMonth() + 1);
+    function getSelectedValue(selector, defaultValue) {
+      return $(selector).length ? $(selector).val() : defaultValue;
+    }
+  
+    function fetchChartData(month, year) {
+      $.ajax({
+        url: "card_chart_kaunseling_total_day", // Replace with your PHP script URL
+        method: "POST",
+        data: {
+          card_chart_kaunseling_total_day: {
+            month: month,
+            year: year,
           },
         },
-        y: {
-          min: 30,
-          max: 89,
-          display: false,
-          grid: {
-            display: false,
-          },
-          ticks: {
-            display: false,
-          },
+        success: function(data) {
+          console.log("Data received:", data);
+          try {
+            const response = JSON.parse(data);
+            console.log("Parsed JSON:", response);
+  
+            const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+            const labels = response.map(item => item.day_of_week);
+            const totals = response.map(item => parseInt(item.total)); // Ensure totals are integers
+  
+            console.log("Labels:", labels);
+            console.log("Totals:", totals);
+  
+            const weeklyTotals = daysOfWeek.map(day => {
+              const index = labels.indexOf(day);
+              return index !== -1 ? totals[index] : 0;
+            });
+  
+            console.log("Weekly Totals:", weeklyTotals);
+  
+            const ctx = document.getElementById("card-chart-new1").getContext("2d");
+  
+            // Destroy existing chart instance if it exists
+            if (cardChartNew1) {
+              cardChartNew1.destroy();
+            }
+  
+            cardChartNew1 = new Chart(ctx, {
+              type: "line",
+              data: {
+                labels: daysOfWeek,
+                datasets: [{
+                  label: "Entries",
+                  backgroundColor: `rgba(${coreui.Utils.getStyle("--cui-primary-rgb")}, .1)`,
+                  borderColor: coreui.Utils.getStyle("--cui-primary"),
+                  borderWidth: 3,
+                  data: weeklyTotals,
+                  fill: true,
+                }]
+              },
+              options: {
+                plugins: {
+                  legend: { display: false },
+                  tooltip: {
+                    position: "nearest",
+                    overflow: "auto",
+                  },
+                },
+                maintainAspectRatio: false,
+                scales: {
+                  x: { display: false },
+                  y: { beginAtZero: true, display: false },
+                },
+                elements: {
+                  line: { borderWidth: 2, tension: 0.4 },
+                  point: { radius: 0, hitRadius: 10, hoverRadius: 4 },
+                },
+              },
+            });
+          } catch (e) {
+            console.error("Error parsing JSON:", e);
+          }
         },
-      },
-      elements: {
-        line: {
-          borderWidth: 1,
-          tension: 0.4,
-        },
-        point: {
-          radius: 4,
-          hitRadius: 10,
-          hoverRadius: 4,
-        },
-      },
-    },
-  });
-}
+        error: function(xhr, status, error) {
+          console.error("Error fetching data:", error);
+        }
+      });
+    }
+  
+    $('#monthSelector, #yearSelector').change(function() {
+      const selectedMonth = getSelectedValue("#monthSelector", new Date().getMonth() + 1);
+      const selectedYear = getSelectedValue("#yearSelector", new Date().getFullYear());
+      fetchChartData(selectedMonth, selectedYear);
+    });
+  
+    fetchChartData(new Date().getMonth() + 1, new Date().getFullYear());
+  }
+});
+
 if (document.getElementById("card-chart3")) {
   const cardChart3 = new Chart(document.getElementById("card-chart3"), {
     type: "line",
@@ -264,97 +302,138 @@ if (document.getElementById("card-chart4")) {
     },
   });
 }
-if (document.getElementById("main-bar-chart")) {
-  const mainBarChart = new Chart(document.getElementById("main-bar-chart"), {
-    type: "bar",
-    data: {
-      labels: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ],
-      datasets: [
-        {
-          label: "Users",
-          backgroundColor: coreui.Utils.getStyle("--cui-primary"),
-          borderRadius: 6,
-          borderSkipped: false,
-          data: [
-            78, 81, 80, 45, 34, 12, 40, 85, 65, 23, 12, 98, 34, 84, 67, 82,
-          ],
-          barPercentage: 0.6,
-          categoryPercentage: 0.5,
-        },
-        {
-          label: "New users",
-          backgroundColor: coreui.Utils.getStyle("--cui-gray-100"),
-          borderRadius: 6,
-          borderSkipped: false,
-          data: [
-            78, 81, 80, 45, 34, 12, 40, 85, 65, 23, 12, 98, 34, 84, 67, 82,
-          ],
-          barPercentage: 0.6,
-          categoryPercentage: 0.5,
-        },
-      ],
-    },
-    options: {
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          display: false,
+$(document).ready(function () {
+  if (document.getElementById("main-bar-chart")) {
+    $.ajax({
+      url: "bar_chart_kaunseling_total",
+      method: "POST",
+      data: {
+        bar_chart_kaunseling_total: {
+          test: "test",
+          year: new Date().getFullYear(),
         },
       },
-      scales: {
-        x: {
-          border: {
-            display: false,
-          },
-          grid: {
-            color: coreui.Utils.getStyle("--cui-border-color-translucent"),
-            display: false,
-            drawTicks: false,
-          },
-          ticks: {
-            color: coreui.Utils.getStyle("--cui-body-color"),
-            font: {
-              size: 14,
+      success: function (data) {
+        console.log("Data received:", data);
+        try {
+          const response = JSON.parse(data);
+          console.log("Parsed JSON:", response);
+
+          // List of months in short form
+          const months = [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
+          ];
+          const monthFullNames = {
+            January: "Jan",
+            February: "Feb",
+            March: "Mar",
+            April: "Apr",
+            May: "May",
+            June: "Jun",
+            July: "Jul",
+            August: "Aug",
+            September: "Sep",
+            October: "Oct",
+            November: "Nov",
+            December: "Dec",
+          };
+
+          const labels = response.map((item) => monthFullNames[item.month]);
+          const counts = response.map((item) => item.count);
+
+          // Fill counts for each month, setting 0 if no data for a given month
+          const monthlyCounts = months.map((month) => {
+            const index = labels.indexOf(month);
+            return index !== -1 ? parseInt(counts[index]) : 0;
+          });
+
+          console.log("Monthly Counts:", monthlyCounts);
+
+          const ctx = document
+            .getElementById("main-bar-chart")
+            .getContext("2d");
+          const mainBarChart = new Chart(ctx, {
+            type: "bar",
+            data: {
+              labels: months,
+              datasets: [
+                {
+                  label: "Entries",
+                  backgroundColor: coreui.Utils.getStyle("--cui-primary"),
+                  borderRadius: 6,
+                  borderSkipped: false,
+                  data: monthlyCounts,
+                  barPercentage: 0.6,
+                  categoryPercentage: 0.5,
+                },
+              ],
             },
-            padding: 16,
-          },
-        },
-        y: {
-          beginAtZero: true,
-          border: {
-            dash: [2, 4],
-            display: false,
-          },
-          grid: {
-            color: coreui.Utils.getStyle("--cui-border-color-translucent"),
-          },
-          ticks: {
-            color: coreui.Utils.getStyle("--cui-body-color"),
-            font: {
-              size: 14,
+            options: {
+              maintainAspectRatio: false,
+              plugins: {
+                legend: {
+                  display: false,
+                },
+              },
+              scales: {
+                x: {
+                  border: { display: false },
+                  grid: {
+                    color: coreui.Utils.getStyle(
+                      "--cui-border-color-translucent"
+                    ),
+                    display: false,
+                    drawTicks: false,
+                  },
+                  ticks: {
+                    color: coreui.Utils.getStyle("--cui-body-color"),
+                    font: { size: 14 },
+                    padding: 16,
+                  },
+                },
+                y: {
+                  beginAtZero: true,
+                  border: { dash: [2, 4], display: false },
+                  grid: {
+                    color: coreui.Utils.getStyle(
+                      "--cui-border-color-translucent"
+                    ),
+                  },
+                  ticks: {
+                    color: coreui.Utils.getStyle("--cui-body-color"),
+                    font: { size: 14 },
+                    maxTicksLimit: 5,
+                    padding: 16,
+                    stepSize: Math.ceil(100 / 4),
+                  },
+                },
+              },
             },
-            maxTicksLimit: 5,
-            padding: 16,
-            stepSize: Math.ceil(100 / 4),
-          },
-        },
+          });
+
+          mainBarChart.update();
+        } catch (e) {
+          console.error("Error parsing JSON:", e);
+        }
       },
-    },
-  });
-}
+      error: function (xhr, status, error) {
+        console.error("Error fetching data:", error);
+      },
+    });
+  }
+});
+
 $(document).ready(() => {
   new DataTable("#sejarahk", {
     ajax: "kaunseling_sejarah",
@@ -379,17 +458,14 @@ $(document).ready(() => {
     },
     columns: [
       { data: "a", className: "text-center" },
-      { data: "b" , responsivePriority: 1},
+      { data: "b", responsivePriority: 1 },
       { data: "c", className: "text-center" },
-      { data: "d", className: "text-center", responsivePriority: 1  },
+      { data: "d", className: "text-center", responsivePriority: 1 },
     ],
     processing: true,
     serverSide: true,
     stateSave: true,
     responsive: true,
-
- 
-
   });
 
   table1 = new DataTable("#editborang", {
@@ -410,10 +486,10 @@ $(document).ready(() => {
     responsive: true,
     paging: false,
     columns: [
-      { data: "a", className: "text-center re_order" },
-      { data: "b", className: "text-center soalan" },
+      { data: "a", className: "text-center re_order", responsivePriority: 1 },
+      { data: "b", className: "text-center soalan", responsivePriority: 1 },
       { data: "c", className: "text-center kategori" },
-      { data: "d", className: "text-center" },
+      { data: "d", className: "text-center", responsivePriority: 1 },
     ],
     createdRow: function (row, data, dataIndex) {
       $(row).attr("data-id", data.id);
@@ -469,16 +545,16 @@ $(document).ready(() => {
     processing: true,
     serverSide: true,
     responsive: true,
-  
+
     columns: [
       { data: "a", className: "text-center  " },
-      { data: "b", className: "   " , responsivePriority: 1},
+      { data: "b", className: "   ", responsivePriority: 1 },
       { data: "c", className: "text-center  ", responsivePriority: 1 },
       { data: "d", className: "text-center  " },
-      { data: "e", className: "text-center" , responsivePriority: 1},
+      { data: "e", className: "text-center", responsivePriority: 1 },
     ],
   });
-  
+
   table3 = new DataTable("#senaraitemujanji2", {
     ajax: {
       type: "POST",
@@ -494,21 +570,21 @@ $(document).ready(() => {
         };
       },
     },
-  
+
     processing: true,
     serverSide: true,
     responsive: true,
     stateSave: true,
-  
+
     columns: [
       { data: "a", className: "text-center  " },
-      { data: "b", className: "   " , responsivePriority: 1},
+      { data: "b", className: "   ", responsivePriority: 1 },
       { data: "c", className: "text-center  ", responsivePriority: 1 },
       { data: "d", className: "text-center  " },
-      { data: "e", className: "text-center" , responsivePriority: 1},
+      { data: "e", className: "text-center", responsivePriority: 1 },
     ],
   });
-  
+
   table4 = new DataTable("#senaraitemujanji3", {
     ajax: {
       type: "POST",
@@ -524,21 +600,20 @@ $(document).ready(() => {
         };
       },
     },
-  
+
     processing: true,
     serverSide: true,
     responsive: true,
     stateSave: true,
-  
+
     columns: [
       { data: "a", className: "text-center  " },
-      { data: "b", className: "   " , responsivePriority: 1},
+      { data: "b", className: "   ", responsivePriority: 1 },
       { data: "c", className: "text-center  ", responsivePriority: 1 },
       { data: "d", className: "text-center  " },
-      { data: "e", className: "text-center" , responsivePriority: 1},
+      { data: "e", className: "text-center", responsivePriority: 1 },
     ],
   });
-
 });
 
 const toastTrigger = document.getElementById("liveToastBtn");
@@ -588,11 +663,65 @@ $("#add_soalan_button").click(function () {
       },
     },
     success: function (response) {
-      showtoast("tambah");
+      showtoast("Added Sucessfully");
       console.log(response);
       $("#add_soalan_content").prop("selectedIndex", 0);
       $("#add_soalan_soalan").val("");
       $("#add_soalan").modal("hide");
+      table1.ajax.reload();
+    },
+  });
+});
+
+// Attach click event to dynamically loaded button within DataTable
+$("#editborang").on("click", ".btn-action", function () {
+  console.log("Button clicked!");
+
+  // Access the closest row and retrieve cell data
+  var rowId = $(this).closest("tr").attr("data-id");
+  var soalan = $(this).closest("tr").find("td:eq(1)").text();
+  var kategori1 = $(this).closest("tr").find("td:eq(2)").text();
+  var kategori2 = $(this)
+    .closest("tr")
+    .find("td:eq(2) .text-center")
+    .data("cat");
+
+  console.log("Row ID:", rowId);
+  console.log("Soalan:", soalan);
+  console.log("Kategori 1:", kategori1);
+  console.log("Kategori 2 (data-cat):", kategori2);
+
+  // Populate modal fields with retrieved data
+  $("#add_edit_soalan").val(soalan);
+  $("#add_edit_content").val(kategori2);
+  $("#soalan_id").val(rowId);
+  showmodal("edit_soalan");
+});
+
+$("#editsoalan").click(function () {
+  console.log("test");
+  var rowId = $("#soalan_id").val();
+  var soalan = $("#add_edit_soalan").val();
+  var kategori = $("#add_edit_content").val();
+
+  console.log(soalan);
+  console.log(kategori);
+  $.ajax({
+    url: "editsoalan",
+    method: "POST",
+    data: {
+      editsoalan: {
+        id: rowId,
+        soalan: soalan,
+        kategori: kategori,
+      },
+    },
+    success: function (response) {
+      showtoast("Edited Successfully");
+      console.log(response);
+      // $("#add_soalan_content").prop("selectedIndex", 0);
+      // $("#add_soalan_soalan").val("");
+      $("#edit_soalan").modal("hide");
       table1.ajax.reload();
     },
   });
@@ -629,6 +758,19 @@ if (document.getElementById("radarChart")) {
           beginAtZero: true,
         },
       },
+      plugins: {
+        tooltip: {
+          callbacks: {
+            label: function (context) {
+              // Get the raw value
+              const level = context.dataset.levels[context.dataIndex];
+
+              const value = context.raw;
+              return `${value} (${level})`; // Append "(level)" to value
+            },
+          },
+        },
+      },
     },
   });
 
@@ -649,20 +791,28 @@ if (document.getElementById("radarChart")) {
 
         let labels = [];
         let dataValues1 = [];
+        let levels1 = [];
+        let levels2 = [];
+
         response.firstRow.forEach(function (item) {
           labels.push(item.kategori_name);
           dataValues1.push(item.value);
+          levels1.push(item.level); // Assuming `level` is available in `firstRow`
         });
 
         let dataValues2 = [];
         response.lastRow.forEach(function (item) {
           dataValues2.push(item.value);
+          levels2.push(item.level); // Assuming `level` is available in `firstRow`
         });
 
         radarChart.data.labels = labels;
 
         radarChart.data.datasets[0].data = dataValues1;
         radarChart.data.datasets[1].data = dataValues2;
+
+        radarChart.data.datasets[0].levels = levels1;
+        radarChart.data.datasets[1].levels = levels2;
 
         radarChart.update();
       } else {
@@ -674,8 +824,6 @@ if (document.getElementById("radarChart")) {
     },
   });
 }
-
-
 
 if (document.getElementById("student_id_senarai")) {
   var user_id = $("#student_id_senarai").data("id");
@@ -703,10 +851,10 @@ if (document.getElementById("student_id_senarai")) {
 
     columns: [
       { data: "a", className: "text-center  " },
-      { data: "b", className: "   " , responsivePriority: 1},
+      { data: "b", className: "   " },
       { data: "c", className: "text-center  ", responsivePriority: 1 },
       { data: "d", className: "text-center  " },
-      { data: "e", className: "text-center" , responsivePriority: 1},
+      { data: "e", className: "text-center", responsivePriority: 1 },
     ],
   });
 
@@ -733,10 +881,10 @@ if (document.getElementById("student_id_senarai")) {
 
     columns: [
       { data: "a", className: "text-center  " },
-      { data: "b", className: "   " , responsivePriority: 1},
+      { data: "b", className: "   " },
       { data: "c", className: "text-center  ", responsivePriority: 1 },
       { data: "d", className: "text-center  " },
-      { data: "e", className: "text-center" , responsivePriority: 1},
+      { data: "e", className: "text-center", responsivePriority: 1 },
     ],
   });
 
@@ -763,10 +911,10 @@ if (document.getElementById("student_id_senarai")) {
 
     columns: [
       { data: "a", className: "text-center  " },
-      { data: "b", className: "   " , responsivePriority: 1},
+      { data: "b", className: "   " },
       { data: "c", className: "text-center  ", responsivePriority: 1 },
       { data: "d", className: "text-center  " },
-      { data: "e", className: "text-center" , responsivePriority: 1},
+      { data: "e", className: "text-center", responsivePriority: 1 },
     ],
   });
 }
@@ -889,6 +1037,65 @@ $('input[name="options-outlined2"]').click(function () {
   }
 });
 
+$(document).ready(function () {
+  // Initialize DataTable
+  if (document.getElementById("meetinganlytics")) {
+    $.ajax({
+      url: "fetch_masalah", // Replace with your PHP script path
+      method: "POST",
+      data: {
+        fetch_masalah: {
+          test: "ndp",
+        },
+      },
+      success: function (response) {
+        // showtoast("Edited Successfully");
+        // console.log(response);
+        $("#MasalahF").html(JSON.parse(response));
+        // $("#add_soalan_content").prop("selectedIndex", 0);
+        // $("#add_soalan_soalan").val("");
+        // $("#edit_soalan").modal("hide");
+        // table1.ajax.reload();
+      },
+    });
+
+    tableanalytics = new DataTable("#meetinganlytics", {
+      ajax: {
+        type: "POST",
+        url: "kaunseling_analytics",
+        data: function (d) {
+          return {
+            kaunseling_analytics: {
+              limit: d.length,
+              offset: d.start,
+              draw: d.draw,
+              search: d.search.value, // Add search parameter
+              gender: $("#JantinaF").val(), // Get value from gender filter
+              masalah: $("#MasalahF").val(), // Get value from masalah filter
+              status: $("#StatusF").val(),
+            },
+          };
+        },
+      },
+
+      processing: true,
+      serverSide: true,
+      responsive: true,
+      stateSave: true,
+      ordering: false, // Disable ordering
+      columns: [
+        { data: "a", className: "  " },
+        { data: "b", className: "text-center     " },
+        { data: "c", className: "text-center  " },
+      ],
+    });
+
+    $("#JantinaF, #MasalahF, #StatusF").on("change", function () {
+      tableanalytics.ajax.reload(); // Reload the table data
+    });
+  }
+});
+
 $("#event_status_3").click(function () {
   var meeting_id = $("#temujanji_mula_id").val();
 
@@ -919,25 +1126,18 @@ $("#event_status_3").click(function () {
   });
 });
 
-
 $("#sejarahkaunseling").DataTable();
 
-
-
-$('button[data-coreui-toggle="tab"]').on('shown.coreui.tab', function (e) {
+$('button[data-coreui-toggle="tab"]').on("shown.coreui.tab", function (e) {
   // console.log("test");
-  $('#senaraitemujanji').DataTable().columns.adjust().responsive.recalc();
-  $('#senaraitemujanji2').DataTable().columns.adjust().responsive.recalc();
-  $('#senaraitemujanji3').DataTable().columns.adjust().responsive.recalc();
-  $('#senaraitemujanjib').DataTable().columns.adjust().responsive.recalc();
-  $('#senaraitemujanji2b').DataTable().columns.adjust().responsive.recalc();
-  $('#senaraitemujanji3b').DataTable().columns.adjust().responsive.recalc();
+  $("#senaraitemujanji").DataTable().columns.adjust().responsive.recalc();
+  $("#senaraitemujanji2").DataTable().columns.adjust().responsive.recalc();
+  $("#senaraitemujanji3").DataTable().columns.adjust().responsive.recalc();
+  $("#senaraitemujanjib").DataTable().columns.adjust().responsive.recalc();
+  $("#senaraitemujanji2b").DataTable().columns.adjust().responsive.recalc();
+  $("#senaraitemujanji3b").DataTable().columns.adjust().responsive.recalc();
 });
 
 $("#book_temujanji").click(function () {
-
-
   showmodal("kaunselor_updateevent");
-
-
 });

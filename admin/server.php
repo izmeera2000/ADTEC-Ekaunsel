@@ -268,16 +268,18 @@ if (isset($_POST['edit_profile'])) {
 
 
 if (isset($_POST['change_pic'])) {
+  // print_r($_FILES);
+
 
   $id = $_SESSION['user_details']['id'];
 
   $filename = uploadpic_id($id, $errors);
-
+  //   uploadpic_id($_SESSION['user_details']['id'], $err);
 
   $query = "UPDATE user SET image_url='$filename' WHERE id='$id'";
   mysqli_query($db, $query);
 
-  header('location:' . $site_url . 'user/profile');
+  // header('location:' . $site_url . 'user/profile');
 
 }
 
@@ -711,10 +713,13 @@ function uploadpic_id($id, &$err)
 
   }
   if ($uploadOk == 1) {
+    removepic("assets/img/user/" . $_SESSION['user_details']['id'] . "/" . $_SESSION['user_details']['image_url']);
 
     if (!move_uploaded_file($_FILES["gambar"]["tmp_name"], $target_file)) {
       $err['gambar'] = "Sorry, there was an error uploading your file.";
     } else {
+
+
       return "gambar." . $imageFileType;
 
     }
@@ -724,7 +729,10 @@ function uploadpic_id($id, &$err)
 
 function removepic($path)
 {
-  unlink($path);
+  if (file_exists($path)) {
+
+    unlink($path);
+  }
 
 }
 
@@ -828,7 +836,7 @@ if (isset($_POST['senaraisoalan'])) {
   $data = array();
 
   $query =
-    "SELECT a.*,b.nama_kategori  FROM borang_psikologi a INNER JOIN  borang_psikologi_kategori b ON a.kategori = b.id ORDER BY re_order ASC";
+    "SELECT a.*,b.nama_kategori , b.id as id_kategory  FROM borang_psikologi a INNER JOIN  borang_psikologi_kategori b ON a.kategori = b.id ORDER BY re_order ASC";
   $results = mysqli_query($db, $query);
   if (mysqli_num_rows($results) > 0) {
 
@@ -837,13 +845,15 @@ if (isset($_POST['senaraisoalan'])) {
         "id" => $row['id'],
         "a" => '<div class="text-center" >' . $row['re_order'] . '</div>',
         "b" => '<div class="text-center">' . $row['soalan'] . '</div>',
-        "c" => '<div class="text-center">' . $row['nama_kategori'] . '</div>',
+        "c" => '<div class="text-center" data-cat="' . $row['id_kategory'] . '">' . $row['nama_kategori'] . '</div>',
         "d" => '
-              <a class="btn btn-success" href="details.php?id=' . $row['id'] . '">
-                  <svg class="icon">
-                      <use xlink:href="icons.svg#icon-view"></use>
-                  </svg>
-              </a>
+              <button class="btn btn-primary btn-action"   type="button">
+                                                    <svg class="icon">
+                                                        <use
+                                                            xlink:href="' . $site_url . 'assets/vendors/@coreui/icons/svg/free.svg#cil-people">
+                                                        </use>
+                                                    </svg>
+              </button>
           '
       );
     }
@@ -871,13 +881,26 @@ if (isset($_POST['addsoalan'])) {
     "INSERT INTO borang_psikologi (soalan,kategori,re_order) VALUES ('$soalan','$kategori','$max')";
   $results = mysqli_query($db, $query);
 
+  die();
+}
+if (isset($_POST['editsoalan'])) {
+
+  $id = $_POST['editsoalan']['id'];
+  $soalan = $_POST['editsoalan']['soalan'];
+  $kategori = $_POST['editsoalan']['kategori'];
+
+  $query =
+    "UPDATE borang_psikologi SET soalan='$soalan' , kategori='$kategori' WHERE id ='$id' ";
+  $results = mysqli_query($db, $query);
+  die();
+
 }
 
 
-if (isset($_POST['addsoalan'])) {
-  removepic($site_url . "assets/img/user/" . $_SESSION['user_details']['id'] / "/" . $_SESSION['user_details']['image_url']);
-  uploadpic_id($_SESSION['user_details']['id'], $err);
-}
+// if (isset($_POST['addsoalan'])) {
+//   removepic($site_url . "assets/img/user/" . $_SESSION['user_details']['id'] / "/" . $_SESSION['user_details']['image_url']);
+//   uploadpic_id($_SESSION['user_details']['id'], $err);
+// }
 
 
 function getEmailContent($filePath, $var = "")
@@ -960,7 +983,7 @@ if (isset($_POST['test3'])) {
     "SELECT a.*,b.ndp  FROM `user_psikologi`  a INNER JOIN user b  ON  a.user_id = b.id WHERE ndp = '$ndp' ORDER BY a.id ASC LIMIT 1";
 
   $query3 =
-    "SELECT id,nama_kategori FROM `borang_psikologi_kategori`";
+    "SELECT id,nama_kategori,normal,ringan,sederhana,teruk,sangat_teruk FROM `borang_psikologi_kategori`";
 
 
   $rows = [];
@@ -980,14 +1003,43 @@ if (isset($_POST['test3'])) {
 
   $results = mysqli_query($db, $query3);
   while ($kategori = mysqli_fetch_assoc($results)) {
-    $kategoriMap[$kategori['id']] = ucfirst($kategori['nama_kategori']);
+    $kategoriMap[$kategori['id']] = [
+      'nama_kategori' => ucfirst($kategori['nama_kategori']),
+      'normal' => $kategori['normal'],
+      'ringan' => $kategori['ringan'],
+      'sederhana' => $kategori['sederhana'],
+      'teruk' => $kategori['teruk'],
+      'sangat_teruk' => $kategori['sangat_teruk'],
+    ];
   }
 
   // Map category names to the rows data
   foreach ($rows as &$row) {
     foreach ($row as &$item) {
       if (isset($kategoriMap[$item['kategori_id']])) {
-        $item['kategori_name'] = $kategoriMap[$item['kategori_id']];
+        $item['kategori_name'] = $kategoriMap[$item['kategori_id']]['nama_kategori'];
+        $item['normal'] = $kategoriMap[$item['kategori_id']]['normal'];
+        $item['ringan'] = $kategoriMap[$item['kategori_id']]['ringan'];
+        $item['sederhana'] = $kategoriMap[$item['kategori_id']]['sederhana'];
+        $item['teruk'] = $kategoriMap[$item['kategori_id']]['teruk'];
+        $item['sangat_teruk'] = $kategoriMap[$item['kategori_id']]['sangat_teruk'];
+
+        if ($item['value'] > $kategoriMap[$item['kategori_id']]['sangat_teruk']) {
+          $item['level'] = "sangat teruk";
+        } else if ($item['value'] > $kategoriMap[$item['kategori_id']]['teruk']) {
+          $item['level'] = "teruk";
+
+        } else if ($item['value'] > $kategoriMap[$item['kategori_id']]['sederhana']) {
+          $item['level'] = "sederhana";
+
+        } else if ($item['value'] > $kategoriMap[$item['kategori_id']]['ringan']) {
+          $item['level'] = "ringan";
+
+        } else {
+          $item['level'] = "normal";
+
+        }
+        // $item['sangat_teruk'] = $kategoriMap[$item['kategori_id']]['sangat_teruk'];
       } else {
         $item['kategori_name'] = 'Unknown';
       }
@@ -1005,6 +1057,8 @@ if (isset($_POST['test3'])) {
       'firstRow' => $firstRow,
       'lastRow' => $lastRow
     ]);
+
+
     die();
 
   }
@@ -1222,24 +1276,24 @@ if (isset($_POST['senaraitemujanji'])) {
       if ($row['event_status'] == "1") {
         $class = "btn-warning";
 
-  
+
       }
-  
+
       if ($row['event_status'] == "2") {
         $class = "btn-success";
 
-  
+
       }
-  
+
       if ($row['event_status'] == "3") {
         $class = "btn-info";
 
-  
+
       }
       if ($row['event_status'] == "4") {
         $class = "btn-secondary";
 
-  
+
       }
 
       $data[] = array(
@@ -1250,7 +1304,7 @@ if (isset($_POST['senaraitemujanji'])) {
         "c" => '<div class="text-center">' . $row['masalah'] . '</div>',
         "d" => '<div class="text-center">' . $formattedDate . '</div>' . '<div class="small text-body-secondary text-nowrap">' . date("h:i") . '</div>',
         "e" => '
-              <a class="btn '.$class .'" href="' . $site_url . 'kaunseling/temujanji/' . $row['id'] . '">
+              <a class="btn ' . $class . '" href="' . $site_url . 'kaunseling/temujanji/' . $row['id'] . '">
 <i class="icon  bi bi-calendar-plus"></i>
               </a>
           '
@@ -1299,7 +1353,7 @@ if (isset($_POST['senaraitemujanji2'])) {
   $filteredRecords = mysqli_fetch_assoc($filteredResult)['filtered'];
 
   $query =
-    "SELECT a.* , b.nama,  b.ndp, b.image_url FROM kaunselor_jadual a INNER JOIN  user b ON a.user_id = b.id  WHERE a.tarikh <'$today'     $quser_id  LIMIT $limit OFFSET  $offset";
+    "SELECT a.* , b.nama,  b.ndp, b.image_url FROM kaunselor_jadual a INNER JOIN  user b ON a.user_id = b.id  WHERE a.tarikh <'$today'     $quser_id ORDER BY a.tarikh DESC LIMIT $limit OFFSET  $offset ";
   $results = mysqli_query($db, $query);
   if (mysqli_num_rows($results) > 0) {
 
@@ -1314,24 +1368,24 @@ if (isset($_POST['senaraitemujanji2'])) {
       if ($row['event_status'] == "1") {
         $class = "btn-warning";
 
-  
+
       }
-  
+
       if ($row['event_status'] == "2") {
         $class = "btn-success";
 
-  
+
       }
-  
+
       if ($row['event_status'] == "3") {
         $class = "btn-info";
 
-  
+
       }
       if ($row['event_status'] == "4") {
         $class = "btn-secondary";
 
-  
+
       }
 
       $data[] = array(
@@ -1342,7 +1396,7 @@ if (isset($_POST['senaraitemujanji2'])) {
         "c" => '<div class="text-center">' . $row['masalah'] . '</div>',
         "d" => '<div class="text-center">' . $formattedDate . '</div>' . '<div class="small text-body-secondary text-nowrap">' . date("h:i") . '</div>',
         "e" => '
-              <a class="btn '.$class .'" href="' . $site_url . 'kaunseling/temujanji/' . $row['id'] . '">
+              <a class="btn ' . $class . '" href="' . $site_url . 'kaunseling/temujanji/' . $row['id'] . '">
                 <i class="icon  bi bi-calendar-x"></i>
               </a>
           '
@@ -1391,7 +1445,7 @@ if (isset($_POST['senaraitemujanji3'])) {
   $filteredRecords = mysqli_fetch_assoc($filteredResult)['filtered'];
 
   $query =
-    "SELECT a.* , b.nama,  b.ndp, b.image_url FROM kaunselor_jadual a INNER JOIN  user b ON a.user_id = b.id  WHERE a.tarikh >'$today'     $quser_id  LIMIT $limit OFFSET  $offset";
+    "SELECT a.* , b.nama,  b.ndp, b.image_url FROM kaunselor_jadual a INNER JOIN  user b ON a.user_id = b.id  WHERE a.tarikh >'$today'     $quser_id  ORDER BY a.tarikh ASC  LIMIT $limit OFFSET  $offset";
   $results = mysqli_query($db, $query);
   if (mysqli_num_rows($results) > 0) {
 
@@ -1407,24 +1461,24 @@ if (isset($_POST['senaraitemujanji3'])) {
       if ($row['event_status'] == "1") {
         $class = "btn-warning";
 
-  
+
       }
-  
+
       if ($row['event_status'] == "2") {
         $class = "btn-success";
 
-  
+
       }
-  
+
       if ($row['event_status'] == "3") {
         $class = "btn-info";
 
-  
+
       }
       if ($row['event_status'] == "4") {
         $class = "btn-secondary";
 
-  
+
       }
 
       $data[] = array(
@@ -1435,7 +1489,7 @@ if (isset($_POST['senaraitemujanji3'])) {
         "c" => '<div class="text-center">' . $row['masalah'] . '</div>',
         "d" => '<div class="text-center">' . $formattedDate . '</div>' . '<div class="small text-body-secondary text-nowrap">' . date("h:i") . '</div>',
         "e" => '
-              <a class="btn '.$class .'" href="' . $site_url . 'kaunseling/temujanji/' . $row['id'] . '">
+              <a class="btn ' . $class . '" href="' . $site_url . 'kaunseling/temujanji/' . $row['id'] . '">
                      <i class="icon  bi bi-calendar-plus"></i>
               </a>
           '
@@ -1575,7 +1629,7 @@ if (isset($_POST['temujanji_update'])) {
     }
   } else {
     $now = date('Y-m-d H:i:s');
-    echo $meeting_id;
+    // echo $meeting_id;
     // $meeting_link = $manual;
     $query =
       "UPDATE kaunselor_jadual SET event_status = '3', masa_mula2 = '$now', time_edit='$now' WHERE id = '$meeting_id'";
@@ -1624,4 +1678,140 @@ if (isset($_POST['temujanji_end'])) {
   die();
 
 }
+
+
+
+if (isset($_POST['bar_chart_kaunseling_total'])) {
+  $year = $_POST['bar_chart_kaunseling_total']['year'];
+  $query = " SELECT MONTHNAME(tarikh) as month, COUNT(*) as count FROM kaunselor_jadual WHERE YEAR(tarikh) = '$year'   GROUP BY MONTH(tarikh) ORDER BY MONTH(tarikh); ";
+  $result = mysqli_query($db, $query);
+  $data = [];
+  if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+      $data[] = $row;
+    }
+  }
+  echo json_encode($data);
+  die();
+
+}
+
+
+if (isset($_POST['card_chart_kaunseling_total_day'])) {
+  $month = $_POST['card_chart_kaunseling_total_day']['month'];
+  $year = $_POST['card_chart_kaunseling_total_day']['year'];
+  $query = "SELECT DAYNAME(tarikh) AS day_of_week, COUNT(*) AS total 
+  FROM kaunselor_jadual 
+  WHERE MONTH(tarikh) = '$month' AND YEAR(tarikh) = '$year'
+  GROUP BY DAYOFWEEK(tarikh) 
+  ORDER BY FIELD(day_of_week, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');";
+  $result = mysqli_query($db, $query);
+  $data = [];
+  if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+      $data[] = $row;
+    }
+  }
+  echo json_encode($data);
+  die();
+
+}
+
+
+
+if (isset($_POST['fetch_masalah'])) {
+
+  $query = "SELECT masalah, COUNT(*) as frequency FROM kaunselor_jadual GROUP BY masalah ORDER BY frequency DESC";
+  $result = mysqli_query($db, $query);
+
+  $options = "<option value=''>All" . '</option>';
+  while ($row = $result->fetch_assoc()) {
+    $options .= "<option value='" . $row['masalah'] . "'>" . $row['masalah'] . '</option>';
+  }
+
+  echo json_encode($options);
+  die();
+
+}
+
+
+if (isset($_POST['kaunseling_analytics'])) {
+  $limit = $_POST['kaunseling_analytics']['limit'];
+  $offset = $_POST['kaunseling_analytics']['offset'];
+  $draw = $_POST['kaunseling_analytics']['draw'];
+  $search = $_POST['kaunseling_analytics']['search'];
+  $gender = $_POST['kaunseling_analytics']['gender'];
+  $masalah = $_POST['kaunseling_analytics']['masalah'];
+  $status = $_POST['kaunseling_analytics']['status'];
+
+  if ($gender == 'Lelaki') {
+    $gender2 = '1';
+  } else {
+    $gender2 = '0';
+  }
+  // Total records count
+  $totalQuery = "SELECT COUNT(*) as total FROM kaunselor_jadual";
+  $totalResult = mysqli_query($db, $totalQuery);
+  $totalRecords = mysqli_fetch_assoc($totalResult)['total'];
+
+  // Total filtered records count
+  $filteredQuery = "SELECT COUNT(*) as filtered, a.*, b.jantina FROM kaunselor_jadual a INNER JOIN user b ON b.id= a.user_id WHERE 1=1";
+  if (!empty($search)) {
+    $filteredQuery .= " AND (jantina LIKE '%$search%' OR masalah LIKE '%$search%' )";
+  }
+  if (!empty($gender)) {
+    $filteredQuery .= " AND jantina = '$gender2'";
+  }
+  if (!empty($masalah)) {
+    $filteredQuery .= " AND masalah = '$masalah'";
+  }
+  if ($status !== '') {
+    $filteredQuery .= " AND event_status = '$status'";
+  }
+  $filteredResult = mysqli_query($db, $filteredQuery);
+  $filteredRecords = mysqli_fetch_assoc(result: $filteredResult)['filtered'];
+
+  // Fetch records
+  $query = "SELECT a.*, b.jantina FROM kaunselor_jadual a INNER JOIN user b ON b.id= a.user_id WHERE 1=1";
+  if (!empty($search)) {
+    $query .= " AND (jantina LIKE '%$search%' OR masalah LIKE '%$search%')";
+  }
+  if (!empty($gender)) {
+    $query .= " AND jantina = '$gender2'";
+  }
+  if (!empty($masalah)) {
+    $query .= " AND masalah = '$masalah'";
+  }
+  if ($status !== '') {
+    $query .= " AND event_status = '$status'";
+  }
+  $query .= " LIMIT $offset, $limit";
+  $results = mysqli_query($db, $query);
+
+  $data = [];
+  if (mysqli_num_rows($results) > 0) {
+    while ($row = mysqli_fetch_assoc($results)) {
+      $jantina = ($row['jantina'] == '1') ? 'Lelaki' : 'Perempuan';
+      $status_text = ($row['event_status'] == '2') ? 'Success' : (($row['event_status'] == '1') ? 'Waiting' : 'Fail');
+      $data[] = array(
+        "a" => $row['masalah'],
+        "b" => $jantina,
+        "c" => $status_text,
+      );
+    }
+  }
+
+  $output = array(
+    "draw" => $draw,
+    "recordsTotal" => intval($totalRecords),
+    "recordsFiltered" => intval($filteredRecords),
+    "data" => $data
+  );
+
+  echo json_encode($output);
+  die();
+}
+
+
+
 ?>

@@ -32,8 +32,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       document.getElementById("user_calendarevent_id").value = info.event.id;
 
+      
+
       document.getElementById("user_calendarevent_date").value =
-        info.event.startStr;
+      new Date(info.event.startStr).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: '2-digit'});;
 
       document.getElementById("user_calendarevent_type").value =
         info.event.extendedProps.jenis;
@@ -87,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function selectDate(info) {
     if (info.startStr >= new Date().toISOString().split("T")[0]) {
       // alert('Selected date: ' + info.startStr);
-      document.getElementById("user_calendaradd_date").value = info.startStr;
+      document.getElementById("user_calendaradd_date").value = new Date(info.startStr).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: '2-digit'});;
 
       showmodal("user_calendaradd");
     } else {

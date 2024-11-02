@@ -96,6 +96,13 @@ function kaunseling_student()
 	require_once('views/kaunseling/student.php');
 
 }
+
+function kaunseling_analytics()
+{
+	check_session($site_url, 1);
+	require_once('views/kaunseling/analytics.php');
+
+}
 function kaunseling_senarai()
 {
 	check_session($site_url);
@@ -311,7 +318,12 @@ switch (true) {
 	// end common
 
 	//st kaunselor
-
+	case str_contains($request, 'bar_chart_kaunseling_total'):
+		server();
+		break;
+	case str_contains($request, 'card_chart_kaunseling_total_day'):
+		server();
+		break;
 
 	case $request == 'kaunseling/editborang':
 		kaunseling_edit_borang();
@@ -321,7 +333,9 @@ switch (true) {
 		kaunseling_booking_kaunselor();
 		break;
 
-
+	case $request == 'kaunseling/analytics':
+		kaunseling_analytics();
+		break;
 
 
 	case str_starts_with($request, 'student/senarai'):
@@ -339,6 +353,10 @@ switch (true) {
 		break;
 
 	case str_contains($request, 'editborang/reorder'):
+		server();
+		break;
+
+	case str_contains($request, 'editsoalan'):
 		server();
 		break;
 
@@ -392,6 +410,16 @@ switch (true) {
 	case str_starts_with($request, 'kaunseling/temujanji'):
 		kaunseling_temujanji($request);
 		break;
+
+		case str_contains($request, 'fetch_masalah'):
+			server();
+			break;
+
+
+			case str_contains($request, 'kaunseling_analytics'):
+				server();
+				break;
+
 	//end kaunselor
 
 

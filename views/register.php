@@ -120,8 +120,8 @@
                       aria-label="Floating label select example" name="jantina" required>
 
                       <option selected disabled> Pilih Jantina</option>
-                      <option value="Lelaki">Lelaki</option>
-                      <option value="Perempuan">Perempuan</option>
+                      <option value="1">Lelaki</option>
+                      <option value="0">Perempuan</option>
                     </select>
 
                     <label for="FS_Jantina">Jantina</label>

@@ -58,7 +58,7 @@
 
               </div>
               <div class="chart-wrapper mt-3 mb-3 mx-3" style="">
-                <form method="POST" action="user_change_image" enctype="multipart/form-data">
+                <form method="POST"  enctype="multipart/form-data">
 
 
                   <p class="mt-3 text-center">Change picture</p>
@@ -67,9 +67,9 @@
 
                     <input class="form-control <?php formvalidatelabel("gambar", $errors) ?>" type="file" id="test"
                       name="gambar" required>
-                    <div class="valid-feedback">Looks good!</div>
-                    <div class="invalid-feedback"><?php formvalidateerr("gambar", $errors) ?></div>
-                    <button class="btn btn-primary" type="submit" name="change_pic">Change</button>
+                      <button class="btn btn-primary" type="submit" name="change_pic">Change</button>
+                      <div class="valid-feedback">Looks good!</div>
+                      <div class="invalid-feedback"><?php formvalidateerr("gambar", $errors) ?></div>
 
                   </div>
                   <div class="text-body-secondary small">Only JPG, JPEG & PNG files are allowed. And Under 5MB</div>

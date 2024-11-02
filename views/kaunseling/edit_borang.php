@@ -33,7 +33,7 @@
                         <div class="card-body p-4">
                             <div class="row">
                                 <div class="col">
-                                    <div class="card-title fs-4 fw-semibold">Users</div>
+                                    <div class="card-title fs-4 fw-semibold">Soalan</div>
                                     <div class="card-subtitle text-body-secondary mb-4">
 
                                         <?php
@@ -46,13 +46,9 @@
 
                                             while ($users = mysqli_fetch_assoc($results)) {
 
-                                                if ($users['COUNT(id)'] == 1) {
-                                                    echo $users['COUNT(id)'] . " registered user";
+                                                echo $users['COUNT(id)'] . " jumlah soalan";
 
-                                                } else {
-                                                    echo $users['COUNT(id)'] . " registered users";
 
-                                                }
                                             }
                                         } ?>
                                     </div>
@@ -75,7 +71,7 @@
                                             <th class="text-center">
                                                 <svg class="icon">
                                                     <use
-                                                        xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-people">
+                                                        xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-list-numbered">
                                                     </use>
                                                 </svg>
                                             </th>
@@ -104,9 +100,12 @@
 
     </div>
 
-    <!-- <?php include(getcwd() . '/views/script.php'); ?> -->
+    <?php include(getcwd() . '/views/script.php'); ?>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+    <script>
 
+    </script>
 </body>
 
 </html>

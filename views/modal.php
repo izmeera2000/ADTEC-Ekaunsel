@@ -91,7 +91,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-danger d-none" id="user_calendarevent_button"
+          <button type="button" class="btn btn-danger text-white d-none" id="user_calendarevent_button"
             data-coreui-dismiss="modal">Delete</button>
           <button type="button" class="btn   d-none" id="user_calendarevent_button2"
             data-coreui-dismiss="modal">Goto</button>
@@ -364,6 +364,64 @@
     </div>
   </div>
 
+
+  <div class="modal fade" id="edit_soalan" tabindex="-1" aria-labelledby="add_edit_title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="add_edit_title">Tambah Soalan</h5>
+          <button type="button" class="btn-close" data-coreui-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+
+
+
+            <input type="hidden" id="soalan_id">
+            <div class="mb-3 row">
+              <label for="add_edit_soalan" class="col-sm-2 col-form-label">Soalan</label>
+              <div class="col-sm-10">
+                <textarea class="form-control" id="add_edit_soalan" rows="3"></textarea>
+              </div>
+            </div>
+            <div class="mb-3 row">
+              <label for="add_edit_content" class="col-sm-2 col-form-label">Kategori</label>
+              <div class="col-sm-10">
+                <select class="form-select" aria-label="Default select example" id="add_edit_content" required>
+                  <option disabled>Open this select menu</option>
+
+                  <?php
+                  $query =
+                    "SELECT * FROM borang_psikologi_kategori ";
+                  $results = mysqli_query($db, $query);
+                  if (mysqli_num_rows($results) > 0) {
+
+
+                    while ($kategori = mysqli_fetch_assoc($results)) { ?>
+                      <option value="<?php echo $kategori['id'] ?>"><?php echo ucfirst($kategori['nama_kategori']) ?></option>
+
+                    <?php }
+                  } ?>
+
+                </select>
+
+              </div>
+
+            </div>
+
+
+
+          </form>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" onclick="" id="editsoalan">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 <?php } ?>
 
 
@@ -434,21 +492,23 @@
           </div>
           <div class="modal-body">
 
-            <input type="hidden" class="form-control" id="kaunselor_updateevent_id" value="<?php echo $kaunselor_jadual['id']?>">
+            <input type="hidden" class="form-control" id="kaunselor_updateevent_id"
+              value="<?php echo $kaunselor_jadual['id'] ?>">
 
             <div class="mb-3 row">
               <label for="kaunselor_updateevent_date" class="col-sm-2 col-form-label">Date</label>
               <div class="col-sm-10">
                 <input type="text" readonly class="form-control-plaintext" id="kaunselor_updateevent_date"
-                  value="<?php echo $kaunselor_jadual['tarikh']?>">
+                  value="<?php echo $kaunselor_jadual['tarikh'] ?>">
               </div>
             </div>
 
 
 
             <div class="mb-3 row">
-              <img class="img-fluid  mx-auto  d-block" src="<?php echo $site_url ?>assets/img/user/<?php echo $kaunselor_jadual['user_id']?>/<?php echo $kaunselor_jadual['image_url']?>"
-                id="user_info" >
+              <img class="img-fluid  mx-auto  d-block"
+                src="<?php echo $site_url ?>assets/img/user/<?php echo $kaunselor_jadual['user_id'] ?>/<?php echo $kaunselor_jadual['image_url'] ?>"
+                id="user_info">
 
             </div>
 
@@ -456,7 +516,7 @@
               <label for="kaunselor_updateevent_date" class="col-sm-2 col-form-label">Nama</label>
               <div class="col-sm-10">
                 <input type="text" readonly class="form-control-plaintext" id="kaunselor_updateevent_nama"
-                  value="<?php echo $kaunselor_jadual['nama']?>">
+                  value="<?php echo $kaunselor_jadual['nama'] ?>">
               </div>
             </div>
 
@@ -464,7 +524,7 @@
               <label for="kaunselor_updateevent_date" class="col-sm-2 col-form-label">NDP</label>
               <div class="col-sm-10">
                 <input type="text" readonly class="form-control-plaintext" id="kaunselor_updateevent_ndp"
-                  value="<?php echo $kaunselor_jadual['ndp']?>">
+                  value="<?php echo $kaunselor_jadual['ndp'] ?>">
               </div>
             </div>
 
@@ -472,7 +532,7 @@
               <label for="kaunselor_updateevent_date" class="col-sm-2 col-form-label">Jenis Modal</label>
               <div class="col-sm-10">
                 <input type="text" readonly class="form-control-plaintext" id="kaunselor_updateevent_type"
-                  value="<?php echo $kaunselor_jadual['jenis']?>">
+                  value="<?php echo $kaunselor_jadual['jenis'] ?>">
               </div>
             </div>
 
