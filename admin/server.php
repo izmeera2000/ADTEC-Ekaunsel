@@ -474,7 +474,7 @@ if (isset($_POST['calendaraddna'])) {
   $jenis = $_POST['calendaraddna']['type'];
 
 
-
+  $start  = DateTime::createFromFormat('d/m/y',   $start )->format('Y-m-d');
 
 
 

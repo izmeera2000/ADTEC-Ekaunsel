@@ -149,6 +149,7 @@
                           <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-cart">
                           </use>
                         </svg>
+                        
                       </div>
                     </div>
                     <div class="fs-4 fw-semibold pb-3">
@@ -227,7 +228,7 @@
                         <option value="">All</option>
                         <option value="2">Success</option>
                         <option value="1">Waiting</option>
-                        <option value="0">Fail</option>
+                        <option value="0">Rejected</option>
                         <!-- Add other msalah options if needed -->
                       </select>
 
