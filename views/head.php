@@ -15,7 +15,7 @@
     <!-- <link rel="apple-touch-icon" sizes="120x120" href="<?php echo $site_url ?>assets/favicon/apple-icon-120x120.png"> -->
     <!-- <link rel="apple-touch-icon" sizes="144x144" href="<?php echo $site_url ?>assets/favicon/apple-icon-144x144.png"> -->
     <!-- <link rel="apple-touch-icon" sizes="152x152" href="<?php echo $site_url ?>assets/favicon/apple-icon-152x152.png"> -->
-    <!-- <link rel="apple-touch-icon" sizes="180x180" href="<?php echo $site_url ?>assets/favicon/apple-icon-180x180.png"> -->
+    <!-- <link rel="apxple-touch-icon" sizes="180x180" href="<?php echo $site_url ?>assets/favicon/apple-icon-180x180.png"> -->
     <!-- <link rel="icon" type="image/png" sizes="192x192" href="<?php echo $site_url ?>assets/favicon/android-icon-192x192.png"> -->
     <link rel="icon" type="image/png" sizes="32x32" href="<?php echo $site_url ?>assets/favicon/favicon-32x32.png">
     <link rel="apple-touch-icon" sizes="180x180" href="<?php echo $site_url ?>assets/favicon/apple-touch-icon.png">
@@ -34,6 +34,6 @@
     <script src="<?php echo $site_url ?>assets/js/config.js"></script>
     <script src="<?php echo $site_url ?>assets/js/color-modes.js"></script>
     <link href="<?php echo $site_url ?>assets/vendors/@coreui/chartjs/css/coreui-chartjs.css" rel="stylesheet">
-  <link href="<?php echo $site_url ?>assets/vendors/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="<?php echo $site_url ?>assets/vendors/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
   </head>

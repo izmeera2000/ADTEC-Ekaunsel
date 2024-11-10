@@ -141,12 +141,7 @@
                         }
                         ?>
                       </div>
-                      <!-- <small class="text-danger">(-12.4%
-                        <svg class="icon">
-                          <use
-                            xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-arrow-bottom">
-                          </use>
-                        </svg>)</small> -->
+
                     </div>
                   </div>
                 </div>
@@ -158,8 +153,9 @@
                           Borang<br>Psikologi</h6>
                         <div
                           class="bg-primary bg-opacity-25 text-primary p-2 rounded ms-2  d-flex justify-content-center align-items-center">
-                          <svg class="icon icon-xl ">
-                            <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-cart">
+                          <svg class="icon icon-xl">
+                            <use
+                              xlink:href="<?php echo $site_url ?>assets/vendors/bootstrap-icons/bootstrap-icons.svg#file-text">
                             </use>
                           </svg>
                         </div>
@@ -176,12 +172,7 @@
                         }
                         ?>
                       </div>
-                      <!-- <small class="text-success">(17.2%
-                        <svg class="icon">
-                          <use
-                            xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-arrow-top">
-                          </use>
-                        </svg>)</small> -->
+
                     </div>
                   </div>
                 </div>
@@ -348,11 +339,11 @@
                           </svg>
                         </button>
                         <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#">Details</a>
-                            <!-- <a class="dropdown-item" href="#"
+                          <!-- <a class="dropdown-item" href="#"
                             data-coreui-i18n="anotherAction">Another action</a> -->
-                            <!-- <a class="dropdown-item" href="#"
+                          <!-- <a class="dropdown-item" href="#"
                             data-coreui-i18n="somethingElseHere">Something else here</a> -->
-                          </div>
+                        </div>
                       </div>
                     </div>
                     <div class="chart-wrapper mt-3" style="height:80px;">

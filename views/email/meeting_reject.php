@@ -233,6 +233,10 @@ include(getcwd() . '/admin/server.php');
                                   </table>
                                   <p class="" style="line-height: 24px; font-size: 16px; width: 100%; margin: 0;"
                                     align="left">
+                                    Alasan ditolak : <?php echo $alasan ?? 'testalasan' ?>
+                                  </p>
+                                  <p class="" style="line-height: 24px; font-size: 16px; width: 100%; margin: 0;"
+                                    align="left">
                                     Untuk maklumat lanjut sila tekan butang di bawah:
                                   </p>
                                   <table class="s-4 w-full" role="presentation" border="0" cellpadding="0"

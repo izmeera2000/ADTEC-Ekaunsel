@@ -201,7 +201,7 @@ if (isset($_POST['user_register'])) {
 
 
 
-    header('location:' . $site_url . '');
+    header('location:' . $site_url . 'dashboard');
   }
 }
 
@@ -247,7 +247,7 @@ if (isset($_POST['user_login'])) {
       }
 
 
-      header('location:' . $site_url . '');
+      header('location:' . $site_url . 'dashboard');
     } else {
       $errors['login'] = "User doesn't exist or wrong password";
     }
@@ -395,6 +395,46 @@ if (isset($_POST['calendarfetch'])) {
   die();
 
 }
+
+if (isset($_POST['calendarfetchcuti'])) {
+
+
+
+
+  $id = $_SESSION['user_details']['id'];
+
+  $start = ($_POST['calendarfetchcuti']['start']);
+  $end = ($_POST['calendarfetchcuti']['end']);
+
+
+  $start = date("Y-m-d", strtotime($start));
+  $end = date("Y-m-d", strtotime($end));
+
+
+
+  $query = "SELECT * FROM `holiday` WHERE (tarikh BETWEEN ('$start') AND ('$end')) ORDER BY tarikh  ASC ";
+
+
+  $result = mysqli_query($db, $query);
+  $eventArray = array();
+
+
+  while ($row = mysqli_fetch_assoc($result)) {
+ 
+
+
+    array_push($eventArray, $row);
+
+
+
+  }
+
+
+  echo json_encode($eventArray);
+  die();
+
+}
+
 if (isset($_POST['calendarfetch2'])) {
 
 
@@ -474,7 +514,7 @@ if (isset($_POST['calendaraddna'])) {
   $jenis = $_POST['calendaraddna']['type'];
 
 
-  $start  = DateTime::createFromFormat('d/m/y',   $start )->format('Y-m-d');
+  $start = DateTime::createFromFormat('d/m/y', $start)->format('Y-m-d');
 
 
 
@@ -615,7 +655,7 @@ if (isset($_POST['borang_psikologi_send_a'])) {
 
 
 
-  header('location:' . $site_url . '');
+  header('location:' . $site_url . 'dashboard');
 
 }
 
@@ -1095,7 +1135,8 @@ if (isset($_POST['kaunselor_reject'])) {
   $start_modified = date('j F Y gA', strtotime($event['tarikh']));
 
   $var = array(
-    'link' => $site_url . "kaunseling/temujanji/$event_id" // Example variable
+    'link' => $site_url . "kaunseling/temujanji/$event_id", // Example variable
+    'alasan' => $sebab // Example variable
   );
   sendmail($event['email'], "Temu Janji Anda Pada $start_modified telah dibatalkan", 'meeting_reject.php', $var);
 
@@ -1573,9 +1614,15 @@ if (isset($_POST['temujanji_update'])) {
 
           // Get the Google Meet link
           $googleMeetLink = $event->getHangoutLink();
+
+          $parsedUrl = parse_url($googleMeetLink, PHP_URL_PATH);
+          $googleMeetCode = basename($parsedUrl);
+
+
           // $meeting_link = $googleMeetLink; // Store the meeting link
           $var = array(
-            'meeting_link' => $googleMeetLink // Example variable
+            'meeting_link' => $googleMeetLink, // Example variable
+            'meeting_code' => $googleMeetCode // Example variable
           );
           // echo $user_mail;
           // echo 'Meet Link: ' . $meeting_link; // Output the meeting link
@@ -1614,9 +1661,15 @@ if (isset($_POST['temujanji_update'])) {
 
         // $meeting_link = $manual;
 
-        $var = array(
-          'meeting_link' => $googleMeetLink // Example variable
-        );
+          $parsedUrl = parse_url($googleMeetLink, PHP_URL_PATH);
+          $googleMeetCode = basename($parsedUrl);
+
+
+          // $meeting_link = $googleMeetLink; // Store the meeting link
+          $var = array(
+            'meeting_link' => $googleMeetLink, // Example variable
+            'meeting_code' => $googleMeetCode // Example variable
+          );
 
         $query =
           "UPDATE kaunselor_jadual SET event_status = '3', masa_mula2 = '$now', meeting_link='$manual' , time_edit='$now' WHERE id = '$meeting_id'";

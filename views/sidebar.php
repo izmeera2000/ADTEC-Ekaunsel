@@ -16,7 +16,7 @@
 
     <?php if (($_SESSION['user_details']['role'] != 1)) { ?>
 
-      <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>">
+      <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>dashboard">
           <i class="nav-icon bi bi-house"></i><span data-coreui-i18n="dashboard">Dashboard</span></a></li>
 
 
@@ -33,6 +33,7 @@
 
           <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>kaunseling/senarai" target="_top">
               <i class="nav-icon bi bi-list-ul"></i><span>Senarai</span></a></li>
+
           <!-- <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>kaunseling/kaunselor" target="_top">
               <svg class="nav-icon">
                 <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout">

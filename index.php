@@ -13,6 +13,10 @@ require('route.php');
 
 function index()
 {
+ 	require_once('views/index2.php');
+}
+function index2()
+{
 	check_session($site_url);
 	require_once('views/index.php');
 }
@@ -39,7 +43,7 @@ function logout()
 
 	session_destroy();
 	unset($_SESSION['user_details']);
-	header("location: " . $site_url . "");
+	header("location: " . $site_url . "dashboard");
 }
 function g_oauth()
 {
@@ -232,6 +236,9 @@ switch (true) {
 		index();
 		break;
 
+	case $request == 'dashboard':
+		index2();
+		break;
 	case $request == 'register':
 		register();
 		break;
@@ -411,14 +418,14 @@ switch (true) {
 		kaunseling_temujanji($request);
 		break;
 
-		case str_contains($request, 'fetch_masalah'):
-			server();
-			break;
+	case str_contains($request, 'fetch_masalah'):
+		server();
+		break;
 
 
-			case str_contains($request, 'kaunseling_analytics'):
-				server();
-				break;
+	case str_contains($request, 'kaunseling_analytics'):
+		server();
+		break;
 
 	//end kaunselor
 

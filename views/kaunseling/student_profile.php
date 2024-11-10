@@ -167,16 +167,7 @@ if (mysqli_num_rows($results) == 1) {
                         }
                       } ?>
                     </div>
-                  </div>x`
-                  <!-- <div class="col-auto ms-auto">
-                                    <button class="btn btn-secondary">
-                                        <svg class="icon me-2">
-                                            <use
-                                                xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-user-plus">
-                                            </use>
-                                        </svg><span>Add new user</span>
-                                    </button>
-                                </div> -->
+                  </div>
                 </div>
                 <div class="table-responsive">
                   <table class="table mb-0 " id="sejarahkaunseling">

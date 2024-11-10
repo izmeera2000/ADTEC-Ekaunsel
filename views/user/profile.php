@@ -35,7 +35,7 @@
             </li>
           </ol>
         </nav>
-        <div class="row">
+        <div class="row mb-4">
           <div class="col-xl-4">
             <div class="card  mb-4  h-100">
 
@@ -58,7 +58,7 @@
 
               </div>
               <div class="chart-wrapper mt-3 mb-3 mx-3" style="">
-                <form method="POST"  enctype="multipart/form-data">
+                <form method="POST" enctype="multipart/form-data">
 
 
                   <p class="mt-3 text-center">Change picture</p>
@@ -67,9 +67,9 @@
 
                     <input class="form-control <?php formvalidatelabel("gambar", $errors) ?>" type="file" id="test"
                       name="gambar" required>
-                      <button class="btn btn-primary" type="submit" name="change_pic">Change</button>
-                      <div class="valid-feedback">Looks good!</div>
-                      <div class="invalid-feedback"><?php formvalidateerr("gambar", $errors) ?></div>
+                    <button class="btn btn-primary" type="submit" name="change_pic">Change</button>
+                    <div class="valid-feedback">Looks good!</div>
+                    <div class="invalid-feedback"><?php formvalidateerr("gambar", $errors) ?></div>
 
                   </div>
                   <div class="text-body-secondary small">Only JPG, JPEG & PNG files are allowed. And Under 5MB</div>
@@ -126,11 +126,44 @@
                   </div>
 
                 </div>
+
+
               </div>
             </div>
           </div>
+        </div>
 
-          <?php if (($_SESSION['user_details']['role'] == 1)) { ?>
+
+        <?php if (($_SESSION['user_details']['role'] == 2)) { ?>
+
+          <div class="row mb-4">
+            <div class="col-xl-6">
+
+
+              <div class="card overflow-hidden mb-4">
+                <div class="card-body p-4">
+                  <div class="row">
+                    <div class="col">
+                      <div class="card-title fs-4 fw-semibold">Keputusan Ujian DASS</div>
+                    </div>
+                    <!-- <div class="col text-end text-primary fs-4 fw-semibold">$613.200</div> -->
+                  </div>
+                  <div class="card-subtitle text-body-secondary">DEPRESSION ANXIETY STRESS SCALE</div>
+                </div>
+                <div class="chart-wrapper mt-3 p-4">
+                  <canvas id="radarChart"></canvas>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        <?php } ?>
+
+
+        <?php if (($_SESSION['user_details']['role'] == 1)) { ?>
+          <div class="row mb-4  ">
+
             <div class="col-xl-6">
 
               <div class="card my-4  ">
@@ -144,13 +177,13 @@
 
 
                   // $accessToken = getAccessTokenFromDatabase($_SESSION['user_details']['id'], $db);
-
+                
 
                   if (isset($_SESSION['user_details']['access_token'])) {
 
 
                     // $client = new Google_Client();
-
+                
 
 
 
@@ -213,15 +246,16 @@
                 </div>
               </div>
             </div>
+          </div>
 
-          <?php } ?>
-        </div>
-
+        <?php } ?>
       </div>
 
     </div>
 
-    <?php include(getcwd() . '/views/footer.php'); ?>
+  </div>
+
+  <?php include(getcwd() . '/views/footer.php'); ?>
 
   </div>
 

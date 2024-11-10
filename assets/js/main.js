@@ -98,6 +98,8 @@ $(document).ready(function () {
   if (document.getElementById("card-chart-new1")) {
     let cardChartNew1;
     $('#monthSelector').val(new Date().getMonth() + 1);
+
+    
     function getSelectedValue(selector, defaultValue) {
       return $(selector).length ? $(selector).val() : defaultValue;
     }
@@ -137,8 +139,12 @@ $(document).ready(function () {
             // Destroy existing chart instance if it exists
             if (cardChartNew1) {
               cardChartNew1.destroy();
+              
             }
-  
+            const displayTotal = totals.length ? totals : [0];
+            $('#thismonthval').html(displayTotal.reduce((a, b) => a + b, 0)); 
+
+            
             cardChartNew1 = new Chart(ctx, {
               type: "line",
               data: {
@@ -777,7 +783,7 @@ if (document.getElementById("radarChart")) {
   var ndp = document.getElementById("3").value;
 
   $.ajax({
-    url: "kaunselor/student/psikologi",
+    url: "kaunseling/student/psikologi",
     method: "POST",
     data: {
       test3: {

@@ -6,6 +6,8 @@
  */
 
 document.addEventListener("DOMContentLoaded", () => {
+  var holidays = [];
+
   function isMobile() {
     return window.innerWidth <= 768; // Change this value based on your mobile breakpoint
   }
@@ -21,10 +23,47 @@ document.addEventListener("DOMContentLoaded", () => {
       },
       success: function (response) {
         successCallback(JSON.parse(response));
+        // console.log(response);
+      },
+    });
+    $.ajax({
+      type: "POST",
+      url: "calendarfetchcuti", // Your endpoint to fetch holiday data
+      data: {
+        calendarfetchcuti: {
+          start: info.startStr, // Start date for fetching holidays
+          end: info.endStr, // End date for fetching holidays
+        },
+      },
+      success: function (response) {
+        // Assuming the response is a JSON object or an array of holiday dates
+        // console.log(response); // Check the response structure
+
+        // If the response is an array of dates, for example: ["2024-12-25", "2024-01-01"]
+        holidays = Array.isArray(response) ? response : JSON.parse(response);  // Ensure `holidays` is an array
+
+        // Apply holiday styling to the dates in the calendar
+        applyHolidayStyling(holidays);
+        // If the response is a JSON object containing a 'holidays' array:
+        // holidays = response.holidays;
+
+        // Now, you have the holidays array, and you can use it to modify your FullCalendar
+        // Example: disable holidays in the calendar view
+      },
+      error: function (xhr, status, error) {
+        console.error("Error fetching holidays:", error);
       },
     });
   }
-
+  function applyHolidayStyling(holidays) {
+    holidays.forEach(function(holiday) {
+      console.log(holiday)
+       const dateCell = document.querySelector(`[data-date='${holiday.tarikh}']`);
+      if (dateCell) {
+        dateCell.classList.add("grayed-out"); // Add the 'grayed-out' class to disable the date
+      }  
+    });
+  }
   function clickonEvent(info) {
     if (info.event.backgroundColor != "gray") {
       document.getElementById("user_calendarevent_title").innerHTML =
@@ -32,10 +71,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
       document.getElementById("user_calendarevent_id").value = info.event.id;
 
-      
-
-      document.getElementById("user_calendarevent_date").value =
-      new Date(info.event.startStr).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: '2-digit'});;
+      document.getElementById("user_calendarevent_date").value = new Date(
+        info.event.startStr
+      ).toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "2-digit",
+      });
 
       document.getElementById("user_calendarevent_type").value =
         info.event.extendedProps.jenis;
@@ -87,9 +129,25 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function selectDate(info) {
+    const selectedDate = info.startStr;  // Date in 'YYYY-MM-DD' format
+
+    const isHoliday = holidays.some(holiday => holiday.tarikh === selectedDate);
+    if (isHoliday) {
+      // console.log("Selected date is a holiday:", selectedDate);
+      // showtoast("Selected date is a holiday");  // Show message if needed
+      calendar.unselect();  // Prevent selection
+      return;
+    }
+
     if (info.startStr >= new Date().toISOString().split("T")[0]) {
       // alert('Selected date: ' + info.startStr);
-      document.getElementById("user_calendaradd_date").value = new Date(info.startStr).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: '2-digit'});;
+      document.getElementById("user_calendaradd_date").value = new Date(
+        info.startStr
+      ).toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "2-digit",
+      });
 
       showmodal("user_calendaradd");
     } else {
@@ -145,18 +203,15 @@ document.addEventListener("DOMContentLoaded", () => {
     selectLongPressDelay: 500,
     dayCellDidMount: function (info) {
       // Get today's date without time
-      const today = new Date();
-      today.setHours(0, 0, 0, 0); // Set time to midnight
-
-      // Get the date from the calendar cell
-      const date = info.date;
-      date.setHours(0, 0, 0, 0); // Set time to midnight for comparison
-
-      // Check if the date is before today
-      if (date < today) {
-        // Add a class to gray out the date
+      if (info.el.classList.contains("fc-day-past")) {
         info.el.classList.add("grayed-out");
       }
+    },
+    datesSet: function () {
+      let pastCells = document.querySelectorAll(".fc-day-past");
+      pastCells.forEach(function (cell) {
+        cell.classList.add("grayed-out");
+      });
     },
     selectConstraint: {
       start: "00:00", // Start at the beginning of the day
@@ -172,6 +227,8 @@ document.addEventListener("DOMContentLoaded", () => {
       calendar.render();
     },
   });
+
+
   calendar.render();
 
   $("#user_calendaradd_button").click(function () {

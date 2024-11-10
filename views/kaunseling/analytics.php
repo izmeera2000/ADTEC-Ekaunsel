@@ -46,7 +46,7 @@
                       <div class="col">
                         <div class="card-title fs-4 fw-semibold">Kaunseling</div>
                       </div>
-                      <div class="col text-end text-primary fs-4 fw-semibold"><?php
+                      <div class="col text-end text-primary fs-4 fw-semibold" id="thismonthval"><?php
                       $query = " SELECT DAYNAME(tarikh) AS day_of_week, COUNT(*) AS total 
                                   FROM kaunselor_jadual 
                                   WHERE MONTH(tarikh) = MONTH(CURDATE())
@@ -76,24 +76,24 @@
                         <option value="12">December</option>
                       </select>
                       <select id="yearSelector">
-                        <?php 
-                        
-                        
+                        <?php
+
+
                         $query = "SELECT DISTINCT YEAR(tarikh) as year FROM kaunselor_jadual ORDER BY year DESC ";
 
-                      $results = mysqli_query($db, $query);
+                        $results = mysqli_query($db, $query);
 
 
-                      while ($row = mysqli_fetch_assoc($results)) {
-                        $year = $row['year'];
-                        
+                        while ($row = mysqli_fetch_assoc($results)) {
+                          $year = $row['year'];
+
+                          ?>
+
+                          <option value="<?php echo $year ?>"><?php echo $year ?></option>
+                          <?php
+                        }
                         ?>
 
-                        <option value="<?php echo $year  ?>"><?php echo $year  ?></option>
-                        <?php
-                      }
-                        ?>
-                        
 
                       </select>
                     </div>
@@ -145,11 +145,12 @@
                         Borang<br>Psikologi</h6>
                       <div
                         class="bg-primary bg-opacity-25 text-primary p-2 rounded ms-2  d-flex justify-content-center align-items-center">
-                        <svg class="icon icon-xl ">
-                          <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-cart">
+                        <svg class="icon icon-xl">
+                          <use
+                            xlink:href="<?php echo $site_url ?>assets/vendors/bootstrap-icons/bootstrap-icons.svg#file-text">
                           </use>
                         </svg>
-                        
+
                       </div>
                     </div>
                     <div class="fs-4 fw-semibold pb-3">
