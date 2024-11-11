@@ -55,8 +55,8 @@
 
       <a href="<?php echo $site_url ?>" class="logo d-flex align-items-center me-auto me-xl-0">
         <!-- Uncomment the line below if you also wish to use an image logo -->
-        <img id="logo1" src="<?php echo $site_url ?>assets/img/logo2.png" >
-        <img id="logo2" src="<?php echo $site_url ?>assets/img/logo5.png" >
+        <img id="logo1" src="<?php echo $site_url ?>assets/img/logo2.png">
+        <img id="logo2" src="<?php echo $site_url ?>assets/img/logo5.png">
         <!-- <h1 class="sitename">Append</h1><span>.</span> -->
       </a>
 
@@ -132,7 +132,9 @@
           <div class="col-xl-5 content">
             <h3>About Us</h3>
             <h2>Kaunseling ADTEC Taiping</h2>
-            <p>We are dedicated to empowering students through tailored support services, ranging from academic guidance to personal development, ensuring a nurturing environment that fosters both educational success and holistic well-being.</p>
+            <p>We are dedicated to empowering students through tailored support services, ranging from academic guidance
+              to personal development, ensuring a nurturing environment that fosters both educational success and
+              holistic well-being.</p>
             <a href="#" class="read-more"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
           </div>
 
@@ -143,14 +145,14 @@
                 <div class="icon-box">
                   <i class="bi bi-buildings"></i>
                   <h3>Free</h3>
-                  <p>Magni repellendus vel ullam hic officia accusantium ipsa dolor omnis dolor voluptatem</p>
+                  <p>No charges for ADTEC Taiping Students</p>
                 </div>
               </div> <!-- End Icon Box -->
 
               <div class="col-md-6" data-aos="fade-up" data-aos-delay="300">
                 <div class="icon-box">
                   <i class="bi bi-clipboard-pulse"></i>
-                  <h3>Approved by ADTEC Taiping</h3>
+                  <h3>Comprehensive</h3>
                   <p>Autem saepe animi et aut aspernatur culpa facere. Rerum saepe rerum voluptates quia</p>
                 </div>
               </div> <!-- End Icon Box -->
@@ -158,16 +160,16 @@
               <div class="col-md-6" data-aos="fade-up" data-aos-delay="400">
                 <div class="icon-box">
                   <i class="bi bi-command"></i>
-                  <h3>Veniam omnis</h3>
-                  <p>Omnis perferendis molestias culpa sed. Recusandae quas possimus. Quod consequatur corrupti</p>
+                  <h3>Schedule</h3>
+                  <p>Easy to schedule</p>
                 </div>
               </div> <!-- End Icon Box -->
 
               <div class="col-md-6" data-aos="fade-up" data-aos-delay="500">
                 <div class="icon-box">
                   <i class="bi bi-graph-up-arrow"></i>
-                  <h3>Comprehensive</h3>
-                  <p>Sint et dolor voluptas minus possimus nostrum. Reiciendis commodi eligendi omnis quideme lorenda
+                  <h3>Certified</h3>
+                  <p>Our counsellor are all Certified 
                   </p>
                 </div>
               </div> <!-- End Icon Box -->
@@ -307,59 +309,7 @@
 
     </section><!-- /Services Section -->
 
-    <!-- Features Section -->
-    <section id="features" class="features section">
 
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Features</h2>
-        <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
-      </div><!-- End Section Title -->
-
-      <div class="container">
-
-        <div class="row gy-4 align-items-center features-item">
-          <div class="col-lg-5 order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
-            <h3>Corporis temporibus maiores provident</h3>
-            <p>
-              Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-              voluptate
-              velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
-            </p>
-            <a href="#" class="btn btn-get-started">Get Started</a>
-          </div>
-          <div class="col-lg-7 order-1 order-lg-2 d-flex align-items-center" data-aos="zoom-out" data-aos-delay="100">
-            <div class="image-stack">
-              <img src="assets/img/features-light-1.jpg" alt="" class="stack-front">
-              <img src="assets/img/features-light-2.jpg" alt="" class="stack-back">
-            </div>
-          </div>
-        </div><!-- Features Item -->
-
-        <div class="row gy-4 align-items-stretch justify-content-between features-item ">
-          <div class="col-lg-6 d-flex align-items-center features-img-bg" data-aos="zoom-out">
-            <img src="assets/img/features-light-3.jpg" class="img-fluid" alt="">
-          </div>
-          <div class="col-lg-5 d-flex justify-content-center flex-column" data-aos="fade-up">
-            <h3>Sunt consequatur ad ut est nulla</h3>
-            <p>Cupiditate placeat cupiditate placeat est ipsam culpa. Delectus quia minima quod. Sunt saepe odit aut
-              quia voluptatem hic voluptas dolor doloremque.</p>
-            <ul>
-              <li><i class="bi bi-check"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo consequat.</span></li>
-              <li><i class="bi bi-check"></i><span> Duis aute irure dolor in reprehenderit in voluptate velit.</span>
-              </li>
-              <li><i class="bi bi-check"></i> <span>Facilis ut et voluptatem aperiam. Autem soluta ad fugiat</span>.
-              </li>
-            </ul>
-            <a href="#" class="btn btn-get-started align-self-start">Get Started</a>
-          </div>
-        </div><!-- Features Item -->
-
-      </div>
-
-    </section><!-- /Features Section -->
-
- 
 
     <!-- Faq Section -->
     <section id="faq" class="faq section">
@@ -449,7 +399,7 @@
 
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
-        <h2>Team</h2>
+        <h2>Caunselor</h2>
         <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
       </div><!-- End Section Title -->
 
@@ -592,7 +542,7 @@
 
     </section><!-- /Call To Action Section -->
 
- 
+
 
     <!-- Contact Section -->
     <section id="contact" class="contact section">
@@ -776,33 +726,33 @@
   <!-- Main JS File -->
   <script src="assets/js/main2.js"></script>
   <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    function changeLogoVisibility() {
-      var logo1 = document.getElementById('logo1');
-      var logo2 = document.getElementById('logo2');
-      if (document.body.classList.contains('scrolled')) {
-        logo1.classList.add('d-none'); // Hide logo1
-        logo2.classList.remove('d-none'); // Show logo2
-      } else {
-        logo1.classList.remove('d-none'); // Show logo1
-        logo2.classList.add('d-none'); // Hide logo2
+    document.addEventListener('DOMContentLoaded', function () {
+      function changeLogoVisibility() {
+        var logo1 = document.getElementById('logo1');
+        var logo2 = document.getElementById('logo2');
+        if (document.body.classList.contains('scrolled')) {
+          logo1.classList.add('d-none'); // Hide logo1
+          logo2.classList.remove('d-none'); // Show logo2
+        } else {
+          logo1.classList.remove('d-none'); // Show logo1
+          logo2.classList.add('d-none'); // Hide logo2
+        }
       }
-    }
 
-    // Event listener for scroll event
-    window.addEventListener('scroll', function() {
-      if (window.scrollY > 0) {
-        document.body.classList.add('scrolled');
-      } else {
-        document.body.classList.remove('scrolled');
-      }
+      // Event listener for scroll event
+      window.addEventListener('scroll', function () {
+        if (window.scrollY > 0) {
+          document.body.classList.add('scrolled');
+        } else {
+          document.body.classList.remove('scrolled');
+        }
+        changeLogoVisibility();
+      });
+
+      // Initial check
       changeLogoVisibility();
     });
-
-    // Initial check
-    changeLogoVisibility();
-  });
-</script>
+  </script>
 
 
 </body>
