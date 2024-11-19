@@ -66,7 +66,7 @@
 
     <?php } else { ?>
 
-      <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>">
+      <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>dashboard">
           <i class="nav-icon bi bi-house"></i><span data-coreui-i18n="dashboard">Dashboard</span></a></li>
 
 
