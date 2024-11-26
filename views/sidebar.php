@@ -29,7 +29,7 @@
           <i class="nav-icon bi bi-calendar"></i><span data-coreui-i18n="pages">Temu Janji</span></a>
         <ul class="nav-group-items compact">
           <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>kaunseling/booking" target="_top">
-              <i class="nav-icon bi bi-calendar-week"></i><span>Booking</span></a></li>
+              <i class="nav-icon bi bi-calendar-week"></i><span>Tempah</span></a></li>
 
           <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>kaunseling/senarai" target="_top">
               <i class="nav-icon bi bi-list-ul"></i><span>Senarai</span></a></li>
