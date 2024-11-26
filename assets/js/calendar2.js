@@ -170,6 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
         success: function (response) {
           console.log(response);
           calendar.refetchEvents();
+          $('input[name=options-outlined]').prop('checked',false);
         },
       });
     } else {
@@ -203,6 +204,8 @@ document.addEventListener("DOMContentLoaded", () => {
         success: function (response) {
           console.log(response);
           calendar.refetchEvents();
+          $('input[name=options-outlined]').prop('checked',false);
+
         },
       });
     } else {
