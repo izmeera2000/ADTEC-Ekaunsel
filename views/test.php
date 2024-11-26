@@ -35,18 +35,30 @@
 // echo "Response: ";
 // print_r($response);
 
-$client = new Google_Client();
-$client->setAuthConfig('../client_secret.json');
-$client->addScope(Google_Service_Calendar::CALENDAR);
-$client->setRedirectUri('http://localhost/ADTEC-EKaunsel/testemail2');
-$client->setAccessType('offline');
-$client->setPrompt('select_account consent');
+// $client = new Google_Client();
+// $client->setAuthConfig('../client_secret.json');
+// $client->addScope(Google_Service_Calendar::CALENDAR);
+// $client->setRedirectUri('http://localhost/ADTEC-EKaunsel/testemail2');
+// $client->setAccessType('offline');
+// $client->setPrompt('select_account consent');
 
-if (!isset($_GET['code'])) {
-    $authUrl = $client->createAuthUrl();
-    header('Location: ' . filter_var($authUrl, FILTER_SANITIZE_URL));
-} else {
-    $client->authenticate($_GET['code']);
-    $_SESSION['access_token'] = $client->getAccessToken();
-    header('Location: ' . filter_var('http://localhost/ADTEC-EKaunsel/login', FILTER_SANITIZE_URL));
-}
+// if (!isset($_GET['code'])) {
+//     $authUrl = $client->createAuthUrl();
+//     header('Location: ' . filter_var($authUrl, FILTER_SANITIZE_URL));
+// } else {
+//     $client->authenticate($_GET['code']);
+//     $_SESSION['access_token'] = $client->getAccessToken();
+//     header('Location: ' . filter_var('http://localhost/ADTEC-EKaunsel/login', FILTER_SANITIZE_URL));
+// }
+?>
+<html>
+<body>
+
+<form action="welcome.php" method="POST">
+Name: <input type="text" name="name"><br>
+E-mail: <input type="text" name="email"><br>
+<input type="submit">
+</form>
+
+</body>
+</html>
