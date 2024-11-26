@@ -154,11 +154,11 @@
 
 
 
-            <!-- <div class="mb-3 row">
+            <div class="mb-3 row">
               <img class="img-fluid  mx-auto  d-block" data-urlsite="<?php echo $site_url ?>assets/img/user/"
                 id="user_info">
 
-            </div> -->
+            </div>
 
             <div class="mb-3 row">
               <label for="kaunselor_updateevent_date" class="col-sm-2 col-form-label">Nama</label>
