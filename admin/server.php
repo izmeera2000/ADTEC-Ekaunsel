@@ -1011,92 +1011,92 @@ if (isset($_POST['test3'])) {
 
   // header('Content-Type: application/json');
   $ndp = $_POST['test3']['ndp'];
-  echo $ndp;
+  // echo $ndp;
 
-  // $query =
-  //   "SELECT a.*,b.ndp  FROM `user_psikologi`  a 
-  //     INNER JOIN user b  ON  a.user_id = b.id
+  $query =
+    "SELECT a.*,b.ndp  FROM `user_psikologi`  a 
+      INNER JOIN user b  ON  a.user_id = b.id
       
-  //     WHERE ndp = '$ndp' ORDER BY a.id DESC LIMIT 1";
+      WHERE ndp = '$ndp' ORDER BY a.id DESC LIMIT 1";
 
-  // $query2 =
-  //   "SELECT a.*,b.ndp  FROM `user_psikologi`  a INNER JOIN user b  ON  a.user_id = b.id WHERE ndp = '$ndp' ORDER BY a.id ASC LIMIT 1";
+  $query2 =
+    "SELECT a.*,b.ndp  FROM `user_psikologi`  a INNER JOIN user b  ON  a.user_id = b.id WHERE ndp = '$ndp' ORDER BY a.id ASC LIMIT 1";
 
-  // $query3 =
-  //   "SELECT id,nama_kategori,normal,ringan,sederhana,teruk,sangat_teruk FROM `borang_psikologi_kategori`";
-
-
-  // $rows = [];
-  // $rows2 = [];
-
-  // $results = mysqli_query($db, $query);
-  // while ($psikologi = mysqli_fetch_assoc($results)) {
-
-  //   $rows[] = json_decode($psikologi['keputusan'], true);
-  // }
-  // $results = mysqli_query($db, $query2);
-  // while ($psikologi = mysqli_fetch_assoc($results)) {
-
-  //   $rows[] = json_decode($psikologi['keputusan'], true);
-  // }
+  $query3 =
+    "SELECT id,nama_kategori,normal,ringan,sederhana,teruk,sangat_teruk FROM `borang_psikologi_kategori`";
 
 
-  // $results = mysqli_query($db, $query3);
-  // while ($kategori = mysqli_fetch_assoc($results)) {
-  //   $kategoriMap[$kategori['id']] = [
-  //     'nama_kategori' => ucfirst($kategori['nama_kategori']),
-  //     'normal' => $kategori['normal'],
-  //     'ringan' => $kategori['ringan'],
-  //     'sederhana' => $kategori['sederhana'],
-  //     'teruk' => $kategori['teruk'],
-  //     'sangat_teruk' => $kategori['sangat_teruk'],
-  //   ];
-  // }
+  $rows = [];
+  $rows2 = [];
 
-  // // Map category names to the rows data
-  // foreach ($rows as &$row) {
-  //   foreach ($row as &$item) {
-  //     if (isset($kategoriMap[$item['kategori_id']])) {
-  //       $item['kategori_name'] = $kategoriMap[$item['kategori_id']]['nama_kategori'];
-  //       $item['normal'] = $kategoriMap[$item['kategori_id']]['normal'];
-  //       $item['ringan'] = $kategoriMap[$item['kategori_id']]['ringan'];
-  //       $item['sederhana'] = $kategoriMap[$item['kategori_id']]['sederhana'];
-  //       $item['teruk'] = $kategoriMap[$item['kategori_id']]['teruk'];
-  //       $item['sangat_teruk'] = $kategoriMap[$item['kategori_id']]['sangat_teruk'];
+  $results = mysqli_query($db, $query);
+  while ($psikologi = mysqli_fetch_assoc($results)) {
 
-  //       if ($item['value'] > $kategoriMap[$item['kategori_id']]['sangat_teruk']) {
-  //         $item['level'] = "sangat teruk";
-  //       } else if ($item['value'] > $kategoriMap[$item['kategori_id']]['teruk']) {
-  //         $item['level'] = "teruk";
+    $rows[] = json_decode($psikologi['keputusan'], true);
+  }
+  $results = mysqli_query($db, $query2);
+  while ($psikologi = mysqli_fetch_assoc($results)) {
 
-  //       } else if ($item['value'] > $kategoriMap[$item['kategori_id']]['sederhana']) {
-  //         $item['level'] = "sederhana";
+    $rows[] = json_decode($psikologi['keputusan'], true);
+  }
 
-  //       } else if ($item['value'] > $kategoriMap[$item['kategori_id']]['ringan']) {
-  //         $item['level'] = "ringan";
 
-  //       } else {
-  //         $item['level'] = "normal";
+  $results = mysqli_query($db, $query3);
+  while ($kategori = mysqli_fetch_assoc($results)) {
+    $kategoriMap[$kategori['id']] = [
+      'nama_kategori' => ucfirst($kategori['nama_kategori']),
+      'normal' => $kategori['normal'],
+      'ringan' => $kategori['ringan'],
+      'sederhana' => $kategori['sederhana'],
+      'teruk' => $kategori['teruk'],
+      'sangat_teruk' => $kategori['sangat_teruk'],
+    ];
+  }
 
-  //       }
-  //       // $item['sangat_teruk'] = $kategoriMap[$item['kategori_id']]['sangat_teruk'];
-  //     } else {
-  //       $item['kategori_name'] = 'Unknown';
-  //     }
-  //   }
-  // }
+  // Map category names to the rows data
+  foreach ($rows as &$row) {
+    foreach ($row as &$item) {
+      if (isset($kategoriMap[$item['kategori_id']])) {
+        $item['kategori_name'] = $kategoriMap[$item['kategori_id']]['nama_kategori'];
+        $item['normal'] = $kategoriMap[$item['kategori_id']]['normal'];
+        $item['ringan'] = $kategoriMap[$item['kategori_id']]['ringan'];
+        $item['sederhana'] = $kategoriMap[$item['kategori_id']]['sederhana'];
+        $item['teruk'] = $kategoriMap[$item['kategori_id']]['teruk'];
+        $item['sangat_teruk'] = $kategoriMap[$item['kategori_id']]['sangat_teruk'];
 
-  // if (count($rows) > 0) {
-  //   // Get the first and last rows
-  //   $firstRow = $rows[0];
-  //   $lastRow = $rows[count($rows) - 1];
+        if ($item['value'] > $kategoriMap[$item['kategori_id']]['sangat_teruk']) {
+          $item['level'] = "sangat teruk";
+        } else if ($item['value'] > $kategoriMap[$item['kategori_id']]['teruk']) {
+          $item['level'] = "teruk";
 
-  //   // Return the data as JSON
-  //   header('Content-Type: application/json');
-  //   echo json_encode([
-  //     'firstRow' => $firstRow,
-  //     'lastRow' => $lastRow
-  //   ]);
+        } else if ($item['value'] > $kategoriMap[$item['kategori_id']]['sederhana']) {
+          $item['level'] = "sederhana";
+
+        } else if ($item['value'] > $kategoriMap[$item['kategori_id']]['ringan']) {
+          $item['level'] = "ringan";
+
+        } else {
+          $item['level'] = "normal";
+
+        }
+        // $item['sangat_teruk'] = $kategoriMap[$item['kategori_id']]['sangat_teruk'];
+      } else {
+        $item['kategori_name'] = 'Unknown';
+      }
+    }
+  }
+
+  if (count($rows) > 0) {
+    // Get the first and last rows
+    $firstRow = $rows[0];
+    $lastRow = $rows[count($rows) - 1];
+
+    // Return the data as JSON
+    header('Content-Type: application/json');
+    echo json_encode([
+      'firstRow' => $firstRow,
+      'lastRow' => $lastRow
+    ]);
 
 
     die();

@@ -781,9 +781,9 @@ if (document.getElementById("radarChart")) {
   });
 
   var ndp = document.getElementById("3").value;
-
+console.log(ndp);
   $.ajax({
-    url: "kaunseling/student/psikologi",
+    url: "dass",
     method: "POST",
     data: {
       test3: {
