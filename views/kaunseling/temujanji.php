@@ -149,7 +149,8 @@ if (mysqli_num_rows($results) == 1) {
                   </div>
                   <?php
 
-                } else { ?>
+                }
+                if ($kaunselor_jadual['event_status'] = "0") { ?>
 
                   <div class="mb-3 row">
                     <label for="2" class="col-sm-2 col-form-label fw-semibold">Sebab</label>
@@ -385,121 +386,122 @@ if (mysqli_num_rows($results) == 1) {
   <script src="<?php echo $site_url ?>assets/js/calendar.js"></script> -->
   <script>
 
-$("#kaunselor_updateevent_button1").click(function () {
-    // calendar_add("user_calendaradd");
-    console.log("reject");
+    $("#kaunselor_updateevent_button1").click(function () {
+      // calendar_add("user_calendaradd");
+      console.log("reject");
 
-    var event_id = document.getElementById("kaunselor_updateevent_id").value;
-    var sebab = document.getElementById(
-      "kaunselor_updateevent_sebabreject"
-    ).value;
+      var event_id = document.getElementById("kaunselor_updateevent_id").value;
+      var sebab = document.getElementById(
+        "kaunselor_updateevent_sebabreject"
+      ).value;
 
-    if (sebab != "") {
-      hidemodal();
+      if (sebab != "") {
+        hidemodal();
 
-      //  coreui.Modal("#kaunselor_updateevent");
-      $.ajax({
-        type: "POST",
-        url: "kaunselor_reject",
-        data: {
-          kaunselor_reject: {
-            id: event_id,
-            sebab: sebab,
+        //  coreui.Modal("#kaunselor_updateevent");
+        $.ajax({
+          type: "POST",
+          url: "kaunselor_reject",
+          data: {
+            kaunselor_reject: {
+              id: event_id,
+              sebab: sebab,
+            },
           },
-        },
-        success: function (response) {
-          console.log(response);
-          calendar.refetchEvents();
-          document.getElementById("success-outlined").checked = false;
-          document.getElementById("danger-outlined").checked = false;       
-          if (!$("#kaunselor_updateevent_reject").hasClass("d-none")) {
-            $("#kaunselor_updateevent_reject").addClass("d-none");
-          }
-          if (!$("#kaunselor_updateevent_approve").hasClass("d-none")) {
-            $("#kaunselor_updateevent_approve").addClass("d-none");
-          } },
-      });
-    } else {
-      showtoast("Sila Masukkan Sebab");
-    }
-
-    // calendar.render();
-  });
-
-  $("#kaunselor_updateevent_button2").click(function () {
-    console.log("approve");
-
-    var event_id = document.getElementById("kaunselor_updateevent_id").value;
-    var mula = document.getElementById("timeInput1").value;
-    var tamat = document.getElementById("timeInput2").value;
-    // console.log(mula);
-
-    if (mula != "" && tamat != "") {
-      hidemodal();
-
-      $.ajax({
-        type: "POST",
-        url: "kaunselor_approve",
-        data: {
-          kaunselor_approve: {
-            id: event_id,
-            mula: mula,
-            tamat: tamat,
+          success: function (response) {
+            console.log(response);
+            calendar.refetchEvents();
+            document.getElementById("success-outlined").checked = false;
+            document.getElementById("danger-outlined").checked = false;
+            if (!$("#kaunselor_updateevent_reject").hasClass("d-none")) {
+              $("#kaunselor_updateevent_reject").addClass("d-none");
+            }
+            if (!$("#kaunselor_updateevent_approve").hasClass("d-none")) {
+              $("#kaunselor_updateevent_approve").addClass("d-none");
+            }
           },
-        },
-        success: function (response) {
-          console.log(response);
-          calendar.refetchEvents();
-          // $('input[name=options-outlined]').prop('checked',false);
-          document.getElementById("success-outlined").checked = false;
-          document.getElementById("danger-outlined").checked = false;
-          if (!$("#kaunselor_updateevent_reject").hasClass("d-none")) {
-            $("#kaunselor_updateevent_reject").addClass("d-none");
-          }
-          if (!$("#kaunselor_updateevent_approve").hasClass("d-none")) {
-            $("#kaunselor_updateevent_approve").addClass("d-none");
-          }
-        },
-      });
-    } else {
-      showtoast("Sila Masukkan Masa Mula Dan Tamat");
-    }
-    // calendar.render();
-
-    // calendar_delete("user_calendarevent");
-  });
-
-  $('input[name="options-outlined"]').click(function () {
-    // alert('You selected: ' + $(this).val());
-    if ($(this).val() == 1) {
-      if (!$("#kaunselor_updateevent_reject").hasClass("d-none")) {
-        $("#kaunselor_updateevent_reject").addClass("d-none");
-      }
-      if ($("#kaunselor_updateevent_approve").hasClass("d-none")) {
-        $("#kaunselor_updateevent_approve").removeClass("d-none");
-      }
-      if (!$("#kaunselor_updateevent_button1").hasClass("d-none")) {
-        $("#kaunselor_updateevent_button1").addClass("d-none");
-      }
-      if ($("#kaunselor_updateevent_button2").hasClass("d-none")) {
-        $("#kaunselor_updateevent_button2").removeClass("d-none");
-      }
-    } else {
-      if (!$("#kaunselor_updateevent_approve").hasClass("d-none")) {
-        $("#kaunselor_updateevent_approve").addClass("d-none");
-      }
-      if ($("#kaunselor_updateevent_reject").hasClass("d-none")) {
-        $("#kaunselor_updateevent_reject").removeClass("d-none");
+        });
+      } else {
+        showtoast("Sila Masukkan Sebab");
       }
 
-      if (!$("#kaunselor_updateevent_button2").hasClass("d-none")) {
-        $("#kaunselor_updateevent_button2").addClass("d-none");
+      // calendar.render();
+    });
+
+    $("#kaunselor_updateevent_button2").click(function () {
+      console.log("approve");
+
+      var event_id = document.getElementById("kaunselor_updateevent_id").value;
+      var mula = document.getElementById("timeInput1").value;
+      var tamat = document.getElementById("timeInput2").value;
+      // console.log(mula);
+
+      if (mula != "" && tamat != "") {
+        hidemodal();
+
+        $.ajax({
+          type: "POST",
+          url: "kaunselor_approve",
+          data: {
+            kaunselor_approve: {
+              id: event_id,
+              mula: mula,
+              tamat: tamat,
+            },
+          },
+          success: function (response) {
+            console.log(response);
+            calendar.refetchEvents();
+            // $('input[name=options-outlined]').prop('checked',false);
+            document.getElementById("success-outlined").checked = false;
+            document.getElementById("danger-outlined").checked = false;
+            if (!$("#kaunselor_updateevent_reject").hasClass("d-none")) {
+              $("#kaunselor_updateevent_reject").addClass("d-none");
+            }
+            if (!$("#kaunselor_updateevent_approve").hasClass("d-none")) {
+              $("#kaunselor_updateevent_approve").addClass("d-none");
+            }
+          },
+        });
+      } else {
+        showtoast("Sila Masukkan Masa Mula Dan Tamat");
       }
-      if ($("#kaunselor_updateevent_button1").hasClass("d-none")) {
-        $("#kaunselor_updateevent_button1").removeClass("d-none");
+      // calendar.render();
+
+      // calendar_delete("user_calendarevent");
+    });
+
+    $('input[name="options-outlined"]').click(function () {
+      // alert('You selected: ' + $(this).val());
+      if ($(this).val() == 1) {
+        if (!$("#kaunselor_updateevent_reject").hasClass("d-none")) {
+          $("#kaunselor_updateevent_reject").addClass("d-none");
+        }
+        if ($("#kaunselor_updateevent_approve").hasClass("d-none")) {
+          $("#kaunselor_updateevent_approve").removeClass("d-none");
+        }
+        if (!$("#kaunselor_updateevent_button1").hasClass("d-none")) {
+          $("#kaunselor_updateevent_button1").addClass("d-none");
+        }
+        if ($("#kaunselor_updateevent_button2").hasClass("d-none")) {
+          $("#kaunselor_updateevent_button2").removeClass("d-none");
+        }
+      } else {
+        if (!$("#kaunselor_updateevent_approve").hasClass("d-none")) {
+          $("#kaunselor_updateevent_approve").addClass("d-none");
+        }
+        if ($("#kaunselor_updateevent_reject").hasClass("d-none")) {
+          $("#kaunselor_updateevent_reject").removeClass("d-none");
+        }
+
+        if (!$("#kaunselor_updateevent_button2").hasClass("d-none")) {
+          $("#kaunselor_updateevent_button2").addClass("d-none");
+        }
+        if ($("#kaunselor_updateevent_button1").hasClass("d-none")) {
+          $("#kaunselor_updateevent_button1").removeClass("d-none");
+        }
       }
-    }
-  });
+    });
   </script>
 </body>
 
