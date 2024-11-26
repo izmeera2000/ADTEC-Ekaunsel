@@ -170,8 +170,8 @@ document.addEventListener("DOMContentLoaded", () => {
         success: function (response) {
           console.log(response);
           calendar.refetchEvents();
-          $('input[name=options-outlined]').prop('checked',false);
-        },
+          document.getElementById("success-outlined").checked = false;
+          document.getElementById("danger-outlined").checked = false;        },
       });
     } else {
       showtoast("Sila Masukkan Sebab");
@@ -204,8 +204,9 @@ document.addEventListener("DOMContentLoaded", () => {
         success: function (response) {
           console.log(response);
           calendar.refetchEvents();
-          $('input[name=options-outlined]').prop('checked',false);
-
+          // $('input[name=options-outlined]').prop('checked',false);
+          document.getElementById("success-outlined").checked = false;
+          document.getElementById("danger-outlined").checked = false;
         },
       });
     } else {
