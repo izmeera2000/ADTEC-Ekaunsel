@@ -355,7 +355,7 @@ switch (true) {
 
 
 
-	case str_starts_with($request, 'kaunseling/student/psikologi'):
+	case str_contains($request, 'kaunseling/student/psikologi'):
 		server();
 		break;
 
