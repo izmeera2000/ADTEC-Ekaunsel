@@ -472,7 +472,7 @@ if (mysqli_num_rows($results) == 1) {
     });
 
     $('input[name="options-outlined"]').click(function () {
-      // alert('You selected: ' + $(this).val());
+      alert('You selected: ' + $(this).val());
       if ($(this).val() == 1) {
         if (!$("#kaunselor_updateevent_reject").hasClass("d-none")) {
           $("#kaunselor_updateevent_reject").addClass("d-none");
