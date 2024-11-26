@@ -50,7 +50,7 @@
 
       <li class="nav-title">User</li>
       <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>user/profile" target="_top">
-          <i class="nav-icon bi bi-person"></i><span>Profile</span></a></li>
+          <i class="nav-icon bi bi-person"></i><span>Profil</span></a></li>
       <!-- <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>user/kaunseling" target="_top">
           <svg class="nav-icon">
             <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout">
@@ -124,7 +124,7 @@
 
       <li class="nav-title">User</li>
       <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>user/profile" target="_top">
-          <i class="nav-icon bi bi-person"></i><span>Profile</span></a></li>
+          <i class="nav-icon bi bi-person"></i><span>Profil</span></a></li>
 
       <!-- <li class="nav-group"><a class="nav-link nav-group-toggle">
           <svg class="nav-icon">
