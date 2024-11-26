@@ -1010,7 +1010,7 @@ function sendmail($receiver, $title, $filepath, $var = "")
 if (isset($_POST['test3'])) {
 
   // header('Content-Type: application/json');
-  $ndp = '29124087';
+  $ndp = $_POST['test3']['ndp'];
   // echo $ndp;
 
   $query =
