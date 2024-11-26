@@ -360,7 +360,7 @@ if (isset($_POST['calendarfetch'])) {
     if ($row['user_id'] != $id) {
       $row['color'] = "gray";
       $row['title'] = "";
-      $row['masalah'] = " ";
+      $row['masalah'] = "Occupied";
       $row['ndp'] = "";
 
     }
