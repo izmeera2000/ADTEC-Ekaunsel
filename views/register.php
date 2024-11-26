@@ -29,7 +29,7 @@
             <form method="POST" action="register" enctype="multipart/form-data">
               <div class="card-body p-4">
                 <h1>Register</h1>
-                <p class="text-body-secondary">Register akaun anda</p>
+                <p class="text-body-secondary">Isi maklumat (menggunakan email ADTEC Taiping jika ada)</p>
                 <div class="input-group mb-3"><span class="input-group-text">
                     <svg class="icon">
                       <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-user"></use>
