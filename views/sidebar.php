@@ -96,7 +96,7 @@
 
 
       <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>student/senarai" target="_top">
-          <i class="nav-icon bi bi-person-lines-fill"></i><span>Senarai</span></a></li>
+          <i class="nav-icon bi bi-person-lines-fill"></i><span> Individu</span></a></li>
 
           <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>kaunseling/analytics" target="_top">
           <i class="nav-icon bi bi-clipboard-data"></i><span> Keseluruhan</span></a></li>
