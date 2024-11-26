@@ -102,6 +102,13 @@
                       value="<?php echo $_SESSION['user_details']['email'] ?>">
                   </div>
                 </div>
+                <div class="mb-3 row">
+                  <label for="2" class="col-sm-2 col-form-label">No Telefon</label>
+                  <div class="col-sm-10">
+                    <input type="text" readonly class="form-control-plaintext" 
+                      value="<?php echo $_SESSION['user_details']['phone'] ?>">
+                  </div>
+                </div>
                 <?php if (($_SESSION['user_details']['role'] != 1)) { ?>
 
                   <div class="mb-3 row">
@@ -117,6 +124,23 @@
                   <div class="col-sm-10">
                     <input type="text" readonly class="form-control-plaintext" id="4"
                       value="<?php echo $_SESSION['user_details']['kp'] ?>">
+                  </div>
+                </div>
+
+                <div class="mb-3 row">
+                  <label for="4" class="col-sm-2 col-form-label">Bangsa</label>
+                  <div class="col-sm-10">
+                    <input type="text" readonly class="form-control-plaintext"  
+                      value="<?php echo $_SESSION['user_details']['bangsa'] ?>">
+                  </div>
+                </div>
+
+
+                <div class="mb-3 row">
+                  <label for="4" class="col-sm-2 col-form-label">Agama</label>
+                  <div class="col-sm-10">
+                    <input type="text" readonly class="form-control-plaintext"  
+                      value="<?php echo $_SESSION['user_details']['agama'] ?>">
                   </div>
                 </div>
 
