@@ -171,7 +171,13 @@ document.addEventListener("DOMContentLoaded", () => {
           console.log(response);
           calendar.refetchEvents();
           document.getElementById("success-outlined").checked = false;
-          document.getElementById("danger-outlined").checked = false;        },
+          document.getElementById("danger-outlined").checked = false;       
+          if (!$("#kaunselor_updateevent_reject").hasClass("d-none")) {
+            $("#kaunselor_updateevent_reject").addClass("d-none");
+          }
+          if (!$("#kaunselor_updateevent_approve").hasClass("d-none")) {
+            $("#kaunselor_updateevent_approve").addClass("d-none");
+          } },
       });
     } else {
       showtoast("Sila Masukkan Sebab");
@@ -207,6 +213,12 @@ document.addEventListener("DOMContentLoaded", () => {
           // $('input[name=options-outlined]').prop('checked',false);
           document.getElementById("success-outlined").checked = false;
           document.getElementById("danger-outlined").checked = false;
+          if (!$("#kaunselor_updateevent_reject").hasClass("d-none")) {
+            $("#kaunselor_updateevent_reject").addClass("d-none");
+          }
+          if (!$("#kaunselor_updateevent_approve").hasClass("d-none")) {
+            $("#kaunselor_updateevent_approve").addClass("d-none");
+          }
         },
       });
     } else {
