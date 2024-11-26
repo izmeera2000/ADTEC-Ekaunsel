@@ -359,10 +359,8 @@ switch (true) {
 		server();
 		break;
 
-		case str_contains($request, 'dass'):
-			server();
-			break;
 
+		
 	case str_contains($request, 'editborang/reorder'):
 		server();
 		break;
