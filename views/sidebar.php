@@ -29,7 +29,7 @@
           <i class="nav-icon bi bi-calendar"></i><span data-coreui-i18n="pages">Temu Janji</span></a>
         <ul class="nav-group-items compact">
           <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>kaunseling/booking" target="_top">
-              <i class="nav-icon bi bi-calendar-week"></i><span>Booking</span></a></li>
+              <i class="nav-icon bi bi-calendar-week"></i><span>Ujian Psikologi</span></a></li>
 
           <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>kaunseling/senarai" target="_top">
               <i class="nav-icon bi bi-list-ul"></i><span>Senarai</span></a></li>
@@ -87,18 +87,19 @@
       </li>
 
       <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>kaunseling/editborang" target="_top">
-          <i class="nav-icon bi bi-file-text"></i><span>Borang</span></a></li>
+          <i class="nav-icon bi bi-file-text"></i><span>Ujian Psikologi</span></a></li>
 
 
-      <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>kaunseling/analytics" target="_top">
-          <i class="nav-icon bi bi-clipboard-data"></i><span>Analytic</span></a></li>
 
-      <li class="nav-title">Student</li>
+
+      <li class="nav-title">Laporan</li>
 
 
       <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>student/senarai" target="_top">
           <i class="nav-icon bi bi-person-lines-fill"></i><span>Senarai</span></a></li>
 
+          <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>kaunseling/analytics" target="_top">
+          <i class="nav-icon bi bi-clipboard-data"></i><span> Keseluruhan</span></a></li>
 
       <li class="nav-title">Email</li>
 
