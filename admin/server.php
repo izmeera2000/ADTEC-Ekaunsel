@@ -46,67 +46,67 @@ if (isset($_POST['user_register'])) {
 
 
   if (empty($_POST['ndp'])) {
-    $errors['ndp'] = "NDP requred";
+    $errors['ndp'] = "NDP required";
   } else {
     $ndp = mysqli_real_escape_string($db, $_POST['ndp']);
 
   }
   if (empty($_POST['fullname'])) {
-    $errors['fullname'] = "fullname requred";
+    $errors['fullname'] = "fullname required";
   } else {
     $fullname = mysqli_real_escape_string($db, $_POST['fullname']);
 
   }
   if (empty($_POST['kp'])) {
-    $errors['kp'] = "kp requred";
+    $errors['kp'] = "kp required";
   } else {
     $kp = mysqli_real_escape_string($db, $_POST['kp']);
 
   }
   if (empty($_POST['jantina'])) {
-    $errors['jantina'] = "jantina requred";
+    $errors['jantina'] = "jantina required";
   } else {
     $jantina = mysqli_real_escape_string($db, $_POST['jantina']);
 
   }
   if (empty($_POST['agama'])) {
-    $errors['agama'] = "agama requred";
+    $errors['agama'] = "agama required";
   } else {
     $agama = mysqli_real_escape_string($db, $_POST['agama']);
 
   }
   if (empty($_POST['statuskahwin'])) {
-    $errors['statuskahwin'] = "statuskahwin requred";
+    $errors['statuskahwin'] = "status kahwin required";
   } else {
     $statuskahwin = mysqli_real_escape_string($db, $_POST['statuskahwin']);
 
   }
   if (empty($_POST['bangsa'])) {
-    $errors['bangsa'] = "bangsa requred";
+    $errors['bangsa'] = "bangsa required";
   } else {
     $bangsa = mysqli_real_escape_string($db, $_POST['bangsa']);
 
   }
   if (empty($_POST['email'])) {
-    $errors['email'] = "email requred";
+    $errors['email'] = "email required";
   } else {
     $email = mysqli_real_escape_string($db, $_POST['email']);
 
   }
   if (empty($_POST['phone'])) {
-    $errors['phone'] = "phone requred";
+    $errors['phone'] = "phone required";
   } else {
     $phone = mysqli_real_escape_string($db, $_POST['phone']);
 
   }
   if (empty($_POST['password1'])) {
-    $errors['password1'] = "password1 requred";
+    $errors['password1'] = "password 1 required";
   } else {
     $password1 = mysqli_real_escape_string($db, $_POST['password1']);
 
   }
   if (empty($_POST['password2'])) {
-    $errors['password2'] = "password2 requred";
+    $errors['password2'] = "password 2 required";
   } else {
     $password2 = mysqli_real_escape_string($db, $_POST['password2']);
 
@@ -227,7 +227,7 @@ if (isset($_POST['user_login'])) {
     $password = md5($password);
 
 
-    $query = "SELECT * FROM user WHERE (ndp='$login' or email='$login') AND password='$password'";
+    $query = "SELECT * FROM user WHERE (ndp='$login' OR email='$login') AND password='$password'";
     $results = mysqli_query($db, $query);
 
     if (mysqli_num_rows($results) == 1) {
