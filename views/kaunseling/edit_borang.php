@@ -55,12 +55,8 @@
                                 </div>
                                 <div class="col-auto ms-auto">
                                     <button class="btn btn-secondary" onclick="showmodal('add_soalan')">
-                                        <svg class="icon me-2">
-                                            <use
-                                                xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-user-plus">
-                                            </use>
-                                        </svg>
-                                        <span>Tambah Soalan</span>
+                                        <i class="bi bi-file-plus"></i>
+                                        <span> Tambah Soalan</span>
                                     </button>
                                 </div>
                             </div>

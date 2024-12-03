@@ -13,7 +13,9 @@ require('route.php');
 
 function index()
 {
- 	require_once('views/index2.php');
+	// require_once('views/dashbo.php');
+	check_session($site_url);
+
 }
 function index2()
 {
@@ -360,12 +362,16 @@ switch (true) {
 		break;
 
 
-		
+
 	case str_contains($request, 'editborang/reorder'):
 		server();
 		break;
 
 	case str_contains($request, 'editsoalan'):
+		server();
+		break;
+
+	case str_contains($request, 'deletesoalan'):
 		server();
 		break;
 

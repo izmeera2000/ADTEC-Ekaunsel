@@ -420,7 +420,7 @@ if (isset($_POST['calendarfetchcuti'])) {
 
 
   while ($row = mysqli_fetch_assoc($result)) {
- 
+
 
 
     array_push($eventArray, $row);
@@ -888,11 +888,7 @@ if (isset($_POST['senaraisoalan'])) {
         "c" => '<div class="text-center" data-cat="' . $row['id_kategory'] . '">' . $row['nama_kategori'] . '</div>',
         "d" => '
               <button class="btn btn-primary btn-action"   type="button">
-                                                    <svg class="icon">
-                                                        <use
-                                                            xlink:href="' . $site_url . 'assets/vendors/@coreui/icons/svg/free.svg#cil-people">
-                                                        </use>
-                                                    </svg>
+                                                    <i class="bi bi-file-diff"></i>
               </button>
           '
       );
@@ -935,7 +931,18 @@ if (isset($_POST['editsoalan'])) {
   die();
 
 }
+if (isset($_POST['deletesoalan'])) {
 
+  $id = $_POST['deletesoalan']['id'];
+  $soalan = $_POST['deletesoalan']['soalan'];
+  $kategori = $_POST['deletesoalan']['kategori'];
+
+  $query =
+    "DELETE FROM  borang_psikologi  WHERE id ='$id' ";
+  $results = mysqli_query($db, $query);
+  die();
+
+}
 
 // if (isset($_POST['addsoalan'])) {
 //   removepic($site_url . "assets/img/user/" . $_SESSION['user_details']['id'] / "/" . $_SESSION['user_details']['image_url']);
@@ -1196,6 +1203,112 @@ if (isset($_POST['kaunselor_approve'])) {
   }
 
 
+}
+
+
+if (isset($_POST['temujanji_final'])) {
+
+
+  $event_id = $_POST['meeting_id'];
+  $user_id = $_POST['user_id'];
+  $mula1 = $_POST['time1'];
+  $tamat1 = $_POST['time2'];
+  $tarikh = $_POST['tarikh1'];
+  $sebab = $_POST['masalah1'];
+  $kaunselor_id = $_SESSION['user_details']['id'];
+  $jenis = $_POST['options_outlined2_final2'];
+  $repeat = $_POST['options-outlined2_final'];
+
+
+  $now = date('Y-m-d H:i:s');
+ 
+
+  $query =
+    "UPDATE kaunselor_jadual SET event_status = '4', masa_tamat2 = '$now' , time_edit='$now' WHERE id = '$event_id'";
+
+  $results = mysqli_query($db, $query);
+
+  // sendmail($user_mail, "Meeting Link", 'meeting_link.php', $meeting_link, $site_url);
+
+
+  $query2 =
+    "SELECT a.*, b.email,b.ndp,b.nama FROM `kaunselor_jadual` a INNER JOIN  user b ON a.user_id = b.id  WHERE a.id = '$event_id'";
+  $results2 = mysqli_query($db, $query2);
+
+  $event = mysqli_fetch_assoc($results2);
+
+  $start_modified = date('j F Y gA', strtotime($event['tarikh']));
+
+  $var = array(
+    'link' => $site_url . "kaunseling/temujanji/$event_id" // Example variable
+  );
+  sendmail($event['email'], "Temu Janji Anda Pada $start_modified telah ditamat", 'meeting_end.php', $var);
+
+
+
+
+  if ($repeat) {
+    if ($mula1 && $tamat1) {
+      // echo $event_id;
+
+      // echo "test";
+      $mula = date_format(new DateTime($tarikh . $mula1), "Y/m/d H:i:s");
+      $tamat = date_format(new DateTime($tarikh . $tamat1), "Y/m/d H:i:s");
+
+      // echo $event['tarikh'] . $mula1;
+
+      // list($hours2, $minutes2) = explode(separator: ':', $tamat1);
+
+
+      // $rows[] = json_decode($psikologi['keputusan'], true);
+      $now = date('Y-m-d H:i:s');
+
+      $query1 =
+        "INSERT INTO kaunselor_jadual 
+              (
+                event_status, 
+                user_id,
+                masa_mula, 
+                masa_tamat, 
+                tarikh,
+                jenis,
+                masalah,
+                kaunselor_id
+              ) 
+              VALUES 
+              (
+                2, 
+                '$user_id',
+                '$mula', 
+                '$tamat', 
+                '$tarikh', 
+                '$jenis', 
+                '$sebab', 
+                '$kaunselor_id'
+              );
+              ";
+      $results = mysqli_query($db, $query1);
+
+
+      $query2 =
+        "SELECT a.*, b.email,b.ndp,b.nama FROM `kaunselor_jadual` a INNER JOIN  user b ON a.user_id = b.id  WHERE a.id = '$event_id'";
+      $results2 = mysqli_query($db, $query2);
+
+      $event = mysqli_fetch_assoc($results2);
+
+      $start_modified = date('j F Y gA', strtotime($event['tarikh']));
+
+      $var = array(
+        'link' => $site_url . "kaunseling/temujanji/$event_id" // Example variable
+      );
+      sendmail($event['email'], "Temu Janji Anda Pada $start_modified telah diluluskan", 'meeting_approve.php', $var);
+
+
+    }
+  }
+
+
+  header('location:' . $site_url . "kaunseling/temujanji/$event_id");
 }
 
 
@@ -1661,15 +1774,15 @@ if (isset($_POST['temujanji_update'])) {
 
         // $meeting_link = $manual;
 
-          $parsedUrl = parse_url($googleMeetLink, PHP_URL_PATH);
-          $googleMeetCode = basename($parsedUrl);
+        // $parsedUrl = parse_url($googleMeetLink, PHP_URL_PATH);
+        // $googleMeetCode = basename($parsedUrl);
 
 
-          // $meeting_link = $googleMeetLink; // Store the meeting link
-          $var = array(
-            'meeting_link' => $googleMeetLink, // Example variable
-            'meeting_code' => $googleMeetCode // Example variable
-          );
+        // $meeting_link = $googleMeetLink; // Store the meeting link
+        $var = array(
+          'meeting_link' => $manual, // Example variable
+          'meeting_code' => " " // Example variable
+        );
 
         $query =
           "UPDATE kaunselor_jadual SET event_status = '3', masa_mula2 = '$now', meeting_link='$manual' , time_edit='$now' WHERE id = '$meeting_id'";

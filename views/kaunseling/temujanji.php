@@ -140,7 +140,6 @@ if (mysqli_num_rows($results) == 1) {
                       <div class=" row">
                         <label for="2" class="col-4 col-form-label fw-semibold">Tamat</label>
                         <div class="col-8">
-
                           <input type="text" readonly class="form-control-plaintext" value="<?php echo $end ?>"
                             id="tamatmasa">
                         </div>
@@ -150,7 +149,7 @@ if (mysqli_num_rows($results) == 1) {
                   <?php
 
                 }
-                if ($kaunselor_jadual['event_status'] = "0") { ?>
+                if ($kaunselor_jadual['event_status'] == "0") { ?>
 
                   <div class="mb-3 row">
                     <label for="2" class="col-sm-2 col-form-label fw-semibold">Sebab</label>
@@ -385,7 +384,9 @@ if (mysqli_num_rows($results) == 1) {
   <!-- <script src="<?php echo $site_url ?>assets/vendors/fullcalendar/js/index.global.min.js"></script>
   <script src="<?php echo $site_url ?>assets/js/calendar.js"></script> -->
   <script>
-
+    $("#book_temujanji").click(function () {
+      showmodal("kaunselor_updateevent2");
+    });
     $("#kaunselor_updateevent_button1").click(function () {
       // calendar_add("user_calendaradd");
       console.log("reject");
@@ -410,7 +411,7 @@ if (mysqli_num_rows($results) == 1) {
           },
           success: function (response) {
             console.log(response);
-            calendar.refetchEvents();
+            // calendar.refetchEvents();
             document.getElementById("success-outlined").checked = false;
             document.getElementById("danger-outlined").checked = false;
             if (!$("#kaunselor_updateevent_reject").hasClass("d-none")) {
@@ -419,6 +420,7 @@ if (mysqli_num_rows($results) == 1) {
             if (!$("#kaunselor_updateevent_approve").hasClass("d-none")) {
               $("#kaunselor_updateevent_approve").addClass("d-none");
             }
+            location.reload();
           },
         });
       } else {
@@ -451,16 +453,18 @@ if (mysqli_num_rows($results) == 1) {
           },
           success: function (response) {
             console.log(response);
-            calendar.refetchEvents();
-            // $('input[name=options-outlined]').prop('checked',false);
-            document.getElementById("success-outlined").checked = false;
-            document.getElementById("danger-outlined").checked = false;
+            // calendar.refetchEvents();
+            // $('input[name=options-outlined2]').prop('checked',false);
+            document.getElementById("success-outlined2").checked = false;
+            document.getElementById("danger-outlined2").checked = false;
             if (!$("#kaunselor_updateevent_reject").hasClass("d-none")) {
               $("#kaunselor_updateevent_reject").addClass("d-none");
             }
             if (!$("#kaunselor_updateevent_approve").hasClass("d-none")) {
               $("#kaunselor_updateevent_approve").addClass("d-none");
             }
+            location.reload();
+
           },
         });
       } else {
@@ -471,8 +475,8 @@ if (mysqli_num_rows($results) == 1) {
       // calendar_delete("user_calendarevent");
     });
 
-    $('input[name="options-outlined"]').click(function () {
-      alert('You selected: ' + $(this).val());
+    $('input[name="options-outlined2"]').click(function () {
+      // alert('You selected: ' + $(this).val());
       if ($(this).val() == 1) {
         if (!$("#kaunselor_updateevent_reject").hasClass("d-none")) {
           $("#kaunselor_updateevent_reject").addClass("d-none");

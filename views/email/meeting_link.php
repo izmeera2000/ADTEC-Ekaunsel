@@ -232,8 +232,8 @@ include(getcwd() . '/admin/server.php');
                                   </table>
                                   <p class="" style="line-height: 24px; font-size: 16px; width: 100%; margin: 0;"
                                     align="left">
-                                    Your meeting code is :  <?php echo $meeting_code ?? 'testmeetingcode' ?>
-                                  </p>
+                                     Your meeting code is :  <?php echo $meeting_code ?? 'testmeetingcode' ?>
+                                   </p>
                                   <p class="" style="line-height: 24px; font-size: 16px; width: 100%; margin: 0;"
                                     align="left">
                                     Please join the meeting by the code given or by clicking the link below:

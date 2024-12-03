@@ -59,7 +59,7 @@
 
 
       <li class="nav-title">Help</li>
-      <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>user/profile" target="_top">
+      <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>guide" target="_top">
           <i class="nav-icon bi bi-question-circle"></i><span>Guide</span></a></li>
 
 
@@ -148,9 +148,13 @@
         </ul>
         </li> -->
 
-      <!-- <li class="nav-title">Help</li>
-      <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>user/profile" target="_top">
-          <i class="nav-icon bi bi-question-circle"></i><span>Guide</span></a></li> -->
+        <li class="nav-title">Settings</li>
+      <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>settings/user_dasboard" target="_top">
+          <i class="nav-icon bi bi-border"></i><span>User Dashboard</span></a></li>
+
+      <li class="nav-title">Help</li>
+      <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>guide" target="_top">
+          <i class="nav-icon bi bi-question-circle"></i><span>Guide</span></a></li>
     </ul>
 
 

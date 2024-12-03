@@ -97,13 +97,12 @@ const updateCharts = () => {
 $(document).ready(function () {
   if (document.getElementById("card-chart-new1")) {
     let cardChartNew1;
-    $('#monthSelector').val(new Date().getMonth() + 1);
+    $("#monthSelector").val(new Date().getMonth() + 1);
 
-    
     function getSelectedValue(selector, defaultValue) {
       return $(selector).length ? $(selector).val() : defaultValue;
     }
-  
+
     function fetchChartData(month, year) {
       $.ajax({
         url: "card_chart_kaunseling_total_day", // Replace with your PHP script URL
@@ -114,49 +113,61 @@ $(document).ready(function () {
             year: year,
           },
         },
-        success: function(data) {
+        success: function (data) {
           console.log("Data received:", data);
           try {
             const response = JSON.parse(data);
             console.log("Parsed JSON:", response);
-  
-            const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-            const labels = response.map(item => item.day_of_week);
-            const totals = response.map(item => parseInt(item.total)); // Ensure totals are integers
-  
+
+            const daysOfWeek = [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday",
+              "Sunday",
+            ];
+            const labels = response.map((item) => item.day_of_week);
+            const totals = response.map((item) => parseInt(item.total)); // Ensure totals are integers
+
             console.log("Labels:", labels);
             console.log("Totals:", totals);
-  
-            const weeklyTotals = daysOfWeek.map(day => {
+
+            const weeklyTotals = daysOfWeek.map((day) => {
               const index = labels.indexOf(day);
               return index !== -1 ? totals[index] : 0;
             });
-  
+
             console.log("Weekly Totals:", weeklyTotals);
-  
-            const ctx = document.getElementById("card-chart-new1").getContext("2d");
-  
+
+            const ctx = document
+              .getElementById("card-chart-new1")
+              .getContext("2d");
+
             // Destroy existing chart instance if it exists
             if (cardChartNew1) {
               cardChartNew1.destroy();
-              
             }
             const displayTotal = totals.length ? totals : [0];
-            $('#thismonthval').html(displayTotal.reduce((a, b) => a + b, 0)); 
+            $("#thismonthval").html(displayTotal.reduce((a, b) => a + b, 0));
 
-            
             cardChartNew1 = new Chart(ctx, {
               type: "line",
               data: {
                 labels: daysOfWeek,
-                datasets: [{
-                  label: "Entries",
-                  backgroundColor: `rgba(${coreui.Utils.getStyle("--cui-primary-rgb")}, .1)`,
-                  borderColor: coreui.Utils.getStyle("--cui-primary"),
-                  borderWidth: 3,
-                  data: weeklyTotals,
-                  fill: true,
-                }]
+                datasets: [
+                  {
+                    label: "Entries",
+                    backgroundColor: `rgba(${coreui.Utils.getStyle(
+                      "--cui-primary-rgb"
+                    )}, .1)`,
+                    borderColor: coreui.Utils.getStyle("--cui-primary"),
+                    borderWidth: 3,
+                    data: weeklyTotals,
+                    fill: true,
+                  },
+                ],
               },
               options: {
                 plugins: {
@@ -181,18 +192,24 @@ $(document).ready(function () {
             console.error("Error parsing JSON:", e);
           }
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
           console.error("Error fetching data:", error);
-        }
+        },
       });
     }
-  
-    $('#monthSelector, #yearSelector').change(function() {
-      const selectedMonth = getSelectedValue("#monthSelector", new Date().getMonth() + 1);
-      const selectedYear = getSelectedValue("#yearSelector", new Date().getFullYear());
+
+    $("#monthSelector, #yearSelector").change(function () {
+      const selectedMonth = getSelectedValue(
+        "#monthSelector",
+        new Date().getMonth() + 1
+      );
+      const selectedYear = getSelectedValue(
+        "#yearSelector",
+        new Date().getFullYear()
+      );
       fetchChartData(selectedMonth, selectedYear);
     });
-  
+
     fetchChartData(new Date().getMonth() + 1, new Date().getFullYear());
   }
 });
@@ -733,6 +750,35 @@ $("#editsoalan").click(function () {
   });
 });
 
+$("#deletesoalan").click(function () {
+  console.log("test");
+  var rowId = $("#soalan_id").val();
+  var soalan = $("#add_edit_soalan").val();
+  var kategori = $("#add_edit_content").val();
+
+  console.log(soalan);
+  console.log(kategori);
+  $.ajax({
+    url: "deletesoalan",
+    method: "POST",
+    data: {
+      deletesoalan: {
+        id: rowId,
+        soalan: soalan,
+        kategori: kategori,
+      },
+    },
+    success: function (response) {
+      showtoast("Edited Successfully");
+      console.log(response);
+      // $("#add_soalan_content").prop("selectedIndex", 0);
+      // $("#add_soalan_soalan").val("");
+      $("#edit_soalan").modal("hide");
+      table1.ajax.reload();
+    },
+  });
+});
+
 if (document.getElementById("radarChart")) {
   const ctx = document.getElementById("radarChart").getContext("2d");
   const radarChart = new Chart(ctx, {
@@ -927,7 +973,6 @@ if (document.getElementById("student_id_senarai")) {
 
 if (document.getElementById("event_status_3")) {
   const now = new Date();
-
   const startTime = new Date(
     document.getElementById("starttime").dataset.value
   );
@@ -1102,33 +1147,53 @@ $(document).ready(function () {
   }
 });
 
-$("#event_status_3").click(function () {
-  var meeting_id = $("#temujanji_mula_id").val();
+$(document).ready(function () {
+  $("#event_status_3").click(function () {
+    // console.log("rete");
+    showmodal("temujanji_final");
 
-  var user_id = $("#user_id").val();
-  var user_mail = $("#user_mail").val();
+ 
 
-  $.ajax({
-    url: "temujanji_end",
-    method: "POST",
-    data: {
-      temujanji_end: {
-        meeting_id: meeting_id,
+    // var meeting_id = $("#temujanji_mula_id").val();
+    // var user_id = $("#user_id").val();
+    // var user_mail = $("#user_mail").val();
 
-        user_id: user_id,
-        user_mail: user_mail,
-      },
-    },
+    // $.ajax({
+    //   url: "temujanji_end",
+    //   method: "POST",
+    //   data: {
+    //     temujanji_end: {
+    //       meeting_id: meeting_id,
+    //       user_id: user_id,
+    //       user_mail: user_mail,
+    //     },
+    //   },
+    //   success: function (response) {
+    //     if (!response) {
+    //       location.reload();
+    //     }
+    //   },
+    //   error: function (error) {
+    //     console.error("Error fetching data", error);
+    //   },
+    // });
+  });
+});
+$(document).ready(function () {
+  $('input[name="options-outlined2_final"]').click(function () {
+    // alert('You selected: ' + $(this).val());
+    if ($(this).val() == 1) {
+      $("#temujanji_final_approve").removeClass("d-none");
 
-    success: function (response) {
-      // console.log(response);
-      if (!response) {
-        location.reload();
-      }
-    },
-    error: function (error) {
-      console.error("Error fetching data", error);
-    },
+
+
+    } else{
+      $("#temujanji_final_approve").addClass("d-none");
+      
+
+
+
+    }
   });
 });
 
@@ -1143,7 +1208,3 @@ $('button[data-coreui-toggle="tab"]').on("shown.coreui.tab", function (e) {
   $("#senaraitemujanji2b").DataTable().columns.adjust().responsive.recalc();
   $("#senaraitemujanji3b").DataTable().columns.adjust().responsive.recalc();
 });
-
-// $("#book_temujanji").click(function () {
-//   showmodal("kaunselor_updateevent");
-// });
