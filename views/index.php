@@ -201,17 +201,29 @@
                       <div class="card-title fs-4 fw-semibold">Pelajar Request</div>
                       <div class="card-subtitle text-body-secondary mb-4"><?php
 
-                      $query = "SELECT DISTINCT COUNT(user_id) ,user_id, tarikh ,event_status, b.image_url,b.nama, b.ndp 
-                      FROM kaunselor_jadual a 
-                      INNER JOIN user b ON a.user_id = b.id 
-                      GROUP BY user_id 
-                      ORDER BY tarikh DESC LIMIT 1
+                      $query = "SELECT 
+                              a.user_id, 
+                            
+                              MAX(a.tarikh) AS latest_tarikh,  
+                              b.* 
+                          FROM 
+                              kaunselor_jadual a
+                          INNER JOIN 
+                              user b ON a.user_id = b.id
+                          GROUP BY 
+                              a.user_id
+                          ORDER BY 
+                              latest_tarikh DESC
+                          LIMIT 6;
                       ";
 
                       $results = mysqli_query($db, $query);
+                      $n = 0;
                       while ($user = mysqli_fetch_assoc($results)) {
-                        echo number_format($user['COUNT(user_id)'], 0, '', ',') . " pelajar";
+                        $n++;
                       }
+                      echo number_format($n, 0, '', ',') . " pelajar";
+
                       ?>
                       </div>
                     </div>
@@ -321,63 +333,46 @@
                   <div class="card mb-4 text-white bg-success-gradient">
                     <div class="card-body p-4 pb-0 d-flex justify-content-between align-items-start">
                       <div>
-                        <div class="fs-4 fw-semibold">2.49% <span class="fs-6 fw-normal">(84.7%
-                            <svg class="icon">
-                              <use
-                                xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-arrow-top">
-                              </use>
-                            </svg>)</span></div>
-                        <div data-coreui-i18n="conversionRate">Kaunseling Berjaya</div>
+                        <?php
+
+                        $query = "SELECT  COUNT(*) as total FROM `kaunselor_jadual` WHERE event_status = '2';";
+
+                        $results = mysqli_query($db, $query);
+                        while ($user = mysqli_fetch_assoc($results)) {
+                          $total = $user['total'];
+                        }
+                        ?>
+                        <div class="fs-4 fw-semibold"><?php echo $total ?></div>
+                        <div data-coreui-i18n="conversionRate" class="mb-3">Kaunseling Berjaya</div>
                       </div>
-                      <div class="dropdown">
-                        <button class="btn btn-transparent text-white p-0" type="button" data-coreui-toggle="dropdown"
-                          aria-haspopup="true" aria-expanded="false">
-                          <svg class="icon">
-                            <use
-                              xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-options">
-                            </use>
-                          </svg>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#">Details</a>
-                          <!-- <a class="dropdown-item" href="#"
-                            data-coreui-i18n="anotherAction">Another action</a> -->
-                          <!-- <a class="dropdown-item" href="#"
-                            data-coreui-i18n="somethingElseHere">Something else here</a> -->
-                        </div>
-                      </div>
+
                     </div>
-                    <div class="chart-wrapper mt-3" style="height:80px;">
-                      <canvas class="chart" id="card-chart3" height="70"></canvas>
-                    </div>
+                    <!-- <div class="chart-wrapper mt-3" style="height:80px;"> -->
+                    <!-- <canvas class="chart" id="card-chart3" height="70"></canvas> -->
+                    <!-- </div> -->
                   </div>
                 </div>
                 <div class="col-md-4 col-xl-12">
                   <div class="card mb-4 text-white bg-danger-gradient">
                     <div class="card-body p-4 pb-0 d-flex justify-content-between align-items-start">
                       <div>
-                        <div class="fs-4 fw-semibold">44K <span class="fs-6 fw-normal">(-23.6%
-                            <svg class="icon">
-                              <use
-                                xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-arrow-bottom">
-                              </use>
-                            </svg>)</span></div>
-                        <div data-coreui-i18n="sessions">Kaunseling Reject</div>
+                        <?php
+
+                        $query = "SELECT  COUNT(*) as total FROM `kaunselor_jadual` WHERE event_status = '0';";
+
+                        $results = mysqli_query($db, $query);
+                        while ($user = mysqli_fetch_assoc($results)) {
+                          $total = $user['total'];
+                        }
+                        ?>
+                        <div class="fs-4 fw-semibold"><?php echo $total ?></div>
+                        <div data-coreui-i18n="sessions" class="mb-3">Kaunseling Reject</div>
                       </div>
-                      <div class="dropdown">
-                        <button class="btn btn-transparent text-white p-0" type="button" data-coreui-toggle="dropdown"
-                          aria-haspopup="true" aria-expanded="false">
-                          <svg class="icon">
-                            <use
-                              xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-options">
-                            </use>
-                          </svg>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#">Details</a></div>
-                      </div>
+
                     </div>
-                    <div class="chart-wrapper mt-3 mx-3" style="height:80px;">
-                      <canvas class="chart" id="card-chart4" height="70"></canvas>
-                    </div>
+                    <!-- <div class="chart-wrapper mt-3 mx-3" style="height:80px;"> -->
+                    <!-- <canvas class="chart" id="card-chart4" height="70"></canvas> -->
+                    <!-- </div> -->
                   </div>
                 </div>
               </div>

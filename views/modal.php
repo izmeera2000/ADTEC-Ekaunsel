@@ -1,7 +1,7 @@
 <?php if ($request == 'kaunseling/booking') { ?>
 
   <div class="modal fade" id="user_calendaradd" tabindex="-1" aria-labelledby="user_calendaradd_title" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered  ">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="user_calendaradd_title">Book Kaunseling</h5>
@@ -51,7 +51,7 @@
 
   <div class="modal fade" id="user_calendarevent" tabindex="-1" aria-labelledby="user_calendarevent_title"
     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered  ">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="user_calendarevent_title">Book Kaunseling</h5>
@@ -102,7 +102,7 @@
   </div>
 
   <div class="modal fade" id="calendarModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered  ">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Book Kaunseling</h5>
@@ -133,7 +133,7 @@
 <?php if ($request == 'kaunseling/manage') { ?>
   <div class="modal fade" id="kaunselor_updateevent" tabindex="-1" aria-labelledby="kaunselor_updateevent_title"
     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered  ">
       <div class="modal-content">
         <form>
           <div class="modal-header">
@@ -232,7 +232,7 @@
 
   <div class="modal fade" id="user_calendarevent" tabindex="-1" aria-labelledby="user_calendarevent_title"
     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered  ">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="user_calendarevent_title">Book Kaunseling</h5>
@@ -277,7 +277,7 @@
 
 
   <div class="modal fade" id="calendarModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered  ">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Book Kaunseling</h5>
@@ -303,12 +303,56 @@
   </div>
 
 
+  <div class="modal fade" id="legend" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Petunjuk</h5>
+          <button type="button" class="btn-close" data-coreui-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4">
+              <div class="bg-primary theme-color w-75 rounded mb-2" style="padding-top:75%"></div>
+              <h6>Reject</h6>
+ 
+            </div>
+            <div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4">
+              <div class="bg-primary theme-color w-75 rounded mb-2" style="padding-top:75%"></div>
+              <h6>Reject</h6>
+ 
+            </div>
+            <div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4">
+              <div class="bg-primary theme-color w-75 rounded mb-2" style="padding-top:75%"></div>
+              <h6>Reject</h6>
+ 
+            </div>
+            <div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4">
+              <div class="bg-primary theme-color w-75 rounded mb-2" style="padding-top:75%"></div>
+              <h6>Reject</h6>
+ 
+            </div>
+            <div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4">
+              <div class="bg-primary theme-color w-75 rounded mb-2" style="padding-top:75%"></div>
+              <h6>Reject</h6>
+ 
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">Close</button>
+          <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
 <?php } ?>
 
 <?php if ($request == 'kaunseling/editborang') { ?>
 
   <div class="modal fade" id="add_soalan" tabindex="-1" aria-labelledby="add_soalan_title" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered  ">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="add_soalan_title">Tambah Soalan</h5>
@@ -366,7 +410,7 @@
 
 
   <div class="modal fade" id="edit_soalan" tabindex="-1" aria-labelledby="add_edit_title" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered  ">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="add_edit_title">Edit Soalan</h5>
@@ -429,7 +473,7 @@
 
 <?php if (str_starts_with($request, 'kaunseling/temujanji')) { ?>
   <div class="modal fade" id="temujanji_mula" tabindex="-1" aria-labelledby="temujanji_mula_title" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered  ">
       <div class="modal-content">
         <form>
           <div class="modal-header">
@@ -483,7 +527,7 @@
 
   <div class="modal fade" id="kaunselor_updateevent2" tabindex="-1" aria-labelledby="kaunselor_updateevent_title"
     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered  ">
       <div class="modal-content">
         <form>
           <div class="modal-header">
@@ -583,7 +627,7 @@
 
 
   <div class="modal fade" id="temujanji_final" tabindex="-1" aria-labelledby="temujanji_final_title" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered  ">
       <div class="modal-content">
         <form method="POST">
           <div class="modal-header">
@@ -611,7 +655,8 @@
 
               <div class="col-md-12">
                 <label for="temujanji_final_content4" class="  col-form-label">Masalah</label>
-                <input type="text" class="form-control" id="masalah1" name="masalah1" value="<?php echo $kaunselor_jadual['masalah'] ?>">
+                <input type="text" class="form-control" id="masalah1" name="masalah1"
+                  value="<?php echo $kaunselor_jadual['masalah'] ?>">
               </div>
 
               <div class="col-md-12">
@@ -632,13 +677,14 @@
               <label class="col-form-label  mt-2">Jenis</label>
               <div class="col-md-12">
 
-                <input type="radio" class="btn-check" name="options_outlined2_final2" id="off_outlined_final2" autocomplete="off" value="0"
-                  checked>
+                <input type="radio" class="btn-check" name="options_outlined2_final2" id="off_outlined_final2"
+                  autocomplete="off" value="0" checked>
                 <label class="btn btn-primary" for="off_outlined_final2">Offline</label>
 
 
 
-                <input type="radio" class="btn-check" name="options_outlined2_final2" id="danger-outlined_final2" autocomplete="off" value="1">
+                <input type="radio" class="btn-check" name="options_outlined2_final2" id="danger-outlined_final2"
+                  autocomplete="off" value="1">
                 <label class="btn btn-primary" for="danger-outlined_final2">Online</label>
 
               </div>

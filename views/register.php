@@ -31,10 +31,7 @@
                 <h1>Register</h1>
                 <p class="text-body-secondary">Isi maklumat dengan lengkap (menggunakan email ADTEC Taiping jika ada)</p>
                 <div class="input-group mb-3"><span class="input-group-text">
-                    <svg class="icon">
-                      <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-user"></use>
-
-                    </svg></span>
+                <i class="bi bi-person-badge"></i></span>
                   <input class="form-control  <?php formvalidatelabel("ndp", $errors) ?>" type="number" placeholder="NDP"
                     name="ndp" required>
 
@@ -49,10 +46,7 @@
 
                 </div>
                 <div class="input-group mb-3"><span class="input-group-text">
-                    <svg class="icon">
-                      <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-user"></use>
-
-                    </svg></span>
+                <i class="bi bi-person-vcard"></i></span>
                   <input class="form-control <?php formvalidatelabel("fullname", $errors) ?>" type="text"
                     placeholder="Nama Penuh" name="fullname" required>
 
@@ -81,10 +75,7 @@
 
 
                 <div class="input-group mb-3"><span class="input-group-text">
-                    <svg class="icon">
-                      <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-user"></use>
-
-                    </svg></span>
+                <i class="bi bi-telephone"></i></span>
                   <input class="form-control   <?php formvalidatelabel("phone", $errors) ?>" type="number"
                     placeholder="Nombor Telefon" name="phone" required>
 
@@ -95,13 +86,12 @@
                 </div>
 
 
-                <div class="input-group mb-3"><span class="input-group-text">
-                    <svg class="icon">
-                      <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-user"></use>
-
-                    </svg></span>
-                  <input class="form-control <?php formvalidatelabel("kp", $errors) ?>" type="number"
-                    placeholder="Nombor Kad Pengenalan" name="kp" required>
+                <div class="input-group mb-3">
+                  <span class="input-group-text">
+                  <i class="  bi bi-123"></i>
+                  </span>
+                  <input class="form-control <?php formvalidatelabel("sem", $errors) ?>" type="number"
+                    placeholder="Semester" name="sem" required>
 
                   <div class="valid-feedback">Tiada kesilapan</div>
                   <div class="invalid-feedback">
@@ -110,10 +100,7 @@
                 </div>
 
                 <div class="input-group mb-3"><span class="input-group-text">
-                    <svg class="icon">
-                      <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-user"></use>
-
-                    </svg></span>
+                <i class="bi bi-gender-ambiguous"></i></span>
 
                   <div class="form-floating <?php formvalidatelabel("jantina", $errors) ?>">
                     <select class="form-select  <?php formvalidatelabel("jantina", $errors) ?>" id="FS_Jantina"
@@ -160,10 +147,7 @@
                 </div>
 
                 <div class="input-group mb-3"><span class="input-group-text">
-                    <svg class="icon">
-                      <use xlink:href="<?php echo $site_url ?>assets/vendors/@coreui/icons/svg/free.svg#cil-user"></use>
-
-                    </svg></span>
+                <i class="bi bi-heart"></i></span>
 
                   <div class="form-floating <?php formvalidatelabel("statuskahwin", $errors) ?>">
                     <select class="form-select  <?php formvalidatelabel("statuskahwin", $errors) ?>"
@@ -203,7 +187,7 @@
                   <label for="test" class="form-label">Gambar</label>
                   <input class="form-control <?php formvalidatelabel("gambar", $errors) ?>" type="file" id="test"
                     name="gambar" required>
-                  <div class="text-body-secondary small">Hanya JPG, JPEG & PNG files are dibenarkan dan bawah 5MB</div>
+                  <div class="text-body-secondary small">Hanya JPG, JPEG & PNG files dibenarkan dan bawah 5MB</div>
                   <div class="valid-feedback">Tiada kesilapan</div>
                   <div class="invalid-feedback"><?php formvalidateerr("gambar", $errors) ?></div>
                 </div>

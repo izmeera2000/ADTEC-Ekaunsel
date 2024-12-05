@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/../route.php';
+require  __DIR__ . '/../route.php';
 
 
 
@@ -52,15 +52,15 @@ if (isset($_POST['user_register'])) {
 
   }
   if (empty($_POST['fullname'])) {
-    $errors['fullname'] = "fullname required";
+    $errors['fullname'] = "Nama Penuh required";
   } else {
     $fullname = mysqli_real_escape_string($db, $_POST['fullname']);
 
   }
-  if (empty($_POST['kp'])) {
-    $errors['kp'] = "kp required";
+  if (empty($_POST['sem'])) {
+    $errors['sem'] = "Semester required";
   } else {
-    $kp = mysqli_real_escape_string($db, $_POST['kp']);
+    $sem = mysqli_real_escape_string($db, $_POST['sem']);
 
   }
   if (empty($_POST['jantina'])) {
@@ -135,7 +135,7 @@ if (isset($_POST['user_register'])) {
 
   if (isset($ndp) && isset($email) && isset($phone) && isset($kp)) {
 
-    $user_check_query = "SELECT * FROM user WHERE ndp='$ndp' OR email='$email'  OR phone='$phone'    OR kp='$kp'   LIMIT 1";
+    $user_check_query = "SELECT * FROM user WHERE ndp='$ndp' OR email='$email'  OR phone='$phone'     LIMIT 1";
     $result = mysqli_query($db, $user_check_query);
     $user = mysqli_fetch_assoc($result);
 
@@ -158,10 +158,10 @@ if (isset($_POST['user_register'])) {
 
       }
 
-      if ($user['kp'] === $kp) {
-        $errors['kp'] = "KP already registered";
+      // if ($user['kp'] === $kp) {
+      //   $errors['kp'] = "KP already registered";
 
-      }
+      // }
     }
   }
   checkuploadpid("test", $errors);
@@ -176,8 +176,8 @@ if (isset($_POST['user_register'])) {
 
     $password = md5($password1);
 
-    $query = "INSERT INTO user (role, ndp,password, nama,email,phone,kp,jantina,agama,status_kahwin,bangsa) 
-                          VALUES('$role','$ndp','$password','$fullname','$email','$phone','$kp','$jantina','$agama','$statuskahwin','$bangsa')";
+    $query = "INSERT INTO user (role, ndp,password, nama,email,phone,sem,jantina,agama,status_kahwin,bangsa) 
+                          VALUES('$role','$ndp','$password','$fullname','$email','$phone','$sem','$jantina','$agama','$statuskahwin','$bangsa')";
     mysqli_query($db, $query);
 
 
@@ -227,7 +227,7 @@ if (isset($_POST['user_login'])) {
     $password = md5($password);
 
 
-    $query = "SELECT * FROM user WHERE (ndp='$login' OR email='$login') AND password='$password'";
+    $query = "SELECT * FROM user WHERE (ndp='$login' AND password='$password' )  OR  (email='$login'AND password='$password' ) ";
     $results = mysqli_query($db, $query);
 
     if (mysqli_num_rows($results) == 1) {
@@ -1221,7 +1221,7 @@ if (isset($_POST['temujanji_final'])) {
 
 
   $now = date('Y-m-d H:i:s');
- 
+
 
   $query =
     "UPDATE kaunselor_jadual SET event_status = '4', masa_tamat2 = '$now' , time_edit='$now' WHERE id = '$event_id'";

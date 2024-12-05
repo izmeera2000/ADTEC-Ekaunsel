@@ -31,12 +31,22 @@
           </ol>
         </nav>
         <div class="card mb-4">
-          <div class="card-header fw-bold"> Calendar</div>
+          <div class="card-header fw-bold"> Calendar
+
+            <div class="float-end">
+              <button type="button" class="btn btn-primary" data-coreui-toggle="modal"
+                data-coreui-target="#legend">
+                Petunjuk
+              </button>
+            </div>
+          </div>
+
+
           <div class="card-body">
             <div class="example">
 
-            <button id="floatingBtn" class="btn btn-primary rounded-circle d-md-none d-block" data-coreui-toggle="modal"
-                data-coreui-target="#calendarModal">
+              <button id="floatingBtn" class="btn btn-primary rounded-circle d-md-none d-block"
+                data-coreui-toggle="modal" data-coreui-target="#calendarModal">
                 <i class="   bi bi-sliders"></i>
               </button>
 
