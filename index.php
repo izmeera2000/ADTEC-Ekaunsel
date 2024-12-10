@@ -190,6 +190,14 @@ function student_profile_psikologi($request)
 	require_once('admin/server.php');
 }
 
+function settings_user_dashboard()
+{
+	check_session($site_url, 1);
+
+	require_once('views/settings/user_dashboard.php');
+}
+
+
 
 function check_session(&$site_url, $admin = 0)
 {
@@ -449,11 +457,22 @@ switch (true) {
 
 
 
+	//settings
+	case $request == 'settings/user_dashboard':
+		settings_user_dashboard();
+		break;
+
+	case str_contains($request, 'senaraigambar'):
+		server();
+		break;
 
 
-
-
-
+	case str_contains($request, 'deletegambar'):
+		server();
+		break;
+	case str_contains($request, 'editgambar/reorder'):
+		server();
+		break;
 
 
 	//test

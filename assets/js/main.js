@@ -1152,8 +1152,6 @@ $(document).ready(function () {
     // console.log("rete");
     showmodal("temujanji_final");
 
- 
-
     // var meeting_id = $("#temujanji_mula_id").val();
     // var user_id = $("#user_id").val();
     // var user_mail = $("#user_mail").val();
@@ -1184,15 +1182,8 @@ $(document).ready(function () {
     // alert('You selected: ' + $(this).val());
     if ($(this).val() == 1) {
       $("#temujanji_final_approve").removeClass("d-none");
-
-
-
-    } else{
+    } else {
       $("#temujanji_final_approve").addClass("d-none");
-      
-
-
-
     }
   });
 });
@@ -1207,4 +1198,84 @@ $('button[data-coreui-toggle="tab"]').on("shown.coreui.tab", function (e) {
   $("#senaraitemujanjib").DataTable().columns.adjust().responsive.recalc();
   $("#senaraitemujanji2b").DataTable().columns.adjust().responsive.recalc();
   $("#senaraitemujanji3b").DataTable().columns.adjust().responsive.recalc();
+});
+
+tablegambar = new DataTable("#editgambar", {
+  rowReorder: {
+    selector: "td:nth-child(1), td:nth-child(2)",
+    update: false,
+  },
+  ajax: {
+    type: "POST",
+    url: "senaraigambar",
+    data: {
+      senaraigambar: {
+        user_id: "test",
+      },
+    },
+  },
+
+  responsive: true,
+  paging: false,
+  columns: [
+    { data: "a", className: "text-center re_order", responsivePriority: 1 },
+    { data: "b", className: "text-center filepath", responsivePriority: 1 },
+    { data: "d", className: "text-center", responsivePriority: 1 },
+  ],
+  createdRow: function (row, data, dataIndex) {
+    $(row).attr("data-id", data.id);
+  },
+});
+
+tablegambar.on("row-reorder", function (e, diff, edit) {
+  var result = [];
+
+  diff.forEach(function (rowData) {
+    var id = $(rowData.node).data("id");
+    var newPosition = rowData.newPosition + 1;
+
+    if (id !== undefined) {
+      result.push({
+        id: id,
+        re_order: newPosition,
+      });
+    }
+  });
+
+  $.ajax({
+    url: "editgambar/reorder",
+    method: "POST",
+    data: {
+      order2: result,
+    },
+
+    success: function (response) {
+      showtoast("order changed");
+      tablegambar.ajax.reload();
+    },
+  });
+
+  console.log(result);
+});
+
+$("#editgambar").on("click", ".btn-delete-gambar", function () {
+  console.log("Button clicked!");
+
+  // Access the closest row and retrieve cell data
+  var rowId = $(this).closest("tr").attr("data-id");
+
+  $.ajax({
+    url: "deletegambar",
+    method: "POST",
+    data: {
+      deletegambar: {
+        id: rowId,
+      },
+    },
+
+    success: function (response) {
+      showtoast("deleted");
+      tablegambar.ajax.reload();
+    },
+  });
 });

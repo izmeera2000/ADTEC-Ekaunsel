@@ -149,7 +149,7 @@
         </li> -->
 
         <li class="nav-title">Settings</li>
-      <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>settings/user_dasboard" target="_top">
+      <li class="nav-item"><a class="nav-link" href="<?php echo $site_url ?>settings/user_dashboard" target="_top">
           <i class="nav-icon bi bi-border"></i><span>User Dashboard</span></a></li>
 
       <li class="nav-title">Help</li>

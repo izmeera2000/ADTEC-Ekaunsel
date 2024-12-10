@@ -184,6 +184,14 @@
     <ul class="header-nav">
       <li class="nav-item dropdown"><button class="nav-link py-0 " type="button" data-coreui-toggle="dropdown"
           role="button" aria-haspopup="true" aria-expanded="false">
+          <?php 
+          if ($_SESSION['user_details']['image_url']){
+            $src = $site_url."assets/img/user/". $_SESSION['user_details']['id'] . "/" . $_SESSION['user_details']['image_url'];
+          }else{
+            $src = $site_url."assets/img/user/anon.jpg";
+            
+          }
+          ?>
           <div class="avatar avatar-md"><img class="avatar-img"
               src="<?php echo $site_url ?>assets/img/user/<?php echo $_SESSION['user_details']['id'] ?>/<?php echo $_SESSION['user_details']['image_url'] ?>"
               alt="user@email.com"></div>

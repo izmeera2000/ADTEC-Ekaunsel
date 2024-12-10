@@ -94,7 +94,7 @@
           <button type="button" class="btn btn-danger text-white d-none" id="user_calendarevent_button"
             data-coreui-dismiss="modal">Delete</button>
           <button type="button" class="btn   d-none" id="user_calendarevent_button2"
-            data-coreui-dismiss="modal">Goto</button>
+            data-coreui-dismiss="modal">More</button>
           <!-- <button type="button" class="btn btn-primary" onclick="" >Save changes</button> -->
         </div>
       </div>
@@ -121,6 +121,50 @@
           <button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">Close</button>
           <!-- <button type="button" class="btn btn-danger" data-coreui-dismiss="modal">Delete</button> -->
           <!-- <button type="button" class="btn btn-primary" onclick="" >Save changes</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="legend" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Petunjuk</h5>
+          <button type="button" class="btn-close" data-coreui-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row d-flex justify-content-center">
+            <div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4  d-flex flex-column  align-items-center">
+              <div class="bg-primary theme-color w-75 rounded   " style="padding-top:75%"></div>
+              <h6 class="text-center">Reject</h6>
+
+            </div>
+            <div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4  d-flex flex-column  align-items-center">
+              <div class="bg-warning theme-color w-75 rounded  " style="padding-top:75%"></div>
+              <h6>Menunggu Keputusan</h6>
+
+            </div>
+            <div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4  d-flex flex-column   align-items-center">
+              <div class="bg-success theme-color w-75 rounded  " style="padding-top:75%"></div>
+              <h6>Lulus</h6>
+
+            </div>
+            <div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4  d-flex flex-column  align-items-center">
+              <div class="bg-info theme-color w-75 rounded " style="padding-top:75%"></div>
+              <h6>Sedang Berjalan</h6>
+
+            </div>
+            <div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4  d-flex flex-column  align-items-center">
+              <div class="bg-secondary theme-color w-75 rounded " style="padding-top:75%"></div>
+              <h6>Tamat</h6>
+
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">Close</button>
+          <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
         </div>
       </div>
     </div>
@@ -311,31 +355,31 @@
           <button type="button" class="btn-close" data-coreui-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <div class="row">
-            <div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4">
-              <div class="bg-primary theme-color w-75 rounded mb-2" style="padding-top:75%"></div>
-              <h6>Reject</h6>
- 
+          <div class="row d-flex justify-content-center">
+            <div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4  d-flex flex-column  align-items-center">
+              <div class="bg-primary theme-color w-75 rounded   " style="padding-top:75%"></div>
+              <h6 class="text-center">Reject</h6>
+
             </div>
-            <div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4">
-              <div class="bg-primary theme-color w-75 rounded mb-2" style="padding-top:75%"></div>
-              <h6>Reject</h6>
- 
+            <div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4  d-flex flex-column  align-items-center">
+              <div class="bg-warning theme-color w-75 rounded  " style="padding-top:75%"></div>
+              <h6>Menunggu Keputusan</h6>
+
             </div>
-            <div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4">
-              <div class="bg-primary theme-color w-75 rounded mb-2" style="padding-top:75%"></div>
-              <h6>Reject</h6>
- 
+            <div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4  d-flex flex-column   align-items-center">
+              <div class="bg-success theme-color w-75 rounded  " style="padding-top:75%"></div>
+              <h6>Lulus</h6>
+
             </div>
-            <div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4">
-              <div class="bg-primary theme-color w-75 rounded mb-2" style="padding-top:75%"></div>
-              <h6>Reject</h6>
- 
+            <div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4  d-flex flex-column  align-items-center">
+              <div class="bg-info theme-color w-75 rounded " style="padding-top:75%"></div>
+              <h6>Sedang Berjalan</h6>
+
             </div>
-            <div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4">
-              <div class="bg-primary theme-color w-75 rounded mb-2" style="padding-top:75%"></div>
-              <h6>Reject</h6>
- 
+            <div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4  d-flex flex-column  align-items-center">
+              <div class="bg-secondary theme-color w-75 rounded " style="padding-top:75%"></div>
+              <h6>Tamat</h6>
+
             </div>
           </div>
         </div>
@@ -717,5 +761,46 @@
     </div>
   </div>
 
+
+<?php } ?>
+
+
+
+<?php if (str_starts_with($request, 'settings/user_dashboard')) { ?>
+  <div class="modal fade" id="add_gambar" tabindex="-1" aria-labelledby="add_gambar_title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered  ">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="add_gambar_title">Tambah Gambar</h5>
+          <button type="button" class="btn-close" data-coreui-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form method="POST" action="" enctype="multipart/form-data">
+          <div class="modal-body">
+
+
+
+
+
+            <div class="mb-3 row">
+              <label for="add_gambar_file" class="col-sm-2 col-form-label">Gambar</label>
+              <div class="col-sm-10">
+                <input class="form-control"  type="file" name="gambar2"></input>
+              </div>
+            </div>
+
+
+
+
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-coreui-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" name="add_gambar_submit">Save changes</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
 
 <?php } ?>

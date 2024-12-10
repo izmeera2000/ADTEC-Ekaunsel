@@ -35,43 +35,34 @@
 
 
           <div class="row">
-            <div class="col-md-12">
-              <div class="card mb-4">
-                <div class="card-body p-4">
-                  <!-- <div class="card-title fs-4 fw-semibold">Traffic</div> -->
-                  <!-- <div class="card-subtitle text-body-secondary border-bottom mb-3 pb-4" href="#"
+
+
+            <?php
+            $query =
+              "SELECT * FROM user_dashboard ORDER BY _order ASC";
+            $results = mysqli_query($db, $query);
+            if (mysqli_num_rows($results) > 0) {
+
+              while ($row = $results->fetch_assoc()) {
+                $filepath = $row['filepath']
+                  ?>
+                <div class="col-md-12">
+                  <div class="card mb-4">
+                    <div class="card-body p-4">
+                      <!-- <div class="card-title fs-4 fw-semibold">Traffic</div> -->
+                      <!-- <div class="card-subtitle text-body-secondary border-bottom mb-3 pb-4" href="#"
                     data-coreui-i18n="lastWeek">Last Week</div> -->
-                  <img class="img-fluid    mx-auto  d-block" src="<?php echo $site_url ?>assets/img/d1.png">
-                  <!-- /.row-->
+                      <img class="img-fluid    mx-auto  d-block"
+                        src="<?php echo $site_url ?>assets/img/user_dashboard/<?php echo $filepath ?>">
+                      <!-- /.row-->
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-
-            <div class="col-md-12">
-              <div class="card mb-4">
-                <div class="card-body p-4">
-                  <!-- <div class="card-title fs-4 fw-semibold">Traffic</div> -->
-                  <!-- <div class="card-subtitle text-body-secondary border-bottom mb-3 pb-4" href="#"
-                    data-coreui-i18n="lastWeek">Last Week</div> -->
-                  <img class="img-fluid   mx-auto  d-block" src="<?php echo $site_url ?>assets/img/d2.png">
-                  <!-- /.row-->
-                </div>
-              </div>
-            </div>
+              <?php }
+            }
+            ?>
 
 
-
-            <div class="col-md-12">
-              <div class="card mb-4">
-                <div class="card-body p-4">
-                  <!-- <div class="card-title fs-4 fw-semibold">Traffic</div> -->
-                  <!-- <div class="card-subtitle text-body-secondary border-bottom mb-3 pb-4" href="#"
-                    data-coreui-i18n="lastWeek">Last Week</div> -->
-                  <img class="img-fluid   mx-auto  d-block" src="<?php echo $site_url ?>assets/img/d4.png">
-                  <!-- /.row-->
-                </div>
-              </div>
-            </div>
             <!-- /.col-->
           </div>
 
