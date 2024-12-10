@@ -24,14 +24,14 @@
     <div class="body flex-grow-1">
       <div class="container-lg px-4">
 
-        <div class="fs-2 fw-semibold">Analytics</div>
+        <div class="fs-2 fw-semibold">Keseluruhan</div>
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item"><a href="#">Home</a>
             </li>
-            <li class="breadcrumb-item"><span>Kaunseling</span>
+            <li class="breadcrumb-item"><span>Laporan</span>
             </li>
-            <li class="breadcrumb-item active"><span>Analytics</span>
+            <li class="breadcrumb-item active"><span>Keseluruhan</span>
             </li>
           </ol>
         </nav>

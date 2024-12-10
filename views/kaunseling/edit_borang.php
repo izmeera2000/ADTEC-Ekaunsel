@@ -16,14 +16,14 @@
         <?php include(getcwd() . '/views/header.php'); ?>
         <div class="body flex-grow-1">
             <div class="container-lg px-4">
-                <div class="fs-2 fw-semibold">Borang</div>
+                <div class="fs-2 fw-semibold">Ujian Psikologi</div>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item"><a href="<?php $site_url ?>">Home</a>
                         </li>
                         <li class="breadcrumb-item "><span>Kaunseling</span>
                         </li>
-                        <li class="breadcrumb-item active"><span>Borang</span>
+                        <li class="breadcrumb-item active"><span>Ujian Psikologi</span>
                         </li>
                     </ol>
                 </nav>

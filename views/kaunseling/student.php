@@ -16,12 +16,14 @@
         <?php include(getcwd() . '/views/header.php'); ?>
         <div class="body flex-grow-1">
             <div class="container-lg px-4">
-                <div class="fs-2 fw-semibold" data-coreui-i18n="dashboard">Dashboard</div>
+                <div class="fs-2 fw-semibold" data-coreui-i18n="dashboard">Individu</div>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item"><a href="#" data-coreui-i18n="home">Home</a>
                         </li>
-                        <li class="breadcrumb-item active"><span data-coreui-i18n="dashboard">Dashboard</span>
+                        <li class="breadcrumb-item "><span data-coreui-i18n="dashboard">Laporan</span>
+                        </li>
+                        <li class="breadcrumb-item active"><span data-coreui-i18n="dashboard">Individu</span>
                         </li>
                     </ol>
                 </nav>
