@@ -5,7 +5,6 @@ if (isset($_POST['calendarfetch'])) {
 
 
 
-      }
   $id = $_SESSION['user_details']['id'];
 
   $start = ($_POST['calendarfetch']['start']);
