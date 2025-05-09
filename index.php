@@ -257,6 +257,8 @@ switch (true) {
 		login();
 		break;
 
+		
+
 	case str_contains($request, 'logout'):
 		logout();
 		break;
