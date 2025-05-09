@@ -44,6 +44,8 @@ if (isset($_POST['user_login'])) {
 
 
       header('location:' . $site_url . 'dashboard');
+      exit();
+
     } else {
       $errors['login'] = "User doesn't exist or wrong password";
     }
