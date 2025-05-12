@@ -56,7 +56,7 @@ if (isset($_POST['user_login'])) {
 
 
 
-if (isset($_POST['user_login_flutter'])) {  // Check if the login request is from Flutter
+if (isset($_POST['user_login_flutter'])) {   
   $login = mysqli_real_escape_string($db, $_POST['login']);  // Login identifier (email or NDP)
   $password = mysqli_real_escape_string($db, $_POST['password']);  // Password
 

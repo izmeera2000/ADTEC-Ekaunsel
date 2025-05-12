@@ -101,8 +101,7 @@ if (isset($_POST['calendarfetch'])) {
 
 
  
-// Assuming you already have your database connection established
-
+ 
 // Check if data is sent via POST
 if (isset($_POST['calendaraddna'])) {
     // Extract values from the POST data
@@ -128,10 +127,7 @@ if (isset($_POST['calendaraddna'])) {
         // Return error response
         echo json_encode(['status' => 'error', 'message' => 'Failed to add appointment.']);
     }
-} else {
-    // Return error if data is not in the expected format
-    echo json_encode(['status' => 'error', 'message' => 'Invalid data received.']);
-}
+} 
  
 
 
