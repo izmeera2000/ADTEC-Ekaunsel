@@ -301,7 +301,7 @@ if (isset($_POST['senaraitemujanji_flutter'])) {
               WHERE 1=1  ";
 
   if ($status2 == 'upcoming') {
-    $query .= " AND (event_status ='2' OR event_status ='3' OR event_status ='1')  ";
+    $query .= " AND (event_status ='2' OR event_status ='3' OR event_status = '1')  ";
 
   } elseif ($status2 == 'completed') {
     $query .= " AND event_status = '4' ";
@@ -335,7 +335,8 @@ if (isset($_POST['senaraitemujanji_flutter'])) {
         'masa_mula' => $masa_mula,
         // 'tarikh' => $date_part,
         // 'masa' => $time_part,
-        'status' => $row['event_status']
+        'status' => $row['event_status'],
+        'status2' => $status2,
       );
     }
   }
