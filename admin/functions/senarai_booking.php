@@ -338,7 +338,7 @@ if (isset($_POST['senaraitemujanji_flutter'])) {
     }
   }
 
-  echo json_encode($query );
+  echo json_encode($data );
 
   die();
 }
