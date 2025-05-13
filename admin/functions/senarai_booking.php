@@ -298,14 +298,16 @@ if (isset($_POST['senaraitemujanji_flutter'])) {
   $query = "SELECT a.*, b.nama, b.ndp, b.image_url 
             FROM kaunselor_jadual a 
             INNER JOIN user b ON a.user_id = b.id 
-              WHERE 1=1 AND event_status > '1' ";
+              WHERE 1=1  ";
 
-  if ($status2 == 'past') {
-    $query .= " AND a.masa_mula < '$today' ";
-  } elseif ($status2 == 'now') {
-    $query .= " AND a.masa_mula = '$today' ";
+  if ($status2 == 'upcoming') {
+    $query .= " AND event_status ='2' OR event_status ='3' ";
+
+  } elseif ($status2 == 'completed') {
+    $query .= " AND event_status = '4' ";
+
   } else {
-    $query .= " AND a.masa_mula > '$today' ";
+    $query .= " AND event_status = '0' ";
   }
 
   $query .= " AND a.user_id= '$user_id' ";
