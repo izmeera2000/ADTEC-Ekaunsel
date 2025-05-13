@@ -100,6 +100,108 @@ if (isset($_POST['calendarfetch'])) {
 }
 
 
+
+if (isset($_POST['calendarfetch_flutter'])) {
+
+
+
+
+  $id = $_POST['calendarfetch_flutter']['id'];
+
+  $start = ($_POST['calendarfetch_flutter']['start']);
+  $end = ($_POST['calendarfetch_flutter']['end']);
+
+
+  $start = date("Y-m-d", strtotime($start));
+  $end = date("Y-m-d", strtotime($end));
+
+
+
+  $query = "SELECT a.id,masalah ,tarikh as start,jenis,tarikh, event_status, b.ndp as ndp, b.id as user_id ,sebab , kaunselor_id FROM kaunselor_jadual a INNER JOIN ( SELECT id, ndp FROM user ) b  ON b.id = a.user_id WHERE (tarikh BETWEEN ('$start') AND ('$end')) ORDER BY tarikh  ASC ";
+
+
+  $result = mysqli_query($db, $query);
+  $eventArray = array();
+
+
+  while ($row = mysqli_fetch_assoc($result)) {
+
+    $row['title'] = $row['masalah'] . " (" . $row['ndp'] . ")";
+
+
+    if ($row['event_status'] == "0") {
+
+      $row['color'] = "	#ef376e";
+
+    }
+    if ($row['event_status'] == "1") {
+      $row['color'] = "yellow";
+      $row['textColor'] = "black";
+
+    }
+
+    if ($row['event_status'] == "2") {
+      $row['color'] = "#51cc8a";
+
+    }
+
+    if ($row['event_status'] == "3") {
+      $row['color'] = "#747af2";
+      $row['textColor'] = "black";
+
+    }
+    if ($row['event_status'] == "4") {
+      $row['color'] = "	#6b7785";
+
+    }
+    if ($row['jenis'] == "1") {
+      $row['jenis'] = "Online";
+
+    } else {
+      $row['jenis'] = "Offline";
+
+    }
+    if ($row['user_id'] != $id) {
+      $row['color'] = "gray";
+      $row['title'] = "";
+      $row['masalah'] = "Ditempah";
+      $row['ndp'] = "";
+
+    }
+
+
+
+
+
+
+
+
+
+
+    if ($row['user_id'] == $id) {
+
+      array_push($eventArray, $row);
+
+    } else {
+      if ($row['event_status'] != "0") {
+        array_push($eventArray, $row);
+
+      }
+    }
+
+    $row['allDay'] = "true";
+
+
+  }
+
+
+  echo json_encode($eventArray);
+  die();
+
+}
+
+
+
  
  
 // Check if data is sent via POST
