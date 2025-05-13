@@ -333,7 +333,7 @@ if (isset($_POST['senaraitemujanji_flutter'])) {
         'masalah' => $row['masalah'],
         'jenis' => $row['jenis'],
         'masa_mula' => $masa_mula,
-        // 'tarikh' => $date_part,
+        'tarikh' => $row['tarikh'],
         // 'masa' => $time_part,
         'status' => $row['event_status'],
        );
