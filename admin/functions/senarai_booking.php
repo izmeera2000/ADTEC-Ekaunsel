@@ -312,7 +312,7 @@ if (isset($_POST['senaraitemujanji_flutter'])) {
 
   $query .= " AND a.user_id= '$user_id' ";
 
-  $query .= " ORDER BY a.tarikh ASC LIMIT $limit OFFSET $offset";
+  $query .= " ORDER BY a.tarikh DESC LIMIT $limit OFFSET $offset";
 
   $results = mysqli_query($db, $query);
   $data = array();
