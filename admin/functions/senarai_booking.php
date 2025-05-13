@@ -301,7 +301,7 @@ if (isset($_POST['senaraitemujanji_flutter'])) {
               WHERE 1=1  ";
 
   if ($status2 == 'upcoming') {
-    $query .= " AND (event_status ='2' OR event_status ='3' OR event_status = '1') ORDER BY a.tarikh ASC ";
+    $query .= " AND (event_status ='2' OR event_status ='3' OR event_status = '1') ORDER BY a.tarikh ASC  ";
 
   } elseif ($status2 == 'completed') {
     $query .= " AND event_status = '4'ORDER BY a.tarikh DESC ";

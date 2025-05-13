@@ -25,7 +25,7 @@ if (isset($_POST['kaunselor_reject'])) {
       'link' => $site_url . "kaunseling/temujanji/$event_id", // Example variable
       'alasan' => $sebab // Example variable
     );
-    sendmail($event['email'], "Temu Janji Anda Pada $start_modified telah dibatalkan", 'meeting_reject.php', $var);
+    // sendmail($event['email'], "Temu Janji Anda Pada $start_modified telah dibatalkan", 'meeting_reject.php', $var);
   
   
   
@@ -77,7 +77,7 @@ if (isset($_POST['kaunselor_reject'])) {
       $var = array(
         'link' => $site_url . "kaunseling/temujanji/$event_id" // Example variable
       );
-      sendmail($event['email'], "Temu Janji Anda Pada $start_modified telah diluluskan", 'meeting_approve.php', $var);
+      // sendmail($event['email'], "Temu Janji Anda Pada $start_modified telah diluluskan", 'meeting_approve.php', $var);
   
   
     }
@@ -171,7 +171,7 @@ if (isset($_POST['kaunselor_reject'])) {
   
             $results = mysqli_query($db, $query);
   
-            sendmail($user_mail, "Link Temu Janji Pada $start_modified", 'meeting_link.php', $var);
+            // sendmail($user_mail, "Link Temu Janji Pada $start_modified", 'meeting_link.php', $var);
   
   
   
@@ -261,7 +261,7 @@ if (isset($_POST['kaunselor_reject'])) {
     $var = array(
       'link' => $site_url . "kaunseling/temujanji/$event_id" // Example variable
     );
-    sendmail($event['email'], "Temu Janji Anda Pada $start_modified telah ditamat", 'meeting_end.php', $var);
+    // sendmail($event['email'], "Temu Janji Anda Pada $start_modified telah ditamat", 'meeting_end.php', $var);
   
   
     die();
@@ -305,7 +305,7 @@ if (isset($_POST['kaunselor_reject'])) {
     $var = array(
       'link' => $site_url . "kaunseling/temujanji/$event_id" // Example variable
     );
-    sendmail($event['email'], "Temu Janji Anda Pada $start_modified telah ditamat", 'meeting_end.php', $var);
+    // sendmail($event['email'], "Temu Janji Anda Pada $start_modified telah ditamat", 'meeting_end.php', $var);
   
   
   
@@ -364,7 +364,7 @@ if (isset($_POST['kaunselor_reject'])) {
         $var = array(
           'link' => $site_url . "kaunseling/temujanji/$event_id" // Example variable
         );
-        sendmail($event['email'], "Temu Janji Anda Pada $start_modified telah diluluskan", 'meeting_approve.php', $var);
+        // sendmail($event['email'], "Temu Janji Anda Pada $start_modified telah diluluskan", 'meeting_approve.php', $var);
   
   
       }
