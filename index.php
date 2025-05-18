@@ -223,6 +223,12 @@ function check_session(&$site_url, $admin = 0)
 
 }
 
+function test_chat()
+{
+	require_once('views/user/testchat.php');
+}
+
+
 function test()
 {
 	require_once('views/test.php');
@@ -257,7 +263,7 @@ switch (true) {
 		login();
 		break;
 
-		
+
 
 	case str_contains($request, 'logout'):
 		logout();
@@ -497,6 +503,17 @@ switch (true) {
 		email_meeting_reject($request);
 		break;
 	//t estend
+
+	case str_contains($request, 'test_chat'):
+		test_chat();
+		break;
+
+	case str_contains($request, 'send_chat'):
+		server();
+		break;
+	case str_contains($request, 'get_chat'):
+		server();
+		break;
 
 
 	default:

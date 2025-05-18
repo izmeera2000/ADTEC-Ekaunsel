@@ -34,6 +34,7 @@ require  'admin/functions/senarai_booking.php';
 require  'admin/functions/user_dashboard.php';
 require  'admin/functions/laporan.php';
 require  'admin/functions/borang.php';
+require  'admin/functions/chat.php';
 
 
 function debug_to_console($data)
