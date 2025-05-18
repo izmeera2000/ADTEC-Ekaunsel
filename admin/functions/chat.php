@@ -160,6 +160,7 @@ if (isset($_POST['get_chat_list'])) {
             c.user_id, 
             c.sender, 
             c.message, 
+            c.created_at, 
             u.image_url, 
             u.ndp, 
             u.nama, 
@@ -186,6 +187,7 @@ if (isset($_POST['get_chat_list'])) {
             'sender' => $row['sender'],
             'message' => $row['message'],
             'image_url' => $row['image_url'],
+            'created_at' => $row['created_at'],
             'ndp' => $row['ndp'],
             'nama' => $row['nama'],
             'email' => $row['email']
