@@ -11,7 +11,7 @@ if (isset($_POST['chat_send'])) {
     $message = $_POST['message'];
 
     // 1. Store user message without using prepared statement
-    $sql = "INSERT INTO chat (user_id, sender, message) VALUES ($user_id, 'user', '$message')";
+    $sql = "INSERT INTO chat (user_id, sender, message) VALUES ($user_id, 'student', '$message')";
     if ($db->query($sql) === TRUE) {
         // Proceed to the next step if the query was successful
     } else {
