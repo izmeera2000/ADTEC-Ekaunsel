@@ -154,9 +154,9 @@
             fetch('send_chat', {
                 method: 'POST',
                 body: new URLSearchParams({
-                    user_id: 1, // Hardcoded user_id for this example (change as needed)
+                    user_id: 18, // Hardcoded user_id for this example (change as needed)
                     message: userMessage,
-                    chat_send: "chat_send"
+                    chat_send_admin: "chat_send_admin"
                 })
             })
                 .then(response => response.json())  // Parse the JSON response
