@@ -147,7 +147,7 @@ if (isset($_POST['chat_send_admin'])) {
         }
     }
 
-    echo json_encode(['status' => 'success']);
+    echo json_encode(['status' => "$result"]);
     exit;
 }
 
