@@ -91,29 +91,65 @@ if (isset($_POST['chat_send'])) {
 if (isset($_POST['chat_send_admin'])) {
     header('Content-Type: application/json');
 
-
-
-
     $user_id = $_POST['user_id'];
     $message = $_POST['message'];
 
-    // 1. Store user message without using prepared statement
+    // Store message
     $sql = "INSERT INTO chat (user_id, sender, message) VALUES ($user_id, 'admin', '$message')";
-    if ($db->query($sql) === TRUE) {
-        // Proceed to the next step if the query was successful
-    } else {
-        echo json_encode(["error" => "Error: " . $conn->error]);
+    if ($db->query($sql) !== TRUE) {
+        echo json_encode(["error" => "Error: " . $db->error]);
         exit;
     }
 
+    // 1. Fetch FCM token of the user
+    $query = "SELECT fcm_token FROM user WHERE id = $user_id LIMIT 1";
+    $result = mysqli_query($db, $query);
+    if ($result && mysqli_num_rows($result) === 1) {
+        $user = mysqli_fetch_assoc($result);
+        $fcm_token = $user['fcm_token'];
 
-    die();
+        if (!empty($fcm_token)) {
+            // 2. Send push notification via FCM
+            $fcm_url = 'https://fcm.googleapis.com/fcm/send';
 
+            $notification = [
+                'title' => 'New Message from Admin',
+                'body' => $message,
+                'sound' => 'default',
+            ];
 
+            $extraData = [
+                "click_action" => "FLUTTER_NOTIFICATION_CLICK", // For Flutter FCM handling
+                "message" => $message,
+                "sender" => "admin",
+            ];
 
+            $payload = [
+                'to' => $fcm_token,
+                'notification' => $notification,
+                'data' => $extraData,
+                'priority' => 'high'
+            ];
+            $apikey = $_ENV['apikey1'];
+            $headers = [
+                "Authorization: key= $apiKey",
+                'Content-Type: application/json'
+            ];
 
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $fcm_url);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
+            $result = curl_exec($ch);
+            curl_close($ch);
+        }
+    }
+
+    echo json_encode(['status' => 'success']);
+    exit;
 }
-
 
 if (isset($_POST['get_chat_user'])) {
     header('Content-Type: application/json');
