@@ -130,9 +130,9 @@ if (isset($_POST['chat_send_admin'])) {
                 'data' => $extraData,
                 'priority' => 'high'
             ];
-            $apikey = $_ENV['apikey1'];
+            $apikey1 = $_ENV['apikey1']; // consistent casing
             $headers = [
-                "Authorization: key= $apiKey",
+                "Authorization: key= $apikey1",
                 'Content-Type: application/json'
             ];
 
