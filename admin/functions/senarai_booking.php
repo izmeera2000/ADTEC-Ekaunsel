@@ -291,7 +291,7 @@ if (isset($_POST['senaraitemujanji_flutter'])) {
   $status2 = $_POST['senaraitemujanji_flutter']['status2'];
   $limit = $_POST['senaraitemujanji_flutter']['limit'];  // Records per page
   $offset = $_POST['senaraitemujanji_flutter']['offset'];  // Record starting point
-
+ 
   $today = date('Y-m-d');
   $quser_id = ($user_id != "test") ? "AND a.user_id='$user_id'" : "";
 

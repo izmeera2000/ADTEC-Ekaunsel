@@ -142,12 +142,12 @@ if (isset($_POST['chat_send_admin'])) {
             curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
-            $result = curl_exec($ch);
+            $result2 = curl_exec($ch);
             curl_close($ch);
         }
     }
 
-    echo json_encode(['status' => "$result"]);
+    echo json_encode(['status' => "$result2"]);
     exit;
 }
 
