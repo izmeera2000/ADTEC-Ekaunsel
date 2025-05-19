@@ -55,57 +55,54 @@ if (isset($_POST['user_login'])) {
 
 
 
+if (isset($_POST['user_login_flutter'])) {
+    $login = mysqli_real_escape_string($db, $_POST['login']);  // Login identifier (email or NDP)
+    $password = mysqli_real_escape_string($db, $_POST['password']);  // Password
+    $fcm_token = isset($_POST['fcm_token']) ? mysqli_real_escape_string($db, $_POST['fcm_token']) : null;
 
-if (isset($_POST['user_login_flutter'])) {   
-  $login = mysqli_real_escape_string($db, $_POST['login']);  // Login identifier (email or NDP)
-  $password = mysqli_real_escape_string($db, $_POST['password']);  // Password
+    // Validate input
+    if (empty($login) || empty($password)) {
+        $response = [
+            'status' => 'error',
+            'message' => 'Please provide both email/ndp and password.'
+        ];
+        echo json_encode($response);
+        exit;
+    }
 
-  // Validate input
-  if (empty($login) || empty($password)) {
-      $response = [
-          'status' => 'error',
-          'message' => 'Please provide both email/ndp and password.'
-      ];
-      echo json_encode($response);
-      exit;
-  }
+    // Encrypt the password (you should ideally use password_hash in production)
+    $password = md5($password);
 
-  // Encrypt the password (md5 or consider using more secure methods like bcrypt)
-  $password = md5($password);
+    // Query to find the user
+    $query = "SELECT * FROM user WHERE (ndp='$login' AND password='$password') OR (email='$login' AND password='$password')";
+    $results = mysqli_query($db, $query);
 
-  // Query to find the user based on email/ndp and password
-  $query = "SELECT * FROM user WHERE (ndp='$login' AND password='$password') OR (email='$login' AND password='$password')";
-  $results = mysqli_query($db, $query);
+    if (mysqli_num_rows($results) == 1) {
+        $user = mysqli_fetch_assoc($results);
+        $userId = $user['id'];
 
-  // Check if user exists
-  if (mysqli_num_rows($results) == 1) {
-      // Fetch user data
-      $user = mysqli_fetch_assoc($results);
-      
-      // Remove password from the response
-      $user['password'] = "";
+        // Update FCM token if provided
+        if ($fcm_token) {
+            $updateTokenQuery = "UPDATE user SET fcm_token = '$fcm_token' WHERE id = '$userId'";
+            mysqli_query($db, $updateTokenQuery);
+        }
 
-      // Store user details in session (for regular PHP users)
-      $_SESSION['user_details'] = $user;
+        $user['password'] = ""; // Clear password for response
+        $_SESSION['user_details'] = $user;
 
- 
-
-      // Send success response to Flutter
-      $response = [
-          'status' => 'success',
-          'message' => 'Login successful',
-          'user' => $user
-      ];
-      echo json_encode($response);
-      exit();
-
-  } else {
-      // Invalid login credentials
-      $response = [
-          'status' => 'error',
-          'message' => "User doesn't exist or wrong password"
-      ];
-      echo json_encode($response);
-      exit();
-  }
-} 
+        $response = [
+            'status' => 'success',
+            'message' => 'Login successful',
+            'user' => $user
+        ];
+        echo json_encode($response);
+        exit();
+    } else {
+        $response = [
+            'status' => 'error',
+            'message' => "User doesn't exist or wrong password"
+        ];
+        echo json_encode($response);
+        exit();
+    }
+}
