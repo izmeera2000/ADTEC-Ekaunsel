@@ -105,8 +105,8 @@ if (isset($_POST['chat_send_admin'])) {
         echo json_encode(["error" => "Error: " . $conn->error]);
         exit;
     }
- 
- 
+
+
     die();
 
 
@@ -115,15 +115,13 @@ if (isset($_POST['chat_send_admin'])) {
 }
 
 
-// Assuming $db is your MySQL connection
-
 if (isset($_POST['get_chat_user'])) {
     header('Content-Type: application/json');
 
     // Get user inputs from POST
     $user_id = $_POST['user_id'];
-  
-   
+
+
     // 4. Fetch the last 10 messages (user + bot)
     $sql_fetch = "SELECT user_id, sender, message  FROM chat WHERE user_id = $user_id ORDER BY created_at DESC LIMIT 10";
     $result = $db->query($sql_fetch);
@@ -144,7 +142,7 @@ if (isset($_POST['get_chat_user'])) {
 
     // Return the bot's reply and the 10 previous messages
     echo json_encode([
-         "messages" => array_reverse($messages)  // Reverse to get the oldest messages first
+        "messages" => array_reverse($messages)  // Reverse to get the oldest messages first
     ]);
     die();
 }
