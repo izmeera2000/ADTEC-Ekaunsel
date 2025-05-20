@@ -293,7 +293,7 @@ if (isset($_POST['senaraitemujanji_flutter'])) {
   $offset = $_POST['senaraitemujanji_flutter']['offset'];  // Record starting point
  
   $today = date('Y-m-d');
-  $quser_id = ($user_id != "test") ? "AND a.user_id='$user_id'" : "";
+  // $quser_id = ($user_id != "test") ? "AND a.user_id='$user_id'" : "";
 
   $query = "SELECT a.*, b.nama, b.ndp, b.image_url 
             FROM kaunselor_jadual a 
@@ -310,7 +310,7 @@ if (isset($_POST['senaraitemujanji_flutter'])) {
     $query .= " AND event_status = '0' ORDER BY a.tarikh DESC ";
   }
 
-  $query .= " AND a.user_id= '$user_id' ";
+  // $query .= " AND a.user_id= '$user_id' ";
 
    $query .= "  LIMIT $limit OFFSET $offset";
 
