@@ -301,20 +301,19 @@ if (isset($_POST['senaraitemujanji_flutter'])) {
               WHERE 1=1  ";
 
   if ($status2 == 'upcoming') {
-    $query .= " AND (event_status ='2' OR event_status ='3' OR event_status = '1') ORDER BY a.tarikh DESC  ";
+    $query .= " AND (event_status ='2' OR event_status ='3' OR event_status = '1')  ";
 
   } elseif ($status2 == 'completed') {
-    $query .= " AND event_status = '4'ORDER BY a.tarikh DESC ";
+    $query .= " AND event_status = '4'  ";
 
   } else {
-    $query .= " AND event_status = '0' ORDER BY a.tarikh DESC ";
+    $query .= " AND event_status = '0'   ";
   }
   if ($role != '1') {
-
-    $query .= " AND user_id = '$user_id' ";
+    $query = " AND user_id = '$user_id' ";
   }
 
-  $query .= "  LIMIT $limit OFFSET $offset";
+  $query .= " ORDER BY a.tarikh DESC   LIMIT $limit OFFSET $offset";
 
   $results = mysqli_query($db, $query);
   $data = array();
