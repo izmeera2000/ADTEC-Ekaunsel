@@ -309,10 +309,14 @@ if (isset($_POST['senaraitemujanji_flutter'])) {
   } else {
     $query .= " AND event_status = '0'   ";
   }
+   
+
   if ($role != '1') {
     $query = " AND user_id = '$user_id' ";
   }
 
+$query = " AND tarikh BETWEEN '$start' AND '$end' ";
+ 
   $query .= " ORDER BY a.tarikh DESC   LIMIT $limit OFFSET $offset";
 
   $results = mysqli_query($db, $query);
