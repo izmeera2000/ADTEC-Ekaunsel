@@ -168,8 +168,7 @@ if (isset($_POST['user_register'])) {
 
 if (isset($_POST['user_register_flutter'])) {
 
-     header('Content-Type: application/json');
-
+ 
     $errors = [];
 
     // Validate and sanitize fields
