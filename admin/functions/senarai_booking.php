@@ -311,7 +311,7 @@ if (isset($_POST['senaraitemujanji_flutter'])) {
   }
   if ($role != '1') {
 
-    $query .= " AND a.user_id= '$user_id' ";
+    $query .= " AND user_id = '$user_id' ";
   }
 
   $query .= "  LIMIT $limit OFFSET $offset";
