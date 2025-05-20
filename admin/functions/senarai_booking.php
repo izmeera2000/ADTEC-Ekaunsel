@@ -291,9 +291,9 @@ if (isset($_POST['senaraitemujanji_flutter'])) {
   $status2 = $_POST['senaraitemujanji_flutter']['status2'];
   $limit = $_POST['senaraitemujanji_flutter']['limit'];  // Records per page
   $offset = $_POST['senaraitemujanji_flutter']['offset'];  // Record starting point
- 
+  $role = $_POST['senaraitemujanji_flutter']['role'];
+
   $today = date('Y-m-d');
-  // $quser_id = ($user_id != "test") ? "AND a.user_id='$user_id'" : "";
 
   $query = "SELECT a.*, b.nama, b.ndp, b.image_url 
             FROM kaunselor_jadual a 
@@ -309,10 +309,12 @@ if (isset($_POST['senaraitemujanji_flutter'])) {
   } else {
     $query .= " AND event_status = '0' ORDER BY a.tarikh DESC ";
   }
+  if ($role != '1') {
 
-  // $query .= " AND a.user_id= '$user_id' ";
+    $query .= " AND a.user_id= '$user_id' ";
+  }
 
-   $query .= "  LIMIT $limit OFFSET $offset";
+  $query .= "  LIMIT $limit OFFSET $offset";
 
   $results = mysqli_query($db, $query);
   $data = array();
@@ -409,7 +411,7 @@ if (isset($_POST['senaraitemujanji_admin_flutter'])) {
 
 if (isset($_POST['senaraitemujanji_details_flutter'])) {
   $id = $_POST['senaraitemujanji_details_flutter']['id'];
-   
+
 
   $today = date('Y-m-d');
 
@@ -418,9 +420,9 @@ if (isset($_POST['senaraitemujanji_details_flutter'])) {
             INNER JOIN user b ON a.user_id = b.id 
               WHERE 1=1  AND a.id = '$id' ";
 
- 
 
- 
+
+
   $results = mysqli_query($db, $query);
   $data = array();
 
