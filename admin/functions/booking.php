@@ -523,7 +523,7 @@ if (isset($_POST['temujanji_update_flutter'])) {
   $user_id = $_POST['temujanji_update_flutter']['user_id'];
 
 
-  // echo $start;
+  echo $start;
   // debug_to_console($start);
 
 
