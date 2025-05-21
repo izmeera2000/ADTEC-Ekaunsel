@@ -561,4 +561,84 @@ if (isset($_POST['temujanji_end_flutter'])) {
 
   die();
 
+
 }
+
+
+if (isset($_POST['temujanji_final_flutter'])) {
+
+
+  $event_id = $_POST['meeting_id'];
+  $user_id = $_POST['user_id'];
+  $mula1 = $_POST['time1'];
+  $tamat1 = $_POST['time2'];
+  $tarikh = $_POST['tarikh1'];
+  $sebab = $_POST['masalah1'];
+  $kaunselor_id = $_SESSION['kaunselor_id'];
+
+
+  $now = date('Y-m-d H:i:s');
+
+
+
+
+  $query2 =
+    "SELECT a.*, b.email,b.ndp,b.nama FROM `kaunselor_jadual` a INNER JOIN  user b ON a.user_id = b.id  WHERE a.id = '$event_id'";
+  $results2 = mysqli_query($db, $query2);
+
+  $event = mysqli_fetch_assoc($results2);
+
+
+
+
+
+    if ($mula1 && $tamat1) {
+      // echo $event_id;
+
+      // echo "test";
+      $mula = date_format(new DateTime($tarikh . $mula1), "Y/m/d H:i:s");
+      $tamat = date_format(new DateTime($tarikh . $tamat1), "Y/m/d H:i:s");
+
+      // echo $event['tarikh'] . $mula1;
+
+      // list($hours2, $minutes2) = explode(separator: ':', $tamat1);
+
+
+      // $rows[] = json_decode($psikologi['keputusan'], true);
+      $now = date('Y-m-d H:i:s');
+
+      $query1 =
+        "INSERT INTO kaunselor_jadual 
+                (
+                  event_status, 
+                  user_id,
+                  masa_mula, 
+                  masa_tamat, 
+                  tarikh,
+                  jenis,
+                  masalah,
+                  kaunselor_id
+                ) 
+                VALUES 
+                (
+                  2, 
+                  '$user_id',
+                  '$mula', 
+                  '$tamat', 
+                  '$tarikh', 
+                  'online', 
+                  '$sebab', 
+                  '$kaunselor_id'
+                );
+                ";
+      $results = mysqli_query($db, $query1);
+
+ 
+ 
+
+    }
+  
+
+
+ }
+
