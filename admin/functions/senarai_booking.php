@@ -341,6 +341,8 @@ if (isset($_POST['senaraitemujanji_flutter'])) {
         'tarikh' => $row['tarikh'],
         // 'masa' => $time_part,
         'status' => $row['event_status'],
+        'status2' => $row['status2'],
+
       );
     }
   }
@@ -412,6 +414,7 @@ if (isset($_POST['senaraitemujanji_admin_flutter'])) {
         'tarikh' => $row['tarikh'],
         // 'masa' => $time_part,
         'status' => $row['event_status'],
+        'status2' => $row['status2'],
       );
     }
   }
