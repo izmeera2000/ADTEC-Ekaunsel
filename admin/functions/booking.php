@@ -520,7 +520,7 @@ if (isset($_POST['temujanji_update_flutter'])) {
 
 
   $start = date('Y-m-d\TH:i:sP', strtotime($_POST['temujanji_update_flutter']['start']));
-   $user_id = $_POST['temujanji_update_flutter']['user_id'];
+  $user_id = $_POST['temujanji_update_flutter']['user_id'];
 
 
   // echo $start;
@@ -592,23 +592,23 @@ if (isset($_POST['temujanji_final_flutter'])) {
 
 
 
-    if ($mula1 && $tamat1) {
-      // echo $event_id;
+  if ($mula1 && $tamat1) {
+    // echo $event_id;
 
-      // echo "test";
-      $mula = date_format(new DateTime($tarikh . $mula1), "Y/m/d H:i:s");
-      $tamat = date_format(new DateTime($tarikh . $tamat1), "Y/m/d H:i:s");
+    // echo "test";
+    $mula = date_format(new DateTime($tarikh . $mula1), "Y/m/d H:i:s");
+    $tamat = date_format(new DateTime($tarikh . $tamat1), "Y/m/d H:i:s");
 
-      // echo $event['tarikh'] . $mula1;
+    // echo $event['tarikh'] . $mula1;
 
-      // list($hours2, $minutes2) = explode(separator: ':', $tamat1);
+    // list($hours2, $minutes2) = explode(separator: ':', $tamat1);
 
 
-      // $rows[] = json_decode($psikologi['keputusan'], true);
-      $now = date('Y-m-d H:i:s');
+    // $rows[] = json_decode($psikologi['keputusan'], true);
+    $now = date('Y-m-d H:i:s');
 
-      $query1 =
-        "INSERT INTO kaunselor_jadual 
+    $query1 =
+      "INSERT INTO kaunselor_jadual 
                 (
                   event_status, 
                   user_id,
@@ -631,14 +631,14 @@ if (isset($_POST['temujanji_final_flutter'])) {
                   '$kaunselor_id'
                 );
                 ";
-      $results = mysqli_query($db, $query1);
-
- 
- 
-
-    }
-  
+    $results = mysqli_query($db, $query1);
 
 
- }
+
+
+  }
+
+
+
+}
 
