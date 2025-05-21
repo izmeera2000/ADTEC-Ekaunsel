@@ -567,48 +567,28 @@ if (isset($_POST['temujanji_end_flutter'])) {
 
 if (isset($_POST['temujanji_final_flutter'])) {
 
-
   $event_id = $_POST['meeting_id'];
   $user_id = $_POST['user_id'];
   $mula1 = $_POST['time1'];
   $tamat1 = $_POST['time2'];
   $tarikh = $_POST['tarikh1'];
   $sebab = $_POST['masalah1'];
-  $kaunselor_id = $_SESSION['kaunselor_id'];
-
+  $kaunselor_id = $_POST['kaunselor_id'];
 
   $now = date('Y-m-d H:i:s');
 
-
-
-
-  $query2 =
-    "SELECT a.*, b.email,b.ndp,b.nama FROM `kaunselor_jadual` a INNER JOIN  user b ON a.user_id = b.id  WHERE a.id = '$event_id'";
+  $query2 = "SELECT a.*, b.email,b.ndp,b.nama FROM `kaunselor_jadual` a INNER JOIN user b ON a.user_id = b.id WHERE a.id = '$event_id'";
   $results2 = mysqli_query($db, $query2);
 
   $event = mysqli_fetch_assoc($results2);
 
-
-
-
-
   if ($mula1 && $tamat1) {
-    // echo $event_id;
-
-    // echo "test";
     $mula = date_format(new DateTime($tarikh . $mula1), "Y/m/d H:i:s");
     $tamat = date_format(new DateTime($tarikh . $tamat1), "Y/m/d H:i:s");
 
-    // echo $event['tarikh'] . $mula1;
-
-    // list($hours2, $minutes2) = explode(separator: ':', $tamat1);
-
-
-    // $rows[] = json_decode($psikologi['keputusan'], true);
     $now = date('Y-m-d H:i:s');
 
-    $query1 =
-      "INSERT INTO kaunselor_jadual 
+    $query1 = "INSERT INTO kaunselor_jadual 
                 (
                   event_status, 
                   user_id,
@@ -629,16 +609,20 @@ if (isset($_POST['temujanji_final_flutter'])) {
                   'online', 
                   '$sebab', 
                   '$kaunselor_id'
-                );
-                ";
+                )";
+
     $results = mysqli_query($db, $query1);
 
-
-
-
+    if ($results) {
+      $last_insert_id = mysqli_insert_id($db);
+      // Return JSON response with last inserted ID
+      echo json_encode(['status' => 'success', 'meeting_id' => $last_insert_id]);
+    } else {
+      echo json_encode(['status' => 'error', 'message' => mysqli_error($db)]);
+    }
+  } else {
+    echo json_encode(['status' => 'error', 'message' => 'Invalid time inputs']);
   }
 
-
-
+  exit; // stop further output
 }
-
