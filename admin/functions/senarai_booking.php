@@ -368,15 +368,25 @@ if (isset($_POST['senaraitemujanji_admin_flutter'])) {
               WHERE 1=1  ";
 
   if ($status2 == 'upcoming') {
-    $query .= " AND (event_status ='2' OR event_status ='3' OR event_status = '1') ORDER BY a.tarikh ASC  ";
+    $query .= " AND (event_status ='2' OR event_status ='3' OR event_status = '1')  ";
 
   } elseif ($status2 == 'completed') {
-    $query .= " AND event_status = '4' ORDER BY a.tarikh DESC ";
+    $query .= " AND event_status = '4'  ";
 
   } else {
-    $query .= " AND event_status = '0' ORDER BY a.tarikh DESC ";
+    $query .= " AND event_status = '0'  ";
   }
 
+
+  $query .= " AND tarikh BETWEEN '$start' AND '$end' ";
+
+  if ($status2 == 'upcoming') {
+  $query .= " ORDER BY a.tarikh ASC  ";
+
+  } else{
+  $query .= " ORDER BY a.tarikh DESC  ";
+
+  }
 
   $query .= "  LIMIT $limit OFFSET $offset ";
 
