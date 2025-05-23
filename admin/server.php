@@ -337,7 +337,7 @@ function sendmail($receiver, $title, $filepath, $var = "")
 
 
 
-function sendFcmNotificationTopic(string $topic, string $title, string $body): array
+function sendFcmNotificationTopic(string $topic, string $title, string $body)
 {
     try {
         $serviceAccountData = [
@@ -408,4 +408,4 @@ function sendFcmNotificationTopic(string $topic, string $title, string $body): a
 }
 
 
-?>
+ 
