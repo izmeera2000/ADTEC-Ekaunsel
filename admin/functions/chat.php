@@ -248,8 +248,6 @@ if (isset($_POST['katasemangat'])) {
 
 
     $result = sendFcmNotificationTopic($topic, $title, $body);
-
-    echo "<pre>";
-    print_r($result);
-    echo "</pre>";
+    echo json_encode($result);
+die();
 }
