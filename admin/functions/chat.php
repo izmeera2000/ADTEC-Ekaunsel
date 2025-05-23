@@ -247,8 +247,9 @@ if (isset($_POST['katasemangat'])) {
     $body = "test";
 
 
+    $result = sendFcmNotificationTopic($topic, $title, $body);
 
-    sendFcmNotificationTopic($topic, $title, $body);
-
-
+    echo "<pre>";
+    print_r($result);
+    echo "</pre>";
 }
