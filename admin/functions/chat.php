@@ -234,3 +234,21 @@ if (isset($_POST['get_chat_list'])) {
     ]);
     die();
 }
+
+
+
+
+if (isset($_POST['katasemangat'])) {
+
+
+
+    $topic = "katasemangat";
+    $title = "test";
+    $body = "test";
+
+
+
+    sendFcmNotificationTopic($topic, $title, $body);
+
+
+}

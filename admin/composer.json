@@ -5,6 +5,8 @@
         "ddeboer/imap": "^1.19",
         "cboden/ratchet": "^0.4.4",
         "pusher/pusher-php-server": "^7.2",
-        "google/apiclient": "2.15.0"
+        "google/apiclient": "2.15.0",
+        "google/auth": "^1.47",
+        "guzzlehttp/guzzle": "^7.9"
     }
 }

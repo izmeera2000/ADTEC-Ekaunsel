@@ -14,7 +14,8 @@ $site_url = $_ENV['site1'];
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
-
+use Google\Auth\Credentials\ServiceAccountCredentials;
+use GuzzleHttp\Client;
 
 $errors = array();
 $toast = array();
@@ -25,16 +26,16 @@ $db = mysqli_connect($_ENV['host'], $_ENV['user'], $_ENV['pass'], $_ENV['databas
 date_default_timezone_set(timezoneId: 'Asia/Kuala_Lumpur');
 
 
-require  'admin/functions/register.php';
-require  'admin/functions/login.php';
-require  'admin/functions/edit_profile.php';
-require  'admin/functions/booking.php';
-require  'admin/functions/booking_student.php';
-require  'admin/functions/senarai_booking.php';
-require  'admin/functions/user_dashboard.php';
-require  'admin/functions/laporan.php';
-require  'admin/functions/borang.php';
-require  'admin/functions/chat.php';
+require 'admin/functions/register.php';
+require 'admin/functions/login.php';
+require 'admin/functions/edit_profile.php';
+require 'admin/functions/booking.php';
+require 'admin/functions/booking_student.php';
+require 'admin/functions/senarai_booking.php';
+require 'admin/functions/user_dashboard.php';
+require 'admin/functions/laporan.php';
+require 'admin/functions/borang.php';
+require 'admin/functions/chat.php';
 
 
 function debug_to_console($data)
@@ -333,5 +334,57 @@ function sendmail($receiver, $title, $filepath, $var = "")
 // /usr/bin/curl -X POST -H "Content-Type: application/json" -d '{"key1":"value1"}' https://example.com/api/endpoint
 
 
+
+
+
+function sendFcmNotificationTopic(string $topic, string $title, string $body): array
+{
+  // Replace these credentials with your actual Firebase service account values
+  $serviceAccountData = [
+    "type" => $_ENV['site1_type'],
+    "project_id" => $_ENV['site1_project_id'],
+    "private_key_id" => $_ENV['site1_private_key_id'],
+    "private_key" => str_replace('\\n', "\n", $_ENV['site1_private_key']),
+    "client_email" => $_ENV['site1_client_email'],
+    "client_id" => $_ENV['site1_client_id'],
+    "auth_uri" => $_ENV['site1_auth_uri'],
+    "token_uri" => $_ENV['site1_token_uri'],
+    "auth_provider_x509_cert_url" => $_ENV['site1_auth_provider_x509_cert_url'],
+    "client_x509_cert_url" => $_ENV['site1_client_x509_cert_url']
+  ];
+
+
+  $scopes = ['https://www.googleapis.com/auth/cloud-platform'];
+  $credentials = new ServiceAccountCredentials($scopes, $serviceAccountData);
+  $authToken = $credentials->fetchAuthToken();
+  $accessToken = $authToken['access_token'];
+
+  $projectId = $serviceAccountData['project_id'];
+  $url = "https://fcm.googleapis.com/v1/projects/{$projectId}/messages:send";
+
+  $message = [
+    "message" => [
+      "topic" => $topic,
+      "notification" => [
+        "title" => $title,
+        "body" => $body
+      ]
+    ]
+  ];
+
+  $client = new Client();
+  $response = $client->post($url, [
+    'headers' => [
+      'Authorization' => "Bearer {$accessToken}",
+      'Content-Type' => 'application/json',
+    ],
+    'json' => $message
+  ]);
+
+  return [
+    'status' => $response->getStatusCode(),
+    'response' => json_decode($response->getBody(), true),
+  ];
+}
 
 ?>
