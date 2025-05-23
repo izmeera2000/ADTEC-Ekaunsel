@@ -237,17 +237,28 @@ if (isset($_POST['get_chat_list'])) {
 
 
 
-
 if (isset($_POST['katasemangat'])) {
-
-
-
     $topic = "katasemangat";
     $title = "test";
     $body = "test";
 
+    try {
+        $result = sendFcmNotificationTopic($topic, $title, $body);
 
-    $result = sendFcmNotificationTopic($topic, $title, $body);
-    echo json_encode($result);
-die();
+        http_response_code(200);
+        echo json_encode([
+            'success' => true,
+            'message' => 'Notification sent successfully.',
+            'data' => $result
+        ]);
+    } catch (Exception $e) {
+        http_response_code(500);
+        echo json_encode([
+            'success' => false,
+            'message' => 'Error sending notification.',
+            'error' => $e->getMessage()
+        ]);
+    }
+
+    die();
 }
