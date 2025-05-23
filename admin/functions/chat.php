@@ -237,11 +237,13 @@ if (isset($_POST['get_chat_list'])) {
 
 
 
-if (isset($_POST['katasemangat'])) {
+if (isset($_POST['push_notification_topic'])) {
     $topic = "katasemangat";
-    $title = "test";
-    $body = "test";
 
+    $title = "Kata-kata Untuk Hari Ini";
+
+    $body = $_POST['body'];
+ 
     try {
         $result = sendFcmNotificationTopic($topic, $title, $body);
 
