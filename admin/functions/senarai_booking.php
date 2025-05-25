@@ -424,6 +424,74 @@ if (isset($_POST['senaraitemujanji_admin_flutter'])) {
   die();
 }
 
+if (isset($_POST['senaraitemujanji_today_flutter'])) {
+  $start = $_POST['senaraitemujanji_today_flutter']['start'];
+  $end = $_POST['senaraitemujanji_today_flutter']['end'];
+  $status2 = $_POST['senaraitemujanji_today_flutter']['status2'];
+  $limit = $_POST['senaraitemujanji_today_flutter']['limit'];  // Records per page
+  $offset = $_POST['senaraitemujanji_today_flutter']['offset'];  // Record starting point
+
+  $today = date('Y-m-d');
+
+  $query = "SELECT a.*, b.nama, b.ndp, b.image_url 
+            FROM kaunselor_jadual a 
+            INNER JOIN user b ON a.user_id = b.id 
+              WHERE 1=1  ";
+
+  if ($status2 == 'upcoming') {
+    $query .= " AND (event_status ='2' OR event_status ='3' OR event_status = '1')  ";
+
+  } elseif ($status2 == 'completed') {
+    $query .= " AND event_status = '4'  ";
+
+  } else {
+    $query .= " AND event_status = '0'  ";
+  }
+
+
+  $query .= " AND DATE(masa_mula)  = '$today'  ";
+
+ 
+  $query .= " ORDER BY a.masa_mula ASC  ";
+
+ 
+
+  $query .= "  LIMIT $limit OFFSET $offset ";
+
+  $results = mysqli_query($db, $query);
+  $data = array();
+
+  if (mysqli_num_rows($results) > 0) {
+    while ($row = $results->fetch_assoc()) {
+      $masa_mula = $row['masa_mula'];
+      // $tarikh_penuh = date('Y-m-d H:i:s', strtotime($masa_mula));
+      // $date_part = date('Y-m-d', strtotime($masa_mula));
+      // $time_part = date('h:i A', strtotime($masa_mula));
+
+      $data[] = array(
+        'id' => $row['id'],
+        'user_id' => $row['user_id'],
+        'nama' => $row['nama'],
+        'ndp' => $row['ndp'],
+        'image_url' => $row['image_url'],
+        'masalah' => $row['masalah'],
+        'jenis' => $row['jenis'],
+        'masa_mula' => $masa_mula,
+        'tarikh' => $row['tarikh'],
+        // 'masa' => $time_part,
+        'status' => $row['event_status'],
+        'status2' => $status2,
+      );
+    }
+  }
+
+  echo json_encode($data);
+
+  die();
+}
+
+
+
 
 if (isset($_POST['senaraitemujanji_details_flutter'])) {
   $id = $_POST['senaraitemujanji_details_flutter']['id'];

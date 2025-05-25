@@ -264,3 +264,33 @@ if (isset($_POST['push_notification_topic'])) {
 
     die();
 }
+
+
+
+if (isset($_POST['push_notification_personal'])) {
+    $fcm = $_POST['fcm'];
+
+    $title = $_POST['title'];
+
+    $body = $_POST['body'];
+ 
+    try {
+        $result = sendFcmNotificationDevice($fcm, $title, $body);
+
+        http_response_code(200);
+        echo json_encode([
+            'success' => true,
+            'message' => 'Notification sent successfully.',
+            'data' => $result
+        ]);
+    } catch (Exception $e) {
+        http_response_code(500);
+        echo json_encode([
+            'success' => false,
+            'message' => 'Error sending notification.',
+            'error' => $e->getMessage()
+        ]);
+    }
+
+    die();
+}
