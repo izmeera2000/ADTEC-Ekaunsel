@@ -340,7 +340,7 @@ function sendmail($receiver, $title, $filepath, $var = "")
 function sendFcmNotificationTopic(string $topic, string $title, string $body, string $siteName  = 'site1')
 {
     try {
-     $sitePrefix = ($siteName === 'site2') ? 'site2' : 'site1';
+     $sitePrefix = $siteName;
         $serviceAccountData = [
             "type" => $_ENV["{$sitePrefix}_type"],
             "project_id" => $_ENV["{$sitePrefix}_project_id"],
@@ -415,7 +415,7 @@ function sendFcmNotificationDevice(string $deviceToken, string $title, string $b
 {
     try {
 
-        $sitePrefix = ($siteName === 'site2') ? 'site2' : 'site1';
+        $sitePrefix =  $siteName;
         $serviceAccountData = [
             "type" => $_ENV["{$sitePrefix}_type"],
             "project_id" => $_ENV["{$sitePrefix}_project_id"],
