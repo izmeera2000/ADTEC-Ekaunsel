@@ -243,9 +243,10 @@ if (isset($_POST['push_notification_topic'])) {
     $title = "Kata-kata Untuk Hari Ini";
 
     $body = $_POST['body'];
+    $siteName = $_POST['siteName'];
  
     try {
-        $result = sendFcmNotificationTopic($topic, $title, $body);
+        $result = sendFcmNotificationTopic($topic, $title, $body, $siteName);
 
         http_response_code(200);
         echo json_encode([
