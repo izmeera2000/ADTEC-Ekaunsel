@@ -450,9 +450,7 @@ function sendFcmNotificationDevice(string $deviceToken, string $title, string $b
           "body" => $body
         ],
         "data" => [
-          "screen" => "details",
-          "itemId" => "123",
-          "route" => $route ?? '/home' // pass the route or fallback to /home
+          "route" => $route ?? '' // pass the route or fallback to /home
         ]
       ]
     ];
