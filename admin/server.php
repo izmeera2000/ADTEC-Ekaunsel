@@ -337,75 +337,75 @@ function sendmail($receiver, $title, $filepath, $var = "")
 
 
 
-function sendFcmNotificationTopic(string $topic, string $title, string $body, string $siteName  = 'site1')
+function sendFcmNotificationTopic(string $topic, string $title, string $body, string $siteName = 'site1')
 {
-    try {
-     $sitePrefix = $siteName;
-        $serviceAccountData = [
-            "type" => $_ENV["{$sitePrefix}_type"],
-            "project_id" => $_ENV["{$sitePrefix}_project_id"],
-            "private_key_id" => $_ENV["{$sitePrefix}_private_key_id"],
-            "private_key" => str_replace('\\n', "\n", $_ENV["{$sitePrefix}_private_key"]),
-            "client_email" => $_ENV["{$sitePrefix}_client_email"],
-            "client_id" => $_ENV["{$sitePrefix}_client_id"],
-            "auth_uri" => $_ENV["{$sitePrefix}_auth_uri"],
-            "token_uri" => $_ENV["{$sitePrefix}_token_uri"],
-            "auth_provider_x509_cert_url" => $_ENV["{$sitePrefix}_auth_provider_x509_cert_url"],
-            "client_x509_cert_url" => $_ENV["{$sitePrefix}_client_x509_cert_url"]
-        ];
+  try {
+    $sitePrefix = $siteName;
+    $serviceAccountData = [
+      "type" => $_ENV["{$sitePrefix}_type"],
+      "project_id" => $_ENV["{$sitePrefix}_project_id"],
+      "private_key_id" => $_ENV["{$sitePrefix}_private_key_id"],
+      "private_key" => str_replace('\\n', "\n", $_ENV["{$sitePrefix}_private_key"]),
+      "client_email" => $_ENV["{$sitePrefix}_client_email"],
+      "client_id" => $_ENV["{$sitePrefix}_client_id"],
+      "auth_uri" => $_ENV["{$sitePrefix}_auth_uri"],
+      "token_uri" => $_ENV["{$sitePrefix}_token_uri"],
+      "auth_provider_x509_cert_url" => $_ENV["{$sitePrefix}_auth_provider_x509_cert_url"],
+      "client_x509_cert_url" => $_ENV["{$sitePrefix}_client_x509_cert_url"]
+    ];
 
-        $scopes = ['https://www.googleapis.com/auth/cloud-platform'];
-        $credentials = new ServiceAccountCredentials($scopes, $serviceAccountData);
-        $authToken = $credentials->fetchAuthToken();
+    $scopes = ['https://www.googleapis.com/auth/cloud-platform'];
+    $credentials = new ServiceAccountCredentials($scopes, $serviceAccountData);
+    $authToken = $credentials->fetchAuthToken();
 
-        if (!isset($authToken['access_token'])) {
-            throw new Exception("Failed to retrieve access token.");
-        }
-
-        $accessToken = $authToken['access_token'];
-        $projectId = $serviceAccountData['project_id'];
-        $url = "https://fcm.googleapis.com/v1/projects/{$projectId}/messages:send";
-
-        $message = [
-            "message" => [
-                "topic" => $topic,
-                "notification" => [
-                    "title" => $title,
-                    "body" => $body
-                ]
-            ]
-        ];
-
-        $client = new Client();
-        $response = $client->post($url, [
-            'headers' => [
-                'Authorization' => "Bearer {$accessToken}",
-                'Content-Type' => 'application/json',
-            ],
-            'json' => $message
-        ]);
-
-        return [
-            'status' => $response->getStatusCode(),
-            'response' => json_decode($response->getBody(), true),
-        ];
-
-    } catch (\GuzzleHttp\Exception\RequestException $e) {
-        // Handle network or API errors from Guzzle
-        return [
-            'status' => 500,
-            'error' => 'HTTP request failed',
-            'message' => $e->getMessage(),
-            'response' => $e->hasResponse() ? (string) $e->getResponse()->getBody() : null,
-        ];
-    } catch (\Exception $e) {
-        // Handle other PHP errors
-        return [
-            'status' => 500,
-            'error' => 'Unexpected error',
-            'message' => $e->getMessage()
-        ];
+    if (!isset($authToken['access_token'])) {
+      throw new Exception("Failed to retrieve access token.");
     }
+
+    $accessToken = $authToken['access_token'];
+    $projectId = $serviceAccountData['project_id'];
+    $url = "https://fcm.googleapis.com/v1/projects/{$projectId}/messages:send";
+
+    $message = [
+      "message" => [
+        "topic" => $topic,
+        "notification" => [
+          "title" => $title,
+          "body" => $body
+        ]
+      ]
+    ];
+
+    $client = new Client();
+    $response = $client->post($url, [
+      'headers' => [
+        'Authorization' => "Bearer {$accessToken}",
+        'Content-Type' => 'application/json',
+      ],
+      'json' => $message
+    ]);
+
+    return [
+      'status' => $response->getStatusCode(),
+      'response' => json_decode($response->getBody(), true),
+    ];
+
+  } catch (\GuzzleHttp\Exception\RequestException $e) {
+    // Handle network or API errors from Guzzle
+    return [
+      'status' => 500,
+      'error' => 'HTTP request failed',
+      'message' => $e->getMessage(),
+      'response' => $e->hasResponse() ? (string) $e->getResponse()->getBody() : null,
+    ];
+  } catch (\Exception $e) {
+    // Handle other PHP errors
+    return [
+      'status' => 500,
+      'error' => 'Unexpected error',
+      'message' => $e->getMessage()
+    ];
+  }
 }
 
 
@@ -413,79 +413,79 @@ function sendFcmNotificationTopic(string $topic, string $title, string $body, st
 
 function sendFcmNotificationDevice(string $deviceToken, string $title, string $body, string $siteName = 'site1', ?string $route = null)
 {
-    try {
+  try {
 
-        $sitePrefix =  $siteName;
-        $serviceAccountData = [
-            "type" => $_ENV["{$sitePrefix}_type"],
-            "project_id" => $_ENV["{$sitePrefix}_project_id"],
-            "private_key_id" => $_ENV["{$sitePrefix}_private_key_id"],
-            "private_key" => str_replace('\\n', "\n", $_ENV["{$sitePrefix}_private_key"]),
-            "client_email" => $_ENV["{$sitePrefix}_client_email"],
-            "client_id" => $_ENV["{$sitePrefix}_client_id"],
-            "auth_uri" => $_ENV["{$sitePrefix}_auth_uri"],
-            "token_uri" => $_ENV["{$sitePrefix}_token_uri"],
-            "auth_provider_x509_cert_url" => $_ENV["{$sitePrefix}_auth_provider_x509_cert_url"],
-            "client_x509_cert_url" => $_ENV["{$sitePrefix}_client_x509_cert_url"]
-        ];
-
-        $scopes = ['https://www.googleapis.com/auth/cloud-platform'];
-        $credentials = new ServiceAccountCredentials($scopes, $serviceAccountData);
-        $authToken = $credentials->fetchAuthToken();
-
-        if (!isset($authToken['access_token'])) {
-            throw new Exception("Failed to retrieve access token.");
-        }
-
-        $accessToken = $authToken['access_token'];
-        $projectId = $serviceAccountData['project_id'];
-        $url = "https://fcm.googleapis.com/v1/projects/{$projectId}/messages:send";
-
-        
-    $message = [
-        "message" => [
-            "token" => $deviceToken,
-            "notification" => [
-                "title" => $title,
-                "body" => $body
-            ],
-            "data" => [
-                "click_action" => "FLUTTER_NOTIFICATION_CLICK",
-                "screen" => "custom_route",
-                "route" => $route ?? '/home' // pass the route or fallback to /home
-            ]
-        ]
+    $sitePrefix = $siteName;
+    $serviceAccountData = [
+      "type" => $_ENV["{$sitePrefix}_type"],
+      "project_id" => $_ENV["{$sitePrefix}_project_id"],
+      "private_key_id" => $_ENV["{$sitePrefix}_private_key_id"],
+      "private_key" => str_replace('\\n', "\n", $_ENV["{$sitePrefix}_private_key"]),
+      "client_email" => $_ENV["{$sitePrefix}_client_email"],
+      "client_id" => $_ENV["{$sitePrefix}_client_id"],
+      "auth_uri" => $_ENV["{$sitePrefix}_auth_uri"],
+      "token_uri" => $_ENV["{$sitePrefix}_token_uri"],
+      "auth_provider_x509_cert_url" => $_ENV["{$sitePrefix}_auth_provider_x509_cert_url"],
+      "client_x509_cert_url" => $_ENV["{$sitePrefix}_client_x509_cert_url"]
     ];
 
-        $client = new Client();
-        $response = $client->post($url, [
-            'headers' => [
-                'Authorization' => "Bearer {$accessToken}",
-                'Content-Type' => 'application/json',
-            ],
-            'json' => $message
-        ]);
+    $scopes = ['https://www.googleapis.com/auth/cloud-platform'];
+    $credentials = new ServiceAccountCredentials($scopes, $serviceAccountData);
+    $authToken = $credentials->fetchAuthToken();
 
-        return [
-            'status' => $response->getStatusCode(),
-            'response' => json_decode($response->getBody(), true),
-        ];
-
-    } catch (\GuzzleHttp\Exception\RequestException $e) {
-        // Handle network or API errors from Guzzle
-        return [
-            'status' => 500,
-            'error' => 'HTTP request failed',
-            'message' => $e->getMessage(),
-            'response' => $e->hasResponse() ? (string) $e->getResponse()->getBody() : null,
-        ];
-    } catch (\Exception $e) {
-        // Handle other PHP errors
-        return [
-            'status' => 500,
-            'error' => 'Unexpected error',
-            'message' => $e->getMessage()
-        ];
+    if (!isset($authToken['access_token'])) {
+      throw new Exception("Failed to retrieve access token.");
     }
+
+    $accessToken = $authToken['access_token'];
+    $projectId = $serviceAccountData['project_id'];
+    $url = "https://fcm.googleapis.com/v1/projects/{$projectId}/messages:send";
+
+
+    $message = [
+      "message" => [
+        "token" => $deviceToken,
+        "notification" => [
+          "title" => $title,
+          "body" => $body
+        ],
+        "data" => [
+          "click_action" => "FLUTTER_NOTIFICATION_CLICK",
+          "screen" => "custom_route",
+          "route" => $route ?? '/home' // pass the route or fallback to /home
+        ]
+      ]
+    ];
+
+    $client = new Client();
+    $response = $client->post($url, [
+      'headers' => [
+        'Authorization' => "Bearer {$accessToken}",
+        'Content-Type' => 'application/json',
+      ],
+      'json' => $message
+    ]);
+
+    return [
+      'status' => $response->getStatusCode(),
+      'response' => json_decode($response->getBody(), true),
+    ];
+
+  } catch (\GuzzleHttp\Exception\RequestException $e) {
+    // Handle network or API errors from Guzzle
+    return [
+      'status' => 500,
+      'error' => 'HTTP request failed',
+      'message' => $e->getMessage(),
+      'response' => $e->hasResponse() ? (string) $e->getResponse()->getBody() : null,
+    ];
+  } catch (\Exception $e) {
+    // Handle other PHP errors
+    return [
+      'status' => 500,
+      'error' => 'Unexpected error',
+      'message' => $e->getMessage()
+    ];
+  }
 }
 
