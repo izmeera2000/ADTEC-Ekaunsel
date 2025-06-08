@@ -411,7 +411,7 @@ function sendFcmNotificationTopic(string $topic, string $title, string $body, st
 
 
 
-function sendFcmNotificationDevice(string $deviceToken, string $title, string $body , string $siteName  = 'site1') 
+function sendFcmNotificationDevice(string $deviceToken, string $title, string $body, string $siteName = 'site1', ?string $route = null)
 {
     try {
 
@@ -441,15 +441,21 @@ function sendFcmNotificationDevice(string $deviceToken, string $title, string $b
         $projectId = $serviceAccountData['project_id'];
         $url = "https://fcm.googleapis.com/v1/projects/{$projectId}/messages:send";
 
-        $message = [
-            "message" => [
-                "token" => $deviceToken,
-                "notification" => [
-                    "title" => $title,
-                    "body" => $body
-                ]
+        
+    $message = [
+        "message" => [
+            "token" => $deviceToken,
+            "notification" => [
+                "title" => $title,
+                "body" => $body
+            ],
+            "data" => [
+                "click_action" => "FLUTTER_NOTIFICATION_CLICK",
+                "screen" => "custom_route",
+                "route" => $route ?? '/home' // pass the route or fallback to /home
             ]
-        ];
+        ]
+    ];
 
         $client = new Client();
         $response = $client->post($url, [

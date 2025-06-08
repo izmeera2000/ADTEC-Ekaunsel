@@ -266,19 +266,15 @@ if (isset($_POST['push_notification_topic'])) {
     die();
 }
 
-
-
 if (isset($_POST['push_notification_personal'])) {
     $fcm = $_POST['fcm'];
-
     $title = $_POST['title'];
-
     $body = $_POST['body'];
     $siteName = $_POST['siteName'];
+    $route = $_POST['route'] ?? null; // optional
 
- 
     try {
-        $result = sendFcmNotificationDevice($fcm, $title, $body,$siteName);
+        $result = sendFcmNotificationDevice($fcm, $title, $body, $siteName, $route);
 
         http_response_code(200);
         echo json_encode([
