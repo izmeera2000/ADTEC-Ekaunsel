@@ -238,9 +238,9 @@ if (isset($_POST['get_chat_list'])) {
 
 
 if (isset($_POST['push_notification_topic'])) {
-    $topic = "katasemangat";
+    $topic =  $_POST['topic'];
 
-    $title = "Kata-kata Untuk Hari Ini";
+    $title =  $_POST['title'];
 
     $body = $_POST['body'];
     $siteName = $_POST['siteName'];
