@@ -246,5 +246,5 @@ if (isset($_POST['user_register_flutter'])) {
         'message' => 'Registration successful!',
         'user_details' => $user
     ]);
-    exit;
+    die();
 }
