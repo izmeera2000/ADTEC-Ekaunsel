@@ -223,7 +223,7 @@ if (isset($_POST['user_register_flutter'])) {
         $img_tmp = $_FILES['image']['tmp_name'];
         $img_ext = pathinfo($img_name, PATHINFO_EXTENSION);
         $new_name = 'user_' . $user['id'] . '.' . $img_ext;
-        $upload_dir = 'assets/img/user/';
+        $upload_dir = 'assets/img/user/'. $user['id'] .'/';
 
         if (!is_dir($upload_dir)) {
             mkdir($upload_dir, 0777, true);
