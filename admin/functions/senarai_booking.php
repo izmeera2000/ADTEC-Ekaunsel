@@ -325,6 +325,7 @@ if (isset($_POST['senaraitemujanji_flutter'])) {
   if (mysqli_num_rows($results) > 0) {
     while ($row = $results->fetch_assoc()) {
       $masa_mula = $row['masa_mula'];
+      $masa_tamat = $row['masa_tamat'];
       // $tarikh_penuh = date('Y-m-d H:i:s', strtotime($masa_mula));
       // $date_part = date('Y-m-d', strtotime($masa_mula));
       // $time_part = date('h:i A', strtotime($masa_mula));
@@ -338,6 +339,7 @@ if (isset($_POST['senaraitemujanji_flutter'])) {
         'masalah' => $row['masalah'],
         'jenis' => $row['jenis'],
         'masa_mula' => $masa_mula,
+        'masa_tamat' => $masa_tamat,
         'tarikh' => $row['tarikh'],
         // 'masa' => $time_part,
         'status' => $row['event_status'],
@@ -464,6 +466,8 @@ if (isset($_POST['senaraitemujanji_today_flutter'])) {
   if (mysqli_num_rows($results) > 0) {
     while ($row = $results->fetch_assoc()) {
       $masa_mula = $row['masa_mula'];
+      $masa_tamat = $row['masa_tamat'];
+
       // $tarikh_penuh = date('Y-m-d H:i:s', strtotime($masa_mula));
       // $date_part = date('Y-m-d', strtotime($masa_mula));
       // $time_part = date('h:i A', strtotime($masa_mula));
@@ -477,6 +481,8 @@ if (isset($_POST['senaraitemujanji_today_flutter'])) {
         'masalah' => $row['masalah'],
         'jenis' => $row['jenis'],
         'masa_mula' => $masa_mula,
+        'masa_tamat' => $masa_tamat,
+
         'tarikh' => $row['tarikh'],
         // 'masa' => $time_part,
         'status' => $row['event_status'],
