@@ -223,14 +223,14 @@ if (isset($_POST['user_register_flutter'])) {
         $img_tmp = $_FILES['image']['tmp_name'];
         $img_ext = pathinfo($img_name, PATHINFO_EXTENSION);
         $new_name = 'user_' . $user['id'] . '.' . $img_ext;
-        $upload_dir = 'uploads/users/';
+        $upload_dir = 'assets/img/user/';
 
         if (!is_dir($upload_dir)) {
             mkdir($upload_dir, 0777, true);
         }
 
         if (move_uploaded_file($img_tmp, $upload_dir . $new_name)) {
-            $image_url = $upload_dir . $new_name;
+            $image_url =$new_name;
             mysqli_query($db, "UPDATE user SET image_url='$image_url' WHERE id='{$user['id']}'");
         }
     }
