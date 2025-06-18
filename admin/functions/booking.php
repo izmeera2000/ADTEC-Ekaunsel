@@ -495,7 +495,7 @@ if (isset($_POST['kaunselor_approve_flutter'])) {
     $now = date('Y-m-d H:i:s');
 
     $query1 =
-      "UPDATE kaunselor_jadual SET event_status = 2, masa_mula ='$mula', masa_tamat = '$tamat', time_edit='$now',kaunselor_id='$user_id'   WHERE id = '$event_id'";
+      "UPDATE kaunselor_jadual SET event_status = 2, masa_mula ='$mula', masa_tamat = '$tamat', time_edit='$now',   kaunselor_id='$user_id'   WHERE id = '$event_id'";
     $results = mysqli_query($db, $query1);
 
 

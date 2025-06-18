@@ -205,11 +205,16 @@ if (isset($_POST['user_register_flutter'])) {
         echo json_encode(['status' => 'error', 'errors' => $errors]);
         exit;
     }
+if (!$jantina) {
+  $jantina2 = 0;
+} else{
+  $jantina2 = 1;
 
+}
     // Encrypt password and insert user
     $password = md5($password1);
     $insert = "INSERT INTO user (role, ndp, password, nama, email, phone, sem, jantina, agama, status_kahwin, bangsa) 
-               VALUES ('$role', '$ndp', '$password', '$fullname', '$email', '$phone', '$sem', '$jantina', '$agama', '$statuskahwin', '$bangsa')";
+               VALUES ('$role', '$ndp', '$password', '$fullname', '$email', '$phone', '$sem', '$jantina2', '$agama', '$statuskahwin', '$bangsa')";
     mysqli_query($db, $insert);
 
     // Get inserted user

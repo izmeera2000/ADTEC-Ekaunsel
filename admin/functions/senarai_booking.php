@@ -293,8 +293,7 @@ if (isset($_POST['senaraitemujanji_flutter'])) {
   $offset = $_POST['senaraitemujanji_flutter']['offset'];  // Record starting point
   $role = $_POST['senaraitemujanji_flutter']['role'];
 
-  $today = date('Y-m-d');
-
+ 
   $query = "SELECT a.*, b.nama, b.ndp, b.image_url 
             FROM kaunselor_jadual a 
             INNER JOIN user b ON a.user_id = b.id 
